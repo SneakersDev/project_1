@@ -1,0 +1,30 @@
+# Ignorar archivos temporales del sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar carpetas de entorno virtual
+venv/
+node_modules/
+
+# Ignorar archivos de configuración sensible
+.env
+.visitasapi.env
+
+# Ignorar archivos de log
+*.log
+logs/
+
+# Ignorar archivos compilados
+*.class
+*.o
+*.out
+
+# Ignorar carpetas de IDEs/editores
+.vscode/
+.idea/
+ecosystem.config.json
+dockerfile
+
+# Ignorar builds
+dist/
+build/
