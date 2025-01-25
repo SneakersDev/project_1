@@ -15,7 +15,9 @@
   "author": "Luis",
   "license": "ISC",
   "dependencies": {
+    "crypto": "^1.0.1",
     "dotenv": "^16.4.7",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.12.0",
     "project": "file:"
   }
