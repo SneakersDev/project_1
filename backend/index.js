@@ -15,7 +15,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-    res.send("Hello World!");
+    res.send("Hola mundo");
 });
 
 app.use("/api", loginRouter);
