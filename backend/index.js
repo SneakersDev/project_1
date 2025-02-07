@@ -2,9 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 
-
-import loginRouter from "./routes/login.js";
-import sneakersRouter from "./routes/sneakers.js";
+import sneakersRouter from "./routes/sneakersRoutes.js";
+import loginRouter from "./routes/authRoutes.js";
 
 dotenv.config();
 
