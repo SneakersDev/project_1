@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import sneakersRouter from "./routes/sneakersRoutes.js";
 import loginRouter from "./routes/authRoutes.js";
@@ -10,6 +11,10 @@ dotenv.config();
 const app = express();
 const port = 3000;
 
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+}));
 app.use(cookieParser());
 app.use(express.json());
 
