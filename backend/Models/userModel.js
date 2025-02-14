@@ -13,14 +13,13 @@ export const findUserByEmail = async (email) => {
 };
 
 // 🆕 Crear usuario (para Google, GitHub o correo/contraseña)
-export const createUser = async (uid, email, password = null, provider = "local") => {
+export const createUser = async ({ uid, email, username, provider, displayName, clave }) => {
   await pool.query(
-    "INSERT INTO users (uid, email, password, provider) VALUES (?, ?, ?, ?)",
-    [uid, email, password, provider]
+    "INSERT INTO users (uid, email, username, provider, displayName, clave) VALUES (?, ?, ?, ?, ?, ?)",
+    [uid, email, username, provider, displayName, clave]
   );
-};
 
-// 🔑 Guardar token (después de iniciar sesión)
-export const saveToken = async (uid, token) => {
-  await pool.query("UPDATE users SET token = ? WHERE uid = ?", [token, uid]);
+  // Recuperar el usuario recién creado
+  const [rows] = await pool.query("SELECT * FROM users WHERE uid = ?", [uid]);
+  return rows[0];
 };

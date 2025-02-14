@@ -15,10 +15,43 @@ const Login = () => {
     const navigate = useNavigate(); // Hook para redirección
 
     useEffect(() => {
-        if (user) {
-            navigate("/dashboard"); // Redirigir si el usuario ya está autenticado
-        }
-    }, [user, navigate]);
+        const sendUserData = async () => {
+            if (!user) return; // No ejecutar si user es null
+
+            console.log("✅ Usuario autenticado con:", user.displayName, user.email, user.uid, user.providerData[0]?.providerId);
+
+            try {
+                const providerId = user.providerData[0]?.providerId || "unknown";
+
+                const response = await fetch("http://localhost:3000/api/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: user.email,
+                        uid: user.uid,
+                        displayName: user.displayName,
+                        providerId: providerId,
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                sessionStorage.setItem("Sneakers", data.authToken);
+                console.log("✅ Respuesta de la API:", data);
+
+                // Redirigir solo después de obtener respuesta
+                navigate("/dashboard");
+            } catch (error) {
+                console.error("❌ Error en la API:", error);
+            }
+        };
+        sendUserData();
+    }, [user]); // Solo se ejecuta cuando 'user' cambia
 
     const handleAuth = async (e) => {
         e.preventDefault();

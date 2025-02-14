@@ -1,36 +1,44 @@
-import { findUserByUid } from "../Models/userModel.js";
+import { createUser, findUserByUid } from "../Models/userModel.js";
 import { generateToken } from "../services/token.js";
 import bcrypt from "bcryptjs";
 
 const login = async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, email, uid, providerId, displayName } = req.body;
 
     try {
-        // Buscar usuario en la base de datos
-        const user = await findUserByUid(username);
-        
+        let user = await findUserByUid(uid);
+
         if (!user) {
-            return res.status(401).json({ message: "Invalid username or password" });
+            const hashedPassword = password ? await bcrypt.hash(password, 10) : await bcrypt.hash("defaultPassword123", 10);
+
+            user = await createUser({
+                uid: uid || "", 
+                email,
+                username: username || email,
+                provider: providerId || "",
+                displayName: displayName || "",
+                clave: hashedPassword,
+            });
+
+            console.log("✅ Usuario creado:", user);
+        } else {
+            console.log("✅ Usuario encontrado:", user);
         }
 
-        // Verificar la contraseña
-        const isPasswordValid = await bcrypt.compare(password, user.clave);
+        const isPasswordValid = password ? await bcrypt.compare(password, user.clave) : true;
         if (!isPasswordValid) {
             return res.status(401).json({ message: "Invalid username or password" });
         }
 
-        // Generar tokens
-        const authToken = generateToken({ username: user.usuario });
+        const authToken = generateToken({ displayName: user.displayName, uid: user.uid });
 
-        // Configurar la cookie segura
-        res.cookie("authToken", authToken, {
+        res.cookie("Sneakers", authToken, {
             httpOnly: true,
-            expires: new Date(Date.now() + 60 * 60 * 1000), // Expira en 1 hora
-            sameSite: "none",
-            secure: true
+            expires: new Date(Date.now() + 60 * 60 * 1000),
+            sameSite: "lax",
+            secure: false,
         });
 
-        // Responder con éxito
         res.json({
             message: "Login successful",
             username: user.usuario,
@@ -38,9 +46,32 @@ const login = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Error in login:", error);
+        console.error("❌ Error en login:", error);
         res.status(500).json({ message: "Internal server error" });
     }
 };
 
-export default { login };
+const register = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const uid = crypto.randomUUID();
+
+        await createUser({
+            uid,
+            email,
+            username: email,
+            provider: "local",
+            displayName: email,
+            clave: hashedPassword,
+        });
+
+        res.status(201).json({ message: "Usuario registrado exitosamente" });
+    } catch (error) {
+        console.error("❌ Error en registro:", error);
+        res.status(500).json({ message: "Error en el servidor" });
+    }
+};
+
+export default { login, register };
