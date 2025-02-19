@@ -16,8 +16,8 @@ const fr = {
   error: "Une erreur s'est produite",
 
   dashboard: {
-    title: "Tableau de bord",
-    welcome: "Bienvenue sur le tableau de bord",
+    title: "Sneakers",
+    welcome: "Bienvenue sur le Sneakers",
     logout: "Deconnexion",
     user: "Utilisateur",
     email: "Courriel",

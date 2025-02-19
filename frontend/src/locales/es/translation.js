@@ -16,8 +16,8 @@ const es = {
   error: "Ha ocurrido un error",
 
   dashboard: {
-    title: "Panel de Control",
-    welcome: "Bienvenido al Panel de Control",
+    title: "Sneakers",
+    welcome: "Bienvenido al Sneakers",
     logout: "Cerrar sesión",
     user: "Usuario",
     email: "Correo electrónico",
