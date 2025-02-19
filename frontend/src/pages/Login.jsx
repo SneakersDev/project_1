@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Importa useNavigate
 import LanguageSelector from "../components/LanguajeSelector";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { FaGithub } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import "../styles/login.css"
 
 const Login = () => {
     const { t } = useTranslation();
@@ -96,43 +99,53 @@ const Login = () => {
             setError(err.message);
         }
     };
-
-
     return (
-        <div className="container d-flex flex-column align-items-center justify-content-center vh-100">
-            <div className="card shadow-lg p-4 text-center" style={{ maxWidth: "400px" }}>
-                <LanguageSelector />
-                <h2 className="mb-3 text-primary">{t("welcome")}</h2>
+        <div className="containerLogin d-flex flex-column align-items-center justify-content-center min-vh-100 px-3">
+            <h1 className="titleLogin">SNEAKERS</h1>
+            <LanguageSelector />
+            <div className="card p-4 text-center w-100">
+                <h2 className="login mb-3">{t("welcome")}</h2>
+                <div className="auth d-flex justify-content-center">
+                    <button onClick={loginWithGoogle} className="btn btn-auth">
+                        <FcGoogle />
+                    </button>
+                    <button onClick={loginWithGithub} className="btn btn-auth">
+                        <FaGithub />
+                    </button>
+                </div>
+                <div className="logIn">
                 {user ? (
                     <>
-                        <p className="mb-3 font-weight-bold">{user.displayName || user.email}</p>
+                        <p className="mb-3">{user.displayName || user.email}</p>
                         <button onClick={logout} className="btn btn-danger">
                             {t("logout")}
                         </button>
                     </>
                 ) : (
-                    <form onSubmit={handleAuth}>
-                        <div className="mb-3">
-                            <input type="email" placeholder={t("email")} className="form-control" onChange={(e) => setEmail(e.target.value)} required />
+                    <form onSubmit={handleAuth} className="formLogin">
+                        <div className="mb-4">
+                            <label htmlFor="email">{t("user")}</label>
+                            <input id="email" name="email" type="email" placeholder={t("email")} className="form-control" onChange={(e) => setEmail(e.target.value)} required />
                         </div>
-                        <div className="mb-3">
-                            <input type="password" placeholder={t("password")} className="form-control" onChange={(e) => setPassword(e.target.value)} required />
+                        <div className="mb-4">
+                            <label htmlFor="password">{t("password")}</label>
+                            <input id="password" name="password" type="password" placeholder={t("password2")} className="form-control" onChange={(e) => setPassword(e.target.value)} required />
                         </div>
-                        {error && <p className="text-danger">{error}</p>}
-                        <button type="submit" className="btn btn-success w-100">
-                            {isRegistering ? t("register") : t("signIn")}
-                        </button>
-                        <button type="button" onClick={() => setIsRegistering(!isRegistering)} className="btn btn-link">
-                            {isRegistering ? t("signIn") : t("register")}
-                        </button>
+                        <div className="button">
+                            {error && <p className="text-danger">{error}</p>}
+                            <button type="submit" className="btn-style btn w-100">
+                                {isRegistering ? t("register") : t("signIn")}
+                            </button>
+                        </div>
+                        <div className="register">
+                            <p className="question"> {t("question")}</p>
+                            <button type="button" onClick={() => setIsRegistering(!isRegistering)} className="btn-style btn w-100">
+                                {isRegistering ? t("signIn") : t("register")}
+                            </button>
+                        </div>
                     </form>
                 )}
-                <button onClick={loginWithGoogle} className="btn btn-dark mt-3 w-100">
-                    <i className="fab fa-google"></i> {t("signInWithGoogle")}
-                </button>
-                <button onClick={loginWithGithub} className="btn btn-dark mt-3 w-100">
-                    <i className="fab fa-github"></i> {t("signInWithGitHub")}
-                </button>
+                </div>
             </div>
         </div>
     );

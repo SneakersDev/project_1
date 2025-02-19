@@ -1,0 +1,6 @@
+@media (max-width: 576px) {
+    .languajeSelector{
+        left: 1rem !important;
+        top: 0rem !important;
+    }
+}
