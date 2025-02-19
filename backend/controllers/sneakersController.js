@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { getSneakerByMarca, getSneakers, getSneakersByCategory } from "../Models/sneakersModel.js";
 
 const allSneakers = async (req, res) => {
-    const token = req.cookies?.Sneakers;
+    const token = req.cookies?.sneakers;
 
     if (!token) {
         return res.status(401).json({ message: "Unauthorized" });
@@ -26,7 +26,7 @@ const allSneakers = async (req, res) => {
 
 
 const sneakersByCategory = async (req, res) => {
-    const token = req.cookies?.Sneakers;
+    const token = req.cookies?.sneakers;
     if (!token) {
         return res.status(401).json({ message: "Unauthorized" });
     }
@@ -51,7 +51,7 @@ const sneakersByCategory = async (req, res) => {
 };
 
 const sneakersByMarca = async (req, res) => {
-    const token = req.cookies?.Sneakers;
+    const token = req.cookies?.sneakers;
     if (!token) {
         return res.status(401).json({ message: "Unauthorized" });
     }
