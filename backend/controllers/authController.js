@@ -46,7 +46,7 @@ const login = async (req, res) => {
 
         const authToken = generateToken({ displayName: user.displayName, uid: user.uid });
 
-        res.cookie("Sneakers", authToken, {
+        res.cookie("sneakers", authToken, {
             httpOnly: true,
             expires: new Date(Date.now() + 60 * 60 * 1000),
             sameSite: "lax",
@@ -82,7 +82,7 @@ const loginWithEmail = async (req, res) => {
 
         const authToken = generateToken({ displayName: user.displayName, uid: user.uid });
 
-        res.cookie("Sneakers", authToken, {
+        res.cookie("sneakers", authToken, {
             httpOnly: true,
             expires: new Date(Date.now() + 60 * 60 * 1000),
             sameSite: "lax",
