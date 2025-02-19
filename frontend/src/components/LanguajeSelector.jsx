@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { changeLanguage } from "../i18n";
+import { MdArrowDropDown } from "react-icons/md";
+import "../styles/languaje.css"
+
 
 const LanguageSelector = () => {
     const { i18n } = useTranslation();
@@ -16,32 +19,34 @@ const LanguageSelector = () => {
     const getLabel = (lang) => {
         switch (lang) {
             case "en":
-                return "🇬🇧 EN";
+                return "🇬🇧";
             case "es":
-                return "🇪🇸 ES";
+                return "🇪🇸";
             case "fr":
-                return "🇫🇷 FR";
+                return "🇫🇷";
             case "de":
-                return "🇩🇪 DE";
+                return "🇩🇪";
             default:
                 return "";
         }
     };
 
     return (
-        <div style={{ position: "relative", display: "inline-block" }}>
+        <div className="languajeSelector" style={{ position: "fixed", left: "4rem", top: "2rem" }}>
             <button
                 onClick={toggleDropdown}
                 style={{
                     padding: "8px 12px",
                     cursor: "pointer",
-                    border: "1px solid #ccc",
-                    background: "#201f1f",
-                    color: "#fff",
+                    background: "#636363",
+                    color: "black",
+                    fontWeight: "900",
                     borderRadius: "4px",
+                    border: "none",
+                    fontSize: "1.5rem"
                 }}
             >
-                🌍 {getLabel(i18n.language)}
+                 {getLabel(i18n.language)}<MdArrowDropDown />
             </button>
             {isOpen && (
                 <ul

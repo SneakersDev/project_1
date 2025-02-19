@@ -1,0 +1,130 @@
+body {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    font-family: "Roboto", serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+   
+  code {
+    font-family: "Roboto", serif;
+  }
+   
+  .containerLogin{
+    background-color: #636363;
+  }
+   
+  .titleLogin{
+    color: white;
+    font-weight: 700;
+    padding-bottom: 2rem;
+  }
+   
+  .containerLogin .card{
+    width: 20%;
+    max-width: 400px;
+    background-color: #636363;
+    border: 2px solid black;
+  }
+   
+  .containerLogin .login{
+    font-weight: 800;
+    color: black;
+    font-size: 2.3rem;
+  }
+   
+  .containerLogin .auth{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+   
+  .containerLogin .auth button{
+    padding: .6rem;
+    background-color: white;
+    border-radius: 50%;
+    margin: .6rem;
+  }
+   
+  .containerLogin .auth button svg{
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  .containerLogin .auth button:hover{
+    background-color: #a7a2a2;
+    transition: 0.5s ease-in-out;
+  }
+
+  .containerLogin .logIn{
+    padding-top: 2rem;
+  }
+   
+  .containerLogin .logIn label{
+    color: black;
+    font-weight: 700;
+    padding-bottom: .2rem;
+  }
+
+  .formLogin{
+    padding: 0 1rem;
+  }
+
+  .button{
+    padding-top: 1.2rem;
+  }
+
+  .form-control{
+    background-color: #CECECE;
+    border-radius: 12px;
+    border: 1px solid #CECECE;
+  }
+
+  .btn-style{
+    background-color: #FF9E58;
+    font-weight: 800;
+    border-radius: 25px;
+    padding: .7rem;
+    color: black;
+  }
+
+  .btn-style:hover{
+    background-color: #ee853b;
+    transition: 0.2s ease-in-out;
+  }
+  .register{
+    padding-top: 2rem;
+  }
+
+  .register .question{
+    color: white;
+    font-weight: 500;
+  }
+
+/* Media Queries para ajustes responsivos */
+@media (max-width: 768px) {
+    .containerLogin .card {
+        width: 80%; /* Expandir tarjeta en pantallas pequeñas */
+    }
+
+    .titleLogin {
+        font-size: 2rem;
+    }
+
+    .containerLogin .login {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .containerLogin .card {
+        width: 90%;
+    }
+
+    .auth button {
+        padding: 0.4rem;
+    }
+}
+
