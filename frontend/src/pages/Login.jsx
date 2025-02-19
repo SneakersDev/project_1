@@ -1,8 +1,9 @@
 import { useTranslation } from "react-i18next";
-import { auth, loginWithGoogle, loginWithGithub, registerWithEmail, loginWithEmail, logout } from "../firebase";
+import { auth, loginWithGoogle, loginWithGithub, logout } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Importa useNavigate
+import LanguageSelector from "../components/LanguajeSelector";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Login = () => {
@@ -59,19 +60,48 @@ const Login = () => {
 
         try {
             if (isRegistering) {
-                await registerWithEmail(email, password);
+                const response = await fetch("http://localhost:3000/api/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                if (!response.ok) {
+                    throw new Error("Error en el registro");
+                }
+                const data = await response.json();
+                navigate("/login");
+                console.log("Registro exitoso:", data);
             } else {
-                await loginWithEmail(email, password);
+                const response = await fetch("http://localhost:3000/api/loginWithEmail", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                if (!response.ok) {
+                    throw new Error("Error al iniciar sesión");
+                }
+
+                const data = await response.json();
+                console.log("Inicio de sesión exitoso:", data);
             }
-            navigate("/dashboard"); // Redirigir después de iniciar sesión
+
+            navigate("/dashboard"); // Redirigir después de iniciar sesión o registrarse
         } catch (err) {
             setError(err.message);
         }
     };
 
+
     return (
         <div className="container d-flex flex-column align-items-center justify-content-center vh-100">
             <div className="card shadow-lg p-4 text-center" style={{ maxWidth: "400px" }}>
+                <LanguageSelector />
                 <h2 className="mb-3 text-primary">{t("welcome")}</h2>
                 {user ? (
                     <>
@@ -98,10 +128,10 @@ const Login = () => {
                     </form>
                 )}
                 <button onClick={loginWithGoogle} className="btn btn-dark mt-3 w-100">
-                    {t("signInWithGoogle")}
+                    <i className="fab fa-google"></i> {t("signInWithGoogle")}
                 </button>
                 <button onClick={loginWithGithub} className="btn btn-dark mt-3 w-100">
-                    {t("signInWithGitHub")}
+                    <i className="fab fa-github"></i> {t("signInWithGitHub")}
                 </button>
             </div>
         </div>

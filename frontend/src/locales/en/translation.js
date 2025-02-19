@@ -11,8 +11,8 @@ const en = {
   changeLanguage: "Change Language",
 
   dashboard: {
-    title: "Dashboard",
-    welcome: "Welcome to the Dashboard",
+    title: "Sneakers",
+    welcome: "Welcome to the Sneakers",
     logout: "Logout",
     user: "User",
     email: "Email",

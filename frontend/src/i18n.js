@@ -3,12 +3,14 @@ import { initReactI18next } from 'react-i18next';
 import en from './locales/en/translation.js';
 import es from './locales/es/translation.js';
 import fr from './locales/fr/translation.js';
+import de from './locales/de/translation.js';
 
 // 🔹 Definir los recursos de traducción
 const resources = {
   en: { translation: en },
   es: { translation: es },
-  fr: { translation: fr }
+  fr: { translation: fr },
+  de: { translation: de },
 };
 
 // 🔹 Detectar idioma guardado o usar el del navegador
