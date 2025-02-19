@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { auth, logout } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import LanguageSelector from "../components/LanguajeSelector";
 import { useTranslation } from "react-i18next";
+import "../styles/dashboard/dashboard.css";
 
 const Dashboard = () => {
     const { t } = useTranslation();
@@ -18,15 +19,15 @@ const Dashboard = () => {
     // Estados para almacenar datos de la API y filtros
     const [sneakers, setSneakers] = useState([]);
 
-    // Ahora las categorías y marcas son objetos con id y nombre
-    const [categories, setCategories] = useState([
+    // Categorías y marcas como objetos con id y nombre
+    const [categories] = useState([
         { id: 1, nombre: "Deportivas" },
         { id: 2, nombre: "Casuales" },
         { id: 3, nombre: "Running" },
         { id: 4, nombre: "Basketball" },
         { id: 5, nombre: "Skate" },
     ]);
-    const [brands, setBrands] = useState([
+    const [brands] = useState([
         { id: 1, nombre: "Nike" },
         { id: 2, nombre: "Adidas" },
         { id: 3, nombre: "Puma" },
@@ -40,16 +41,14 @@ const Dashboard = () => {
 
     // Función para obtener sneakers según filtros usando async/await
     const fetchSneakers = async () => {
-        let endpoint = "http://localhost:3000/api/sneakers"; // Endpoint por defecto (todos los sneakers)
-        // Si se selecciona solo categoría
+        let endpoint = "http://localhost:3000/api/sneakers";
+
         if (selectedCategory && !selectedBrand) {
             endpoint = `http://localhost:3000/api/sneakers/ByCategoria?category=${selectedCategory}`;
-        }
-        // Si se selecciona solo marca
-        else if (selectedBrand && !selectedCategory) {
+        } else if (selectedBrand && !selectedCategory) {
             endpoint = `http://localhost:3000/api/sneakers/ByMarca?marca=${selectedBrand}`;
         }
-        // Si se seleccionan ambos, se opta por obtener todos y filtrar en el cliente
+        // Si se seleccionan ambos, se obtiene todos y se filtra en el cliente
         try {
             const response = await fetch(endpoint, {
                 method: "GET",
@@ -64,9 +63,12 @@ const Dashboard = () => {
             const data = await response.json();
             let results = data.sneakers;
 
-            // Si ambos filtros están seleccionados, se filtran en el cliente usando IDs
             if (selectedCategory && selectedBrand) {
-                results = results.filter((sneaker) => sneaker.categoria_id === Number(selectedCategory) && sneaker.marca_id === Number(selectedBrand));
+                results = results.filter(
+                    (sneaker) =>
+                        sneaker.categoria_id === Number(selectedCategory) &&
+                        sneaker.marca_id === Number(selectedBrand)
+                );
             }
             setSneakers(results);
         } catch (error) {
@@ -82,7 +84,8 @@ const Dashboard = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                credentials: "include" });
+                credentials: "include" 
+            });
             if (!response.ok) {
                 throw new Error("Error en la red");
             }
@@ -93,7 +96,7 @@ const Dashboard = () => {
         }
     };
 
-    // Al montar el componente se obtienen todos los sneakers
+    // Al montar el componente se obtienen todas las sneakers
     useEffect(() => {
         fetchAllSneakers();
     }, []);
@@ -124,7 +127,13 @@ const Dashboard = () => {
                     {/* Menú lateral para filtros */}
                     <div className="col-md-3">
                         <h4>Categorías</h4>
-                        <select className="form-control" value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+                        <select
+                            className="form-control"
+                            value={selectedCategory}
+                            onChange={(e) =>
+                                setSelectedCategory(e.target.value)
+                            }
+                        >
                             <option value="">Todas</option>
                             {categories.map((cat) => (
                                 <option key={cat.id} value={cat.id}>
@@ -133,7 +142,13 @@ const Dashboard = () => {
                             ))}
                         </select>
                         <h4 className="mt-4">Marcas</h4>
-                        <select className="form-control" value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)}>
+                        <select
+                            className="form-control"
+                            value={selectedBrand}
+                            onChange={(e) =>
+                                setSelectedBrand(e.target.value)
+                            }
+                        >
                             <option value="">Todas</option>
                             {brands.map((brand) => (
                                 <option key={brand.id} value={brand.id}>
@@ -142,38 +157,43 @@ const Dashboard = () => {
                             ))}
                         </select>
                     </div>
-                    {/* Tabla para mostrar los sneakers */}
+                    {/* Tarjetas para mostrar las sneakers */}
                     <div className="col-md-9">
-                        <table className="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Categoría</th>
-                                    <th>Marca</th>
-                                    <th>Modelo</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {sneakers && sneakers.length > 0 ? (
-                                    sneakers.map((sneaker) => (
-                                        <tr key={sneaker.id}>
-                                            <td>{sneaker.id}</td>
-                                            <td>{sneaker.nombre}</td>
-                                            <td>{sneaker.categoria}</td>
-                                            <td>{sneaker.marca}</td>
-                                            <td>{sneaker.modelo}</td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="5" className="text-center">
-                                            No se encontraron resultados.
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
+                        <div className="grid-container">
+                            {sneakers && sneakers.length > 0 ? (
+                                sneakers.map((sneaker) => (
+                                    <div key={sneaker.nombre} className="card">
+                                        {sneaker.imagen && (
+                                            <img
+                                                src={sneaker.imagen}
+                                                alt={sneaker.nombre}
+                                                className="card-img"
+                                            />
+                                        )}
+                                        <div className="card-info">
+                                            <h3>{sneaker.nombre}</h3>
+                                            <p>{sneaker.descripcion}</p>
+                                            <p>
+                                                <strong>Categoría:</strong> {sneaker.categoria}
+                                            </p>
+                                            <p>
+                                                <strong>Marca:</strong> {sneaker.marca}
+                                            </p>
+                                            <p>
+                                                <strong>Modelo:</strong> {sneaker.modelo}
+                                            </p>
+                                            {sneaker.precio && (
+                                                <p className="price">${sneaker.precio}</p>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="no-results text-center">
+                                    No se encontraron resultados.
+                                </p>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

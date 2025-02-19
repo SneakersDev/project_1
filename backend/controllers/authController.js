@@ -44,13 +44,13 @@ const login = async (req, res) => {
             }
         }
 
-        const authToken = generateToken({ displayName: user.displayName, uid: user.uid });
+        const authToken = generateToken({ email: user.email, username: user.username });
 
         res.cookie("sneakers", authToken, {
             httpOnly: true,
             expires: new Date(Date.now() + 60 * 60 * 1000),
-            sameSite: "lax",
-            secure: false,
+            sameSite: "None",
+            secure: true,
         });
 
         res.json({
@@ -80,13 +80,13 @@ const loginWithEmail = async (req, res) => {
             return res.status(401).json({ message: "Invalid email or password" });
         }
 
-        const authToken = generateToken({ displayName: user.displayName, uid: user.uid });
+        const authToken = generateToken({ email: user.email });
 
         res.cookie("sneakers", authToken, {
             httpOnly: true,
             expires: new Date(Date.now() + 60 * 60 * 1000),
-            sameSite: "lax",
-            secure: false,
+            sameSite: "None",
+            secure: true,
         });
 
         res.json({
