@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { changeLanguage } from "../i18n";
 import { MdArrowDropDown } from "react-icons/md";
-import "../styles/languaje.css"
+import "../styles/languageSwitcher/languaje.css"
 
 
 const LanguageSelector = () => {

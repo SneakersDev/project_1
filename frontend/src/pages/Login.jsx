@@ -7,7 +7,7 @@ import LanguageSelector from "../components/LanguajeSelector";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import "../styles/login.css"
+import "../styles/login/login.css";
 
 const Login = () => {
     const { t } = useTranslation();
@@ -29,6 +29,7 @@ const Login = () => {
 
                 const response = await fetch("http://localhost:3000/api/login", {
                     method: "POST",
+                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json",
                     },
@@ -65,6 +66,7 @@ const Login = () => {
             if (isRegistering) {
                 const response = await fetch("http://localhost:3000/api/register", {
                     method: "POST",
+                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json",
                     },
@@ -80,6 +82,7 @@ const Login = () => {
             } else {
                 const response = await fetch("http://localhost:3000/api/loginWithEmail", {
                     method: "POST",
+                    credentials: "include",
                     headers: {
                         "Content-Type": "application/json",
                     },
@@ -129,7 +132,7 @@ const Login = () => {
                         </div>
                         <div className="mb-4">
                             <label htmlFor="password">{t("password")}</label>
-                            <input id="password" name="password" type="password" placeholder={t("password2")} className="form-control" onChange={(e) => setPassword(e.target.value)} required />
+                            <input id="password" name="password" type="password" placeholder={t("password")} className="form-control" onChange={(e) => setPassword(e.target.value)} required />
                         </div>
                         <div className="button">
                             {error && <p className="text-danger">{error}</p>}

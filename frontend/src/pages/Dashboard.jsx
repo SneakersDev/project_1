@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { auth, logout } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import LanguageSelector from "../components/LanguajeSelector";
 import { useTranslation } from "react-i18next";
+import "../styles/dashboard/dashboard.css";
 
 const Dashboard = () => {
     const { t } = useTranslation();
@@ -15,18 +16,18 @@ const Dashboard = () => {
         navigate("/"); // Redirigir al login después de cerrar sesión
     };
 
-    // Estados para almacenar datos de la API y filtros
+    // Estado para almacenar los sneakers
     const [sneakers, setSneakers] = useState([]);
 
-    // Ahora las categorías y marcas son objetos con id y nombre
-    const [categories, setCategories] = useState([
+    // Categorías y marcas (objetos con id y nombre)
+    const [categories] = useState([
         { id: 1, nombre: "Deportivas" },
         { id: 2, nombre: "Casuales" },
         { id: 3, nombre: "Running" },
         { id: 4, nombre: "Basketball" },
         { id: 5, nombre: "Skate" },
     ]);
-    const [brands, setBrands] = useState([
+    const [brands] = useState([
         { id: 1, nombre: "Nike" },
         { id: 2, nombre: "Adidas" },
         { id: 3, nombre: "Puma" },
@@ -34,55 +35,31 @@ const Dashboard = () => {
         { id: 5, nombre: "New Balance" },
     ]);
 
-    // Estados para filtros (almacenamos IDs, que pueden ser números o cadena vacía)
+    // Estados para filtros (almacenamos IDs o cadena vacía para "Todas")
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedBrand, setSelectedBrand] = useState("");
 
-    // Función para obtener sneakers según filtros usando async/await
+    // Función para obtener sneakers según filtros
     const fetchSneakers = async () => {
-        let endpoint = "http://localhost:3000/api/sneakers"; // Endpoint por defecto (todos los sneakers)
-        // Si se selecciona solo categoría
-        if (selectedCategory && !selectedBrand) {
-            endpoint = `http://localhost:3000/api/sneakers/ByCategoria?category=${selectedCategory}`;
-        }
-        // Si se selecciona solo marca
-        else if (selectedBrand && !selectedCategory) {
+        let endpoint = "http://localhost:3000/api/sneakers";
+
+        if (selectedCategory && selectedBrand) {
+            // Endpoint que filtra por categoría y marca
+            endpoint = `http://localhost:3000/api/sneakers/ByCategoryAndMarca?category=${selectedCategory}&marca=${selectedBrand}`;
+        } else if (selectedCategory) {
+            // Endpoint que filtra solo por categoría
+            endpoint = `http://localhost:3000/api/sneakers/ByCategory?category=${selectedCategory}`;
+        } else if (selectedBrand) {
+            // Endpoint que filtra solo por marca
             endpoint = `http://localhost:3000/api/sneakers/ByMarca?marca=${selectedBrand}`;
         }
-        // Si se seleccionan ambos, se opta por obtener todos y filtrar en el cliente
+
         try {
             const response = await fetch(endpoint, {
                 method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include"
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
             });
-            if (!response.ok) {
-                throw new Error("Error en la red");
-            }
-            const data = await response.json();
-            let results = data.sneakers;
-
-            // Si ambos filtros están seleccionados, se filtran en el cliente usando IDs
-            if (selectedCategory && selectedBrand) {
-                results = results.filter((sneaker) => sneaker.categoria_id === Number(selectedCategory) && sneaker.marca_id === Number(selectedBrand));
-            }
-            setSneakers(results);
-        } catch (error) {
-            console.error("Error fetching sneakers:", error);
-        }
-    };
-
-    // Función para obtener todos los sneakers
-    const fetchAllSneakers = async () => {
-        try {
-            const response = await fetch("http://localhost:3000/api/sneakers", { 
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include" });
             if (!response.ok) {
                 throw new Error("Error en la red");
             }
@@ -93,12 +70,30 @@ const Dashboard = () => {
         }
     };
 
-    // Al montar el componente se obtienen todos los sneakers
+    // Función para obtener todos los sneakers
+    const fetchAllSneakers = async () => {
+        try {
+            const response = await fetch("http://localhost:3000/api/sneakers", {
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+            });
+            if (!response.ok) {
+                throw new Error("Error en la red");
+            }
+            const data = await response.json();
+            setSneakers(data.sneakers);
+        } catch (error) {
+            console.error("Error fetching sneakers:", error);
+        }
+    };
+
+    // Al montar el componente, obtener todas las sneakers
     useEffect(() => {
         fetchAllSneakers();
     }, []);
 
-    // Cada vez que cambian los filtros, se vuelve a buscar la información
+    // Cada vez que cambian los filtros, se vuelve a obtener la data
     useEffect(() => {
         if (!selectedCategory && !selectedBrand) {
             fetchAllSneakers();
@@ -142,38 +137,33 @@ const Dashboard = () => {
                             ))}
                         </select>
                     </div>
-                    {/* Tabla para mostrar los sneakers */}
+                    {/* Tarjetas para mostrar los sneakers */}
                     <div className="col-md-9">
-                        <table className="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Categoría</th>
-                                    <th>Marca</th>
-                                    <th>Modelo</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {sneakers && sneakers.length > 0 ? (
-                                    sneakers.map((sneaker) => (
-                                        <tr key={sneaker.id}>
-                                            <td>{sneaker.id}</td>
-                                            <td>{sneaker.nombre}</td>
-                                            <td>{sneaker.categoria}</td>
-                                            <td>{sneaker.marca}</td>
-                                            <td>{sneaker.modelo}</td>
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="5" className="text-center">
-                                            No se encontraron resultados.
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
+                        <div className="grid-container">
+                            {sneakers && sneakers.length > 0 ? (
+                                sneakers.map((sneaker) => (
+                                    <div key={sneaker.nombre} className="card">
+                                        {sneaker.imagen && <img src={sneaker.imagen} alt={sneaker.nombre} className="card-img" />}
+                                        <div className="card-info">
+                                            <h3>{sneaker.nombre}</h3>
+                                            <p>{sneaker.descripcion}</p>
+                                            <p>
+                                                <strong>Categoría:</strong> {sneaker.categoria}
+                                            </p>
+                                            <p>
+                                                <strong>Marca:</strong> {sneaker.marca}
+                                            </p>
+                                            <p>
+                                                <strong>Modelo:</strong> {sneaker.modelo}
+                                            </p>
+                                            {sneaker.precio && <p className="price">${sneaker.precio}</p>}
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p className="no-results text-center">No se encontraron resultados.</p>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
