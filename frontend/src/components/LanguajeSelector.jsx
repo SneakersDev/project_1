@@ -57,7 +57,6 @@ const LanguageSelector = () => {
                         margin: 0,
                         padding: 0,
                         listStyle: "none",
-                        border: "1px solid #ccc",
                         background: "#fff",
                         borderRadius: "4px",
                         width: "100%",
@@ -74,8 +73,9 @@ const LanguageSelector = () => {
                                     width: "100%",
                                     textAlign: "left",
                                     border: "none",
-                                    background: i18n.language === lang ? "#e0e0e0" : "transparent",
+                                    background: i18n.language === lang ? "#ff852d" : "transparent",
                                     cursor: "pointer",
+                                    color: "black"
                                 }}
                             >
                                 {getLabel(lang)}

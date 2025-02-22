@@ -61,96 +61,146 @@ const Login = () => {
     const handleAuth = async (e) => {
         e.preventDefault();
         setError(null);
-
+        console.log("isRegistering:", isRegistering); // Verificar si el estado es correcto
+    
         try {
             if (isRegistering) {
+                console.log("Enviando solicitud de registro...");
                 const response = await fetch("http://localhost:3000/api/register", {
                     method: "POST",
                     credentials: "include",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email, password }),
                 });
-
-                if (!response.ok) {
-                    throw new Error("Error en el registro");
-                }
+    
+                if (!response.ok) throw new Error("Error en el registro");
                 const data = await response.json();
-                navigate("/login");
                 console.log("Registro exitoso:", data);
+                navigate("/login");
             } else {
+                console.log("Enviando solicitud de inicio de sesión...");
                 const response = await fetch("http://localhost:3000/api/loginWithEmail", {
                     method: "POST",
                     credentials: "include",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email, password }),
                 });
-
-                if (!response.ok) {
-                    throw new Error("Error al iniciar sesión");
-                }
-
+    
+                if (!response.ok) throw new Error("Error al iniciar sesión");
                 const data = await response.json();
                 console.log("Inicio de sesión exitoso:", data);
+                navigate("/dashboard");
             }
-
-            navigate("/dashboard"); // Redirigir después de iniciar sesión o registrarse
         } catch (err) {
+            console.error(err);
             setError(err.message);
         }
     };
+    
     return (
-        <div className="containerLogin d-flex flex-column align-items-center justify-content-center min-vh-100 px-3">
-            <h1 className="titleLogin">SNEAKERS</h1>
+        <div className="login-container">
             <LanguageSelector />
-            <div className="card p-4 text-center w-100">
-                <h2 className="login mb-3">{t("welcome")}</h2>
-                <div className="auth d-flex justify-content-center">
-                    <button onClick={loginWithGoogle} className="btn btn-auth">
-                        <FcGoogle />
-                    </button>
-                    <button onClick={loginWithGithub} className="btn btn-auth">
-                        <FaGithub />
-                    </button>
+            <div className={`container ${isRegistering ? "active" : ""}`}>
+                <div className="form-container sign-up col-12 col-md-6">
+                    {user ? (
+                        <>
+                            <p className="mb-3">{user.displayName || user.email}</p>
+                            <button onClick={logout} className="btn btn-danger">
+                                {t("logout")}
+                            </button>
+                        </>
+                    ) : (
+                        <form onSubmit={handleAuth} className="formLogin">
+                            <h1 className="login">{t("signIn")}</h1>
+                            <div className="social-icons">
+                                <button type="button" onClick={loginWithGoogle} className="btn btn-auth">
+                                    <FcGoogle />
+                                </button>
+                                <button type="button" onClick={loginWithGithub} className="btn btn-auth">
+                                    <FaGithub />
+                                </button>
+                            </div>
+                            <span> {t("singInAccount")} </span>
+                            <div className="loginDates">
+                                <div>
+                                    <label htmlFor="email">{t("user")}</label>
+                                    <input id="email" name="email" type="email" placeholder={t("email")} onChange={(e) => setEmail(e.target.value)} required />
+                                </div>
+                                <div>
+                                    <label htmlFor="password">{t("password")}</label>
+                                    <input id="password" name="password" type="password" placeholder={t("password")} onChange={(e) => setPassword(e.target.value)} required />
+                                </div>
+                                <div className="button">
+                                    {error && <p className="text-danger">{error}</p>}
+                                    <button type="submit" className="create">
+                                        {isRegistering ? t("register") : t("signIn")}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    )}
                 </div>
-                <div className="logIn">
-                {user ? (
-                    <>
-                        <p className="mb-3">{user.displayName || user.email}</p>
-                        <button onClick={logout} className="btn btn-danger">
-                            {t("logout")}
-                        </button>
-                    </>
-                ) : (
-                    <form onSubmit={handleAuth} className="formLogin">
-                        <div className="mb-4">
-                            <label htmlFor="email">{t("user")}</label>
-                            <input id="email" name="email" type="email" placeholder={t("email")} className="form-control" onChange={(e) => setEmail(e.target.value)} required />
+                <div className="form-container sign-in">
+                    {user ? (
+                        <>
+                            <p className="mb-3">{user.displayName || user.email}</p>
+                            <button onClick={logout} className="btn btn-danger">
+                                {t("logout")}
+                            </button>
+                        </>
+                    ) : (
+                        <form onSubmit={handleAuth}>
+                            <h1 className="login">{t("loginAccount")}</h1>
+                            <div className="social-icons">
+                                <button type="button" onClick={loginWithGoogle} className="btn btn-auth">
+                                    <FcGoogle />
+                                </button>
+                                <button type="button" onClick={loginWithGithub} className="btn btn-auth">
+                                    <FaGithub />
+                                </button>
+                            </div>
+                            <span> {t("loginAccountEmail")} </span>
+                            <div className="loginDates">
+                                <div>
+                                    <label htmlFor="emailLogin">{t("user")}</label>
+                                    <input id="emailLogin" name="email" type="email" placeholder={t("email")} onChange={(e) => setEmail(e.target.value)} required />
+                                </div>
+                                <div>
+                                    <label htmlFor="passwordLogin">{t("password")}</label>
+                                    <input id="passwordLogin" name="password" type="password" placeholder={t("password")} onChange={(e) => setPassword(e.target.value)} required />
+                                </div>
+                            </div>
+                            <div className="register">
+                                {error && <p className="text-danger">{error}</p>}
+                                <button type="submit" className="create">
+                                    {t("signIn")}
+                                </button>
+                            </div>
+                        </form>
+                    )}
+                </div>
+                <div className="toggle-container">
+                    <div className="toggle">
+                        <div className="toggle-panel toggle-left">
+                            <h2>{t("questionLog")}</h2>
+                            <p>{t("textLog")}</p>
+                            <button className="hidden" type="button" onClick={() => setIsRegistering(false)}>
+                                {t("logIn")}
+                            </button>
                         </div>
-                        <div className="mb-4">
-                            <label htmlFor="password">{t("password")}</label>
-                            <input id="password" name="password" type="password" placeholder={t("password")} className="form-control" onChange={(e) => setPassword(e.target.value)} required />
-                        </div>
-                        <div className="button">
+                        <div className="toggle-panel toggle-right">
+                            <h2>{t("questionAccount")}</h2>
+                            <p>{t("textAccount")}</p>
                             {error && <p className="text-danger">{error}</p>}
-                            <button type="submit" className="btn-style btn w-100">
-                                {isRegistering ? t("register") : t("signIn")}
+                            <button className="hidden" type="button" onClick={() => setIsRegistering(true)}>
+                                {t("register")}
                             </button>
                         </div>
-                        <div className="register">
-                            <p className="question"> {t("question")}</p>
-                            <button type="button" onClick={() => setIsRegistering(!isRegistering)} className="btn-style btn w-100">
-                                {isRegistering ? t("signIn") : t("register")}
-                            </button>
-                        </div>
-                    </form>
-                )}
+                    </div>
                 </div>
             </div>
         </div>
+
     );
 };
 
