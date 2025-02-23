@@ -173,7 +173,7 @@ const Login = () => {
                             <div className="register">
                                 {error && <p className="text-danger">{error}</p>}
                                 <button type="submit" className="create">
-                                    {t("signIn")}
+                                    {t("logIn")}
                                 </button>
                             </div>
                         </form>

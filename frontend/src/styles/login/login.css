@@ -15,6 +15,7 @@ body {
     height: 100vh;
     display: flex;
     align-items: center;
+    padding: 1rem;
 }
 
 .login-container .container{
@@ -47,7 +48,6 @@ body {
 }
 
 .login-container button{
-    background-color: #FF9E58;
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;
@@ -181,7 +181,7 @@ body {
 }
 
 .container .form-container .create{
-    background-color: #FF9E58;
+    background-color: black;
 }
 .container.active .toggle{
     transform: translateX(50%);
@@ -232,13 +232,13 @@ body {
 }
 
 .login-container button.hidden:hover{
-    background-color: #dfdfdf;
+    background-color: transparent;
     transition: 0.5s ease-in-out;
     color: black;
 }
 
 .login-container .container .register .buttonLogin:hover, .login-container .container .form-container .create:hover {
-    background-color: #ff852d;
+    background-color: #363636;
     transition: 0.3s ease-in-out;
 }
 
@@ -246,4 +246,194 @@ body {
     background-color: #363636;
     color: white;
     transition: 0.3s ease-in-out;
+}
+
+
+/*Media Queries*/
+@media (min-width: 345px) and (max-width: 575px) {
+    
+    .login-container{
+        padding: 0 1rem;
+    }
+
+    .login-container .container{
+        min-height: 550px;
+        border: 2px solid #FF9E58;
+        box-shadow: 0 4px 6px rgba(255, 158, 88, 0.5) !important;
+    }
+
+    .login-container .form-container{
+        width: 100% !important;
+    }
+
+    .container.active .sign-up{
+        transform: translateY(0%);
+    }
+
+    .login-container .container form{
+        height: 95%;
+    }
+    .login-container .container.active .sign-in{
+        width: 100% !important;
+        transform: translateY(100%);
+    }
+
+    .toggle-container {
+        position: absolute;
+        bottom: 20px;
+        top: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50%;
+        height: auto;
+        padding: 20px;
+        background: none;
+        border: none;
+    }
+    
+      /* Oculta ambos paneles por defecto */
+      .toggle-panel {
+        display: none;
+      }
+    
+      /* Cuando no está activo (login mode), muestra el panel derecho */
+      .container:not(.active) .toggle-panel.toggle-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      /* Cuando está activo (registro mode), muestra el panel izquierdo */
+      .container.active .toggle-panel.toggle-left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    
+      /* Oculta los textos para dejar solo el botón */
+      .toggle-panel h2,
+      .toggle-panel p,
+      .toggle-panel .text-danger {
+        display: none;
+      }
+    
+      /* Ajusta el estilo del botón para que se vea como un enlace o similar */
+      .toggle-panel button {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 16px;
+        color: #ff8833;
+        cursor: pointer;
+        letter-spacing: 0px;
+        font-weight: 800;
+        text-decoration: underline;
+      }
+
+      .container.active .toggle-container{
+        width: 100%;
+        transform: translateX(-50%);
+      }
+}
+
+@media (min-width: 140px) and (max-width: 344px){
+
+    .login-container{
+        padding: 0 1rem;
+    }
+
+    .login-container .container{
+        min-height: 550px;
+        border: 2px solid #FF9E58;
+        box-shadow: 0 4px 6px rgba(255, 158, 88, 0.5) !important;
+    }
+
+    .login-container .form-container{
+        width: 100% !important;
+    }
+
+    .container.active .sign-up{
+        transform: translateY(0%);
+    }
+
+    .login-container .container form{
+        height: 90%;
+    }
+    .login-container .container.active .sign-in{
+        width: 100% !important;
+        transform: translateY(100%);
+    }
+
+    .toggle-container {
+        position: absolute;
+        bottom: 20px;
+        top: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50%;
+        height: auto;
+        padding: 20px;
+        background: none;
+        border: none;
+    }
+    
+      /* Oculta ambos paneles por defecto */
+      .toggle-panel {
+        display: none;
+      }
+    
+      /* Cuando no está activo (login mode), muestra el panel derecho */
+      .container:not(.active) .toggle-panel.toggle-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      /* Cuando está activo (registro mode), muestra el panel izquierdo */
+      .container.active .toggle-panel.toggle-left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    
+      /* Oculta los textos para dejar solo el botón */
+      .toggle-panel h2,
+      .toggle-panel p,
+      .toggle-panel .text-danger {
+        display: none;
+      }
+    
+      /* Ajusta el estilo del botón para que se vea como un enlace o similar */
+      .toggle-panel button {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 16px;
+        color: #ff8833;
+        cursor: pointer;
+        letter-spacing: 0px;
+        font-weight: 800;
+        text-decoration: underline;
+      }
+
+      .container.active .toggle-container{
+        width: 101%;
+        transform: translateX(-50%);
+      }
+
+      .login-container .container span{
+        text-align: center;
+      }
+
+      .form-container .social-icons{
+        display: flex;
+      }
+
+      .form-container h1{
+        text-align: center;
+      }
 }
