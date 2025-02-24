@@ -11,120 +11,429 @@ body {
     font-family: "Roboto", serif;
   }
    
-  .containerLogin{
-    background-color: #636363;
-  }
-   
-  .titleLogin{
-    color: white;
-    font-weight: 700;
-    padding-bottom: 2rem;
-  }
-   
-  .containerLogin .card{
-    width: 20%;
-    max-width: 400px;
-    background-color: #636363;
-    border: 2px solid black;
-  }
-   
-  .containerLogin .login{
-    font-weight: 800;
-    color: black;
-    font-size: 2.3rem;
-  }
-   
-  .containerLogin .auth{
+  .login-container{
+    height: 100vh;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
     align-items: center;
-  }
-   
-  .containerLogin .auth button{
-    padding: .6rem;
-    background-color: white;
-    border-radius: 50%;
-    margin: .6rem;
-  }
-   
-  .containerLogin .auth button svg{
-    height: 1.5rem;
-    width: 1.5rem;
-  }
+    padding: 1rem;
+}
 
-  .containerLogin .auth button:hover{
-    background-color: #a7a2a2;
+.login-container .container{
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    position: relative;
+    overflow: hidden;
+    width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+}
+
+.login-container .container p{
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.3px;
+    margin: 20px 0;
+}
+
+.login-container .container span{
+    font-size: 12px;
+}
+
+.login-container a{
+    color: #333;
+    font-size: 13px;
+    text-decoration: none;
+    margin: 15px 0 10px;
+}
+
+.login-container button{
+    color: #fff;
+    font-size: 12px;
+    padding: 10px 45px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.login-container button.hidden{
+    background-color: transparent;
+    border-color: #fff;
+}
+
+.login-container .container form{
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    height: 100%;
+}
+
+.login-container .container input{
+    background-color: #eee;
+    border: none;
+    margin: 8px 0;
+    padding: 10px 15px;
+    font-size: 13px;
+    border-radius: 8px;
+    width: 100%;
+    outline: none;
+}
+
+.login-container .form-container{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+}
+
+.loginDates{
+  text-align: center;
+  padding-top: .7rem;
+}
+
+.sign-in{
+    left: 0;
+    width: 50%;
+    z-index: 2;
+}
+
+.login-container .register .question{
+  text-align: center;
+  margin: 1.25rem 0 0 0;
+}
+.container.active .sign-in{
+    transform: translateX(100%);
+}
+
+.sign-up{
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+.container.active .sign-up{
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: move 0.6s;
+}
+
+@keyframes move{
+    0%, 49.99%{
+        opacity: 0;
+        z-index: 1;
+    }
+    50%, 100%{
+        opacity: 1;
+        z-index: 5;
+    }
+}
+
+.social-icons{
+    margin: 0px 0 20px 0;
+}
+
+.social-icons button{
+  background-color: black;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.2rem;
+  padding: 0.375rem 0.75rem;
+  margin: 0 1rem;
+}
+
+.toggle-container{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: all 0.6s ease-in-out;
+    border-radius: 150px 0 0 100px;
+    z-index: 1000;
+}
+
+.container.active .toggle-container{
+    transform: translateX(-100%);
+    border-radius: 0 150px 100px 0;
+}
+
+.toggle{
+    background-color: #2da0a8;
+    height: 100%;
+    background: linear-gradient(to right, #FF9E58, #D86E30);
+    color: black;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: all 0.6s ease-in-out;
+}
+
+.container .form-container .create{
+    background-color: black;
+}
+.container.active .toggle{
+    transform: translateX(50%);
+}
+
+.toggle-panel{
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 30px;
+    text-align: center;
+    top: 0;
+    transform: translateX(0);
+    transition: all 0.6s ease-in-out;
+}
+
+.toggle-left{
+    transform: translateX(-200%);
+}
+
+.container.active .toggle-left{
+    transform: translateX(0);
+}
+
+.toggle-right{
+    right: 0;
+    transform: translateX(0);
+}
+
+.container.active .toggle-right{
+    transform: translateX(200%);
+}
+
+
+/*Hovers del Login*/
+
+.social-icons .icon:hover{
+    border: 1px solid #aaa;
+}
+
+.login-container .container .form-container .log-in:hover{
+    background-color: #2b7c81;
+    transition: 0.3s ease-in-out;
+}
+
+.login-container button.hidden:hover{
+    background-color: transparent;
     transition: 0.5s ease-in-out;
-  }
-
-  .containerLogin .logIn{
-    padding-top: 2rem;
-  }
-   
-  .containerLogin .logIn label{
     color: black;
-    font-weight: 700;
-    padding-bottom: .2rem;
-  }
+}
 
-  .formLogin{
-    padding: 0 1rem;
-  }
+.login-container .container .register .buttonLogin:hover, .login-container .container .form-container .create:hover {
+    background-color: #363636;
+    transition: 0.3s ease-in-out;
+}
 
-  .button{
-    padding-top: 1.2rem;
-  }
-
-  .form-control{
-    background-color: #CECECE;
-    border-radius: 12px;
-    border: 1px solid #CECECE;
-  }
-
-  .btn-style{
-    background-color: #FF9E58;
-    font-weight: 800;
-    border-radius: 25px;
-    padding: .7rem;
-    color: black;
-  }
-
-  .btn-style:hover{
-    background-color: #ee853b;
-    transition: 0.2s ease-in-out;
-  }
-  .register{
-    padding-top: 2rem;
-  }
-
-  .register .question{
+.social-icons button:hover{
+    background-color: #363636;
     color: white;
-    font-weight: 500;
-  }
-
-/* Media Queries para ajustes responsivos */
-@media (max-width: 768px) {
-    .containerLogin .card {
-        width: 80%; /* Expandir tarjeta en pantallas pequeñas */
-    }
-
-    .titleLogin {
-        font-size: 2rem;
-    }
-
-    .containerLogin .login {
-        font-size: 1.8rem;
-    }
+    transition: 0.3s ease-in-out;
 }
 
-@media (max-width: 576px) {
-    .containerLogin .card {
-        width: 90%;
+
+/*Media Queries*/
+@media (min-width: 345px) and (max-width: 575px) {
+    
+    .login-container{
+        padding: 0 1rem;
     }
 
-    .auth button {
-        padding: 0.4rem;
+    .login-container .container{
+        min-height: 550px;
+        border: 2px solid #FF9E58;
+        box-shadow: 0 4px 6px rgba(255, 158, 88, 0.5) !important;
     }
+
+    .login-container .form-container{
+        width: 100% !important;
+    }
+
+    .container.active .sign-up{
+        transform: translateY(0%);
+    }
+
+    .login-container .container form{
+        height: 95%;
+    }
+    .login-container .container.active .sign-in{
+        width: 100% !important;
+        transform: translateY(100%);
+    }
+
+    .toggle-container {
+        position: absolute;
+        bottom: 20px;
+        top: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50%;
+        height: auto;
+        padding: 20px;
+        background: none;
+        border: none;
+    }
+    
+      /* Oculta ambos paneles por defecto */
+      .toggle-panel {
+        display: none;
+      }
+    
+      /* Cuando no está activo (login mode), muestra el panel derecho */
+      .container:not(.active) .toggle-panel.toggle-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      /* Cuando está activo (registro mode), muestra el panel izquierdo */
+      .container.active .toggle-panel.toggle-left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    
+      /* Oculta los textos para dejar solo el botón */
+      .toggle-panel h2,
+      .toggle-panel p,
+      .toggle-panel .text-danger {
+        display: none;
+      }
+    
+      /* Ajusta el estilo del botón para que se vea como un enlace o similar */
+      .toggle-panel button {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 16px;
+        color: #ff8833;
+        cursor: pointer;
+        letter-spacing: 0px;
+        font-weight: 800;
+        text-decoration: underline;
+      }
+
+      .container.active .toggle-container{
+        width: 100%;
+        transform: translateX(-50%);
+      }
 }
 
+@media (min-width: 140px) and (max-width: 344px){
+
+    .login-container{
+        padding: 0 1rem;
+    }
+
+    .login-container .container{
+        min-height: 550px;
+        border: 2px solid #FF9E58;
+        box-shadow: 0 4px 6px rgba(255, 158, 88, 0.5) !important;
+    }
+
+    .login-container .form-container{
+        width: 100% !important;
+    }
+
+    .container.active .sign-up{
+        transform: translateY(0%);
+    }
+
+    .login-container .container form{
+        height: 90%;
+    }
+    .login-container .container.active .sign-in{
+        width: 100% !important;
+        transform: translateY(100%);
+    }
+
+    .toggle-container {
+        position: absolute;
+        bottom: 20px;
+        top: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50%;
+        height: auto;
+        padding: 20px;
+        background: none;
+        border: none;
+    }
+    
+      /* Oculta ambos paneles por defecto */
+      .toggle-panel {
+        display: none;
+      }
+    
+      /* Cuando no está activo (login mode), muestra el panel derecho */
+      .container:not(.active) .toggle-panel.toggle-right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      /* Cuando está activo (registro mode), muestra el panel izquierdo */
+      .container.active .toggle-panel.toggle-left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    
+      /* Oculta los textos para dejar solo el botón */
+      .toggle-panel h2,
+      .toggle-panel p,
+      .toggle-panel .text-danger {
+        display: none;
+      }
+    
+      /* Ajusta el estilo del botón para que se vea como un enlace o similar */
+      .toggle-panel button {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 16px;
+        color: #ff8833;
+        cursor: pointer;
+        letter-spacing: 0px;
+        font-weight: 800;
+        text-decoration: underline;
+      }
+
+      .container.active .toggle-container{
+        width: 101%;
+        transform: translateX(-50%);
+      }
+
+      .login-container .container span{
+        text-align: center;
+      }
+
+      .form-container .social-icons{
+        display: flex;
+      }
+
+      .form-container h1{
+        text-align: center;
+      }
+}
