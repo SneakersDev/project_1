@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import LanguageSelector from "../components/LanguajeSelector";
 import { useTranslation } from "react-i18next";
 import "../styles/dashboard/dashboard.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Nav from "../components/Nav";
 
 const Dashboard = () => {
     const { t } = useTranslation();
@@ -103,68 +105,14 @@ const Dashboard = () => {
     }, [selectedCategory, selectedBrand]);
 
     return (
-        <div className="container">
-            <LanguageSelector />
-            <div className="container mt-5">
-                <h1>{t("dashboard.title")}</h1>
-                {user && (
-                    <p>
-                        {t("dashboard.user")}: {user.displayName || user.email}
-                    </p>
-                )}
-                <button onClick={handleLogout} className="btn btn-danger">
-                    {t("dashboard.logout")}
-                </button>
-                <div className="row mt-4">
-                    {/* Menú lateral para filtros */}
-                    <div className="col-md-3">
-                        <h4>Categorías</h4>
-                        <select className="form-control" value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
-                            <option value="">Todas</option>
-                            {categories.map((cat) => (
-                                <option key={cat.id} value={cat.id}>
-                                    {cat.nombre}
-                                </option>
-                            ))}
-                        </select>
-                        <h4 className="mt-4">Marcas</h4>
-                        <select className="form-control" value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)}>
-                            <option value="">Todas</option>
-                            {brands.map((brand) => (
-                                <option key={brand.id} value={brand.id}>
-                                    {brand.nombre}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    {/* Tarjetas para mostrar los sneakers */}
-                    <div className="col-md-9">
-                        <div className="grid-container">
-                            {sneakers && sneakers.length > 0 ? (
-                                sneakers.map((sneaker) => (
-                                    <div key={sneaker.nombre} className="card">
-                                        {sneaker.imagen && <img src={sneaker.imagen} alt={sneaker.nombre} className="card-img" />}
-                                        <div className="card-info">
-                                            <h3>{sneaker.nombre}</h3>
-                                            <p>{sneaker.descripcion}</p>
-                                            <p>
-                                                <strong>Categoría:</strong> {sneaker.categoria}
-                                            </p>
-                                            <p>
-                                                <strong>Marca:</strong> {sneaker.marca}
-                                            </p>
-                                            <p>
-                                                <strong>Modelo:</strong> {sneaker.modelo}
-                                            </p>
-                                            {sneaker.precio && <p className="price">${sneaker.precio}</p>}
-                                        </div>
-                                    </div>
-                                ))
-                            ) : (
-                                <p className="no-results text-center">No se encontraron resultados.</p>
-                            )}
-                        </div>
-                    </div>
+        <div className="containerDashboard">
+            <Nav></Nav>
+            <div className="languaje" hidden>
+                <LanguageSelector />
+            </div>
+            <div className="container">
+                <div className="titleDashboard">
+                    <h1>{t("dashboard.title")}</h1>
                 </div>
             </div>
         </div>
