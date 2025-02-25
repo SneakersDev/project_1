@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login"; // Página de inicio de sesión
 import AuthForm from "./components/AuthForm"; // Formulario de autenticación
 import Dashboard from "./pages/Dashboard";
+import User from "./pages/User";
+import Favorites from "./pages/Favorites";
 
 // Importa la hoja de estilos de Bootstrap para usar su sistema de diseño y estilos predefinidos
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -26,6 +28,12 @@ const App = () => {
 
                 {/* Ruta para el dashboard */}
                 <Route path="/dashboard" element={<Dashboard />} />
+
+                {/* Ruta para el user */}
+                <Route path="/user" element={<User />} />
+
+                {/* Ruta para el user */}
+                <Route path="/favorites" element={<Favorites />} />
             </Routes>
         </Router>
     );
