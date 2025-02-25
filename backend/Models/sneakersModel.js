@@ -2,7 +2,7 @@ import pool from "../services/connect.js";
 
 export const getSneakers = async () => {
     const [rows] = await pool.query(`
-        SELECT s.id, s.nombre, s.descripcion, s.modelo, 
+        SELECT s.id, s.nombre, s.descripcion, s.modelo, s.imagen, 
             m.nombre AS marca, c.nombre AS categoria
         FROM sneakers s
         JOIN marcas m ON s.marca_id = m.id
@@ -11,10 +11,9 @@ export const getSneakers = async () => {
     return rows;
 };
 
-
 export const getSneakerByMarca = async (marca_id) => {
     const [rows] = await pool.query(`
-        SELECT s.id, s.nombre, s.descripcion, s.modelo, 
+        SELECT s.id, s.nombre, s.descripcion, s.modelo, s.imagen, 
             m.nombre AS marca, c.nombre AS categoria
         FROM sneakers s
         JOIN marcas m ON s.marca_id = m.id
@@ -26,7 +25,7 @@ export const getSneakerByMarca = async (marca_id) => {
 
 export const getSneakersByCategory = async (category_id) => {
     const [rows] = await pool.query(`
-        SELECT s.id, s.nombre, s.descripcion, s.modelo, 
+        SELECT s.id, s.nombre, s.descripcion, s.modelo, s.imagen, 
             m.nombre AS marca, c.nombre AS categoria
         FROM sneakers s
         JOIN marcas m ON s.marca_id = m.id
@@ -38,7 +37,7 @@ export const getSneakersByCategory = async (category_id) => {
 
 export const getSneakerByMarcaAndCategory = async (marca_id, category_id) => {
     const [rows] = await pool.query(`
-        SELECT s.id, s.nombre, s.descripcion, s.modelo, 
+        SELECT s.id, s.nombre, s.descripcion, s.modelo, s.imagen, 
             m.nombre AS marca, c.nombre AS categoria
         FROM sneakers s
         JOIN marcas m ON s.marca_id = m.id
