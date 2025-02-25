@@ -1,15 +1,15 @@
 body {
-    margin: 0;
-    border: 0;
-    padding: 0;
-    font-family: "Roboto", serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+margin: 0;
+border: 0;
+padding: 0;
+font-family: "Roboto", serif;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
    
-  code {
-    font-family: "Roboto", serif;
-  }
+code {
+font-family: "Roboto", serif;
+}
    
   .login-container{
     height: 100vh;
@@ -62,7 +62,7 @@ body {
 
 .login-container button.hidden{
     background-color: transparent;
-    border-color: #fff;
+    border-color: #fff; 
 }
 
 .login-container .container form{
@@ -338,7 +338,7 @@ body {
       }
 }
 
-@media (min-width: 140px) and (max-width: 344px){
+@media (max-width: 344px){
 
     .login-container{
         padding: 0 1rem;
@@ -435,5 +435,10 @@ body {
 
       .form-container h1{
         text-align: center;
+      }
+
+      .login-container button.hidden{
+        margin: 6px;
+        padding: 0;
       }
 }
