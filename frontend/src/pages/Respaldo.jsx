@@ -1,7 +1,7 @@
 const Respaldo = () =>{
     return(
         <div>
-                            <h1>{t("dashboard.title")}</h1>
+            <h1>{t("dashboard.title")}</h1>
                 {user && (
                     <p>
                         {t("dashboard.user")}: {user.displayName || user.email}
