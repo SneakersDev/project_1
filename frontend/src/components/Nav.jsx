@@ -8,14 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { SiGooglemaps } from "react-icons/si";
 import "../styles/nav/nav.css";
 
-const Nav = ({
-  categories,
-  brands,
-  selectedCategory,
-  selectedBrand,
-  setSelectedCategory,
-  setSelectedBrand,
-}) => {
+const Nav = ({ categories, selectedCategory, setSelectedCategory }) => {
   const navigate = useNavigate();
 
   return (
@@ -36,33 +29,30 @@ const Nav = ({
             </button>
           </p>
           <div className="collapse multi-collapse" id="multiCollapseExample1">
+            <div className="titleCategory">
+            <h4>Categorías</h4>
+            </div>
             <div className="card card-body">
-              <h4>Categorías</h4>
-              <select
-                className="form-control"
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+              <ul className="category-list">
+              <li
+                key="general"
+                className={`category-item ${selectedCategory === "" ? "active" : ""}`}
+                onClick={() => setSelectedCategory("")}
               >
-                <option value="">Todas</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.nombre}
-                  </option>
-                ))}
-              </select>
-              <h4 className="mt-4">Marcas</h4>
-              <select
-                className="form-control"
-                value={selectedBrand}
-                onChange={(e) => setSelectedBrand(e.target.value)}
-              >
-                <option value="">Todas</option>
-                {brands.map((brand) => (
-                  <option key={brand.id} value={brand.id}>
-                    {brand.nombre}
-                  </option>
-                ))}
-              </select>
+                General
+              </li>
+              {categories.map((cat) => (
+                <li
+                  key={cat.id}
+                  className={`category-item ${
+                    selectedCategory === cat.id ? "active" : ""
+                  }`}
+                  onClick={() => setSelectedCategory(cat.id)}
+                >
+                  {cat.nombre}
+                </li>
+              ))}
+            </ul>
             </div>
           </div>
         </div>
@@ -91,6 +81,7 @@ const Nav = ({
             </div>
           </form>
         </div>
+
       </div>
 
       {/* Sección inferior (fija) */}
@@ -118,7 +109,7 @@ const Nav = ({
         <div className="nav-bottom-right">
           <div className="home">
             <button
-              onClick={() => navigate("/Dashboard")}
+              onClick={() => navigate("/dashboard")}
               className="btn btn-primary"
               aria-label="Abrir la sección principal"
             >
