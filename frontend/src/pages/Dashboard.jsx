@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import "../styles/dashboard/dashboard.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from "../components/Nav";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 const Dashboard = () => {
   const { t } = useTranslation();
@@ -20,14 +21,14 @@ const Dashboard = () => {
 
   // Estado para almacenar los sneakers
   const [sneakers, setSneakers] = useState([]);
+  const [favorites, setFavorites] = useState([]); // Estado para manejar favoritos
 
   // Categorías y marcas (objetos con id y nombre)
   const [categories] = useState([
-    { id: 1, nombre: "Deportivas" },
+    { id: 1, nombre: "Baloncesto" },
     { id: 2, nombre: "Casuales" },
     { id: 3, nombre: "Running" },
-    { id: 4, nombre: "Basketball" },
-    { id: 5, nombre: "Skate" },
+    { id: 4, nombre: "Deportivas" },
   ]);
   const [brands] = useState([
     { id: 1, nombre: "Nike" },
@@ -101,16 +102,23 @@ const Dashboard = () => {
     }
   }, [selectedCategory, selectedBrand]);
 
+  // Función para añadir o quitar un sneaker de favoritos
+  const toggleFavorite = (nombre) => {
+    setFavorites((prevFavorites) =>
+      prevFavorites.includes(nombre)
+        ? prevFavorites.filter((fav) => fav !== nombre)
+        : [...prevFavorites, nombre]
+    );
+  };
+
   return (
     <div className="containerDashboard">
       <Nav
         categories={categories}
-        brands={brands}
         selectedCategory={selectedCategory}
-        selectedBrand={selectedBrand}
         setSelectedCategory={setSelectedCategory}
-        setSelectedBrand={setSelectedBrand}
       />
+
       <div className="languaje" hidden>
         <LanguageSelector />
       </div>
@@ -118,14 +126,6 @@ const Dashboard = () => {
         <div className="titleDashboard">
           <h1>{t("dashboard.title")}</h1>
         </div>
-        {user && (
-          <p>
-            {t("dashboard.user")}: {user.displayName || user.email}
-          </p>
-        )}
-        <button onClick={handleLogout} className="btn btn-danger">
-          {t("dashboard.logout")}
-        </button>
         <div className="row mt-4">
           {/* Se muestra la grilla de sneakers sin el menú lateral */}
           <div className="col-12">
@@ -133,25 +133,37 @@ const Dashboard = () => {
               {sneakers && sneakers.length > 0 ? (
                 sneakers.map((sneaker) => (
                   <div key={sneaker.nombre} className="card">
-                    {sneaker.imagen && (
-                      <img
-                        src={sneaker.imagen}
-                        alt={sneaker.nombre}
-                        className="card-img"
+                    <div className="image">
+                      {sneaker.imagen && (
+                        <img
+                          src={sneaker.imagen}
+                          alt={sneaker.nombre}
+                          className="card-img"
+                        />
+                      )}
+
+                      {/* Ícono de favoritos */}
+                      <FaRegHeart
+                        className={`heart-icon ${
+                          favorites.includes(sneaker.nombre) ? "favorited" : ""
+                        }`}
+                        onClick={() => toggleFavorite(sneaker.nombre)}
                       />
-                    )}
+                    </div>
                     <div className="card-info">
-                      <h3>{sneaker.nombre}</h3>
-                      <p>{sneaker.descripcion}</p>
-                      <p>
-                        <strong>Categoría:</strong> {sneaker.categoria}
-                      </p>
-                      <p>
-                        <strong>Marca:</strong> {sneaker.marca}
-                      </p>
-                      <p>
-                        <strong>Modelo:</strong> {sneaker.modelo}
-                      </p>
+                      <h5>{sneaker.nombre}</h5>
+                      <div className="sneakerDates" hidden>
+                        <p>{sneaker.descripcion}</p>
+                        <p>
+                          <strong>Categoría:</strong> {sneaker.categoria}
+                        </p>
+                        <p>
+                          <strong>Marca:</strong> {sneaker.marca}
+                        </p>
+                        <p>
+                          <strong>Modelo:</strong> {sneaker.modelo}
+                        </p>
+                      </div>
                       {sneaker.precio && (
                         <p className="price">${sneaker.precio}</p>
                       )}
@@ -166,8 +178,19 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+        <div className="copyright">
+          <p class="textCopyright">© 2025 SNEAKERS, Inc. Todos los derechos reservados</p>
+        </div>
       </div>
     </div>
+            // {user && (
+            //   <p>
+            //     {t("dashboard.user")}: {user.displayName || user.email}
+            //   </p>
+            // )}
+            // <button onClick={handleLogout} className="btn btn-danger">
+            //   {t("dashboard.logout")}
+            // </button>
   );
 };
 
