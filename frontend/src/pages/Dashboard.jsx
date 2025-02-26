@@ -27,14 +27,15 @@ const Dashboard = () => {
   const [categories] = useState([
     { id: 1, nombre: "Baloncesto" },
     { id: 2, nombre: "Casuales" },
-    { id: 3, nombre: "Running" },
-    { id: 4, nombre: "Deportivas" },
+    { id: 3, nombre: "Deportivas" },
+    { id: 4, nombre: "Atletismo" },
+    { id: 5, nombre: "Patinaje" },
   ]);
   const [brands] = useState([
     { id: 1, nombre: "Nike" },
     { id: 2, nombre: "Adidas" },
     { id: 3, nombre: "Puma" },
-    { id: 4, nombre: "Reebok" },
+    { id: 4, nombre: "Jordan" },
     { id: 5, nombre: "New Balance" },
   ]);
 
