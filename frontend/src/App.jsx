@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import User from "./pages/User";
 import Favorites from "./pages/Favorites";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Home from "./pages/Home";
 
 const App = () => {
     return (
@@ -17,6 +18,7 @@ const App = () => {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/user" element={<User />} />
                 <Route path="/favorites" element={<Favorites />} />
+                <Route path="/home" element={<Home/>} />
             </Routes>
         </Router>
     );

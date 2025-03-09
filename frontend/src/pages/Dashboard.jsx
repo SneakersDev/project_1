@@ -1,3 +1,4 @@
+// pages/Dashboard.jsx
 import { useState, useEffect } from "react";
 import { auth, logout } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -7,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import "../styles/dashboard/dashboard.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from "../components/Nav";
-import { FaRegHeart, FaHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
 
 const Dashboard = () => {
   const { t } = useTranslation();
@@ -19,11 +20,14 @@ const Dashboard = () => {
     navigate("/"); // Redirigir al login después de cerrar sesión
   };
 
-  // Estado para almacenar los sneakers
+  // Estado para almacenar los sneakers y favoritos
   const [sneakers, setSneakers] = useState([]);
-  const [favorites, setFavorites] = useState([]); // Estado para manejar favoritos
+  const [favorites, setFavorites] = useState([]);
 
-  // Categorías y marcas (objetos con id y nombre)
+  // NUEVO: Estado para el término de búsqueda
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Categorías y marcas
   const [categories] = useState([
     { id: 1, nombre: "Baloncesto" },
     { id: 2, nombre: "Casuales" },
@@ -39,11 +43,11 @@ const Dashboard = () => {
     { id: 5, nombre: "New Balance" },
   ]);
 
-  // Estados para filtros (almacenamos IDs o cadena vacía para "Todas")
+  // Estados para filtros de categorías y marcas
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedBrand, setSelectedBrand] = useState("");
 
-  // Función para obtener sneakers según filtros
+  // Función para obtener sneakers según filtros de categoría/marca
   const fetchSneakers = async () => {
     let endpoint = "http://localhost:3000/api/sneakers";
 
@@ -61,9 +65,7 @@ const Dashboard = () => {
         headers: { "Content-Type": "application/json" },
         credentials: "include",
       });
-      if (!response.ok) {
-        throw new Error("Error en la red");
-      }
+      if (!response.ok) throw new Error("Error en la red");
       const data = await response.json();
       setSneakers(data.sneakers);
     } catch (error) {
@@ -79,9 +81,7 @@ const Dashboard = () => {
         headers: { "Content-Type": "application/json" },
         credentials: "include",
       });
-      if (!response.ok) {
-        throw new Error("Error en la red");
-      }
+      if (!response.ok) throw new Error("Error en la red");
       const data = await response.json();
       setSneakers(data.sneakers);
     } catch (error) {
@@ -89,12 +89,33 @@ const Dashboard = () => {
     }
   };
 
-  // Al montar el componente, obtener todas los sneakers
+  // Función para buscar sneakers por nombre (búsqueda parcial, sin distinción de mayúsculas)
+  const fetchSneakersByName = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/sneakers/search?name=${encodeURIComponent(
+          searchTerm
+        )}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
+      if (!response.ok) throw new Error("Error en la red");
+      const data = await response.json();
+      setSneakers(data.sneakers);
+    } catch (error) {
+      console.error("Error fetching sneakers by name:", error);
+    }
+  };
+
+  // Al montar el componente, obtener todos los sneakers
   useEffect(() => {
     fetchAllSneakers();
   }, []);
 
-  // Cada vez que cambian los filtros, se vuelve a obtener la data
+  // Actualizar sneakers al cambiar filtros de categoría o marca
   useEffect(() => {
     if (!selectedCategory && !selectedBrand) {
       fetchAllSneakers();
@@ -102,6 +123,19 @@ const Dashboard = () => {
       fetchSneakers();
     }
   }, [selectedCategory, selectedBrand]);
+
+  // Efecto para la búsqueda en tiempo real (con debounce de 300ms)
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (searchTerm.trim() === "") {
+        fetchAllSneakers();
+      } else {
+        fetchSneakersByName();
+      }
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchTerm]);
 
   // Función para añadir o quitar un sneaker de favoritos
   const toggleFavorite = (nombre) => {
@@ -118,6 +152,7 @@ const Dashboard = () => {
         categories={categories}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
+        onSearch={setSearchTerm} // Se pasa la función para actualizar searchTerm
       />
 
       <div className="languaje" hidden>
@@ -130,8 +165,16 @@ const Dashboard = () => {
         <div className="row mt-4">
           {/* Se muestra la grilla de sneakers sin el menú lateral */}
           <div className="col-12">
+            {/* Mostrar mensaje de "No se encontraron resultados" fuera del grid-container */}
+            {sneakers && sneakers.length === 0 && (
+              <div className="noResults">
+                <p className="no-results">No se encontraron resultados.</p>
+              </div>
+            )}
+
             <div className="grid-container">
-              {sneakers && sneakers.length > 0 ? (
+              {sneakers &&
+                sneakers.length > 0 &&
                 sneakers.map((sneaker) => (
                   <div key={sneaker.nombre} className="card">
                     <div className="image">
@@ -142,7 +185,6 @@ const Dashboard = () => {
                           className="card-img"
                         />
                       )}
-
                       {/* Ícono de favoritos */}
                       <FaRegHeart
                         className={`heart-icon ${
@@ -170,28 +212,18 @@ const Dashboard = () => {
                       )}
                     </div>
                   </div>
-                ))
-              ) : (
-                <p className="no-results text-center">
-                  No se encontraron resultados.
-                </p>
-              )}
+                ))}
             </div>
           </div>
         </div>
+
         <div className="copyright">
-          <p class="textCopyright">© 2025 SNEAKERS, Inc. Todos los derechos reservados</p>
+          <p className="textCopyright">
+            © 2025 SNEAKERS, Inc. Todos los derechos reservados
+          </p>
         </div>
       </div>
     </div>
-            // {user && (
-            //   <p>
-            //     {t("dashboard.user")}: {user.displayName || user.email}
-            //   </p>
-            // )}
-            // <button onClick={handleLogout} className="btn btn-danger">
-            //   {t("dashboard.logout")}
-            // </button>
   );
 };
 
