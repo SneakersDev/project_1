@@ -1,0 +1,20 @@
+@media (max-width: 1100px) {
+    .languajeSelector{
+        left: 1rem !important;
+        top: 0rem !important;
+    }
+    ul{
+        display: flex;
+        width: auto !important;
+    }
+}
+
+@media (max-width: 575px) and (max-height: 750px),
+       (max-width: 1024px) and (max-height: 600px) {
+    ul {
+        display: flex;
+        width: auto !important;
+        top: 20% !important;
+        left: 100% !important;
+    }
+}
