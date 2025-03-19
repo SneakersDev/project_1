@@ -1,14 +1,15 @@
+// components/Nav.jsx
+import React from "react";
 import { TiThMenu } from "react-icons/ti";
-import { IoSearch } from "react-icons/io5";
 import { LuUserRound } from "react-icons/lu";
 import { FaRegHeart } from "react-icons/fa";
 import { RiHomeLine } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { SiGooglemaps } from "react-icons/si";
+import { useNavigate } from "react-router-dom";
+import SearchBar from "./SearchBar";
 import "../styles/nav/nav.css";
 
-const Nav = ({ categories, selectedCategory, setSelectedCategory }) => {
+const Nav = ({ categories, selectedCategory, setSelectedCategory, onSearch }) => {
   const navigate = useNavigate();
 
   return (
@@ -30,58 +31,36 @@ const Nav = ({ categories, selectedCategory, setSelectedCategory }) => {
           </p>
           <div className="collapse multi-collapse" id="multiCollapseExample1">
             <div className="titleCategory">
-            <h4>Categorías</h4>
+              <h4>Categorías</h4>
             </div>
             <div className="card card-body">
               <ul className="category-list">
-              <li
-                key="general"
-                className={`category-item ${selectedCategory === "" ? "active" : ""}`}
-                onClick={() => setSelectedCategory("")}
-              >
-                General
-              </li>
-              {categories.map((cat) => (
                 <li
-                  key={cat.id}
+                  key="general"
                   className={`category-item ${
-                    selectedCategory === cat.id ? "active" : ""
+                    selectedCategory === "" ? "active" : ""
                   }`}
-                  onClick={() => setSelectedCategory(cat.id)}
+                  onClick={() => setSelectedCategory("")}
                 >
-                  {cat.nombre}
+                  General
                 </li>
-              ))}
-            </ul>
+                {categories.map((cat) => (
+                  <li
+                    key={cat.id}
+                    className={`category-item ${
+                      selectedCategory === cat.id ? "active" : ""
+                    }`}
+                    onClick={() => setSelectedCategory(cat.id)}
+                  >
+                    {cat.nombre}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
-        <div className="search">
-          <form className="d-flex" role="search">
-            <p className="d-inline-flex gap-1">
-              <a
-                className="btn btn-primary"
-                data-bs-toggle="collapse"
-                href="#multiCollapseExample2"
-                role="button"
-                aria-expanded="false"
-                aria-controls="multiCollapseExample2"
-                aria-label="Abrir menú de búsqueda"
-              >
-                <IoSearch />
-              </a>
-            </p>
-            <div className="col search collapse" id="multiCollapseExample2">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-            </div>
-          </form>
-        </div>
-
+        {/* Aquí se integra el SearchBar */}
+        <SearchBar onSearch={onSearch} />
       </div>
 
       {/* Sección inferior (fija) */}

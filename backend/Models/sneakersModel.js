@@ -46,3 +46,15 @@ export const getSneakerByMarcaAndCategory = async (marca_id, category_id) => {
     `, [marca_id, category_id]);
     return rows;
 };
+
+export const getSneakersByName = async (name) => {
+    const [rows] = await pool.query(`
+      SELECT s.id, s.nombre, s.descripcion, s.modelo, s.imagen, 
+             m.nombre AS marca, c.nombre AS categoria
+      FROM sneakers s
+      JOIN marcas m ON s.marca_id = m.id
+      JOIN categorias c ON s.categoria_id = c.id
+      WHERE s.nombre LIKE ?
+    `, [`%${name}%`]);
+    return rows;
+  };
