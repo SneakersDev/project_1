@@ -1,8 +1,5 @@
 // pages/Dashboard.jsx
 import { useState, useEffect } from "react";
-import { auth, logout } from "../firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
 import LanguageSelector from "../components/LanguajeSelector";
 import { useTranslation } from "react-i18next";
 import "../styles/dashboard/dashboard.css";
@@ -10,15 +7,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from "../components/Nav";
 import { FaRegHeart } from "react-icons/fa";
 
+import Footer from "../components/Footer";
+
 const Dashboard = () => {
   const { t } = useTranslation();
-  const [user] = useAuthState(auth);
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate("/"); // Redirigir al login después de cerrar sesión
-  };
 
   // Estado para almacenar los sneakers y favoritos
   const [sneakers, setSneakers] = useState([]);
@@ -216,12 +208,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-
-        <div className="copyright">
-          <p className="textCopyright">
-            © 2025 SNEAKERS, Inc. Todos los derechos reservados
-          </p>
-        </div>
+        <Footer/>
       </div>
     </div>
   );

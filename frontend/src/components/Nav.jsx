@@ -9,8 +9,30 @@ import { useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import "../styles/nav/nav.css";
 
-const Nav = ({ categories, selectedCategory, setSelectedCategory, onSearch }) => {
+
+const Nav = ({ categories, selectedCategory, setSelectedCategory, onSearch, showHomeOnly }) => {
+
   const navigate = useNavigate();
+
+  if (showHomeOnly) {
+    return (
+      <div className="nav-wrapper">
+        <div className="nav-bottom">
+          <div className="nav-bottom-right">
+            <div className="home">
+              <button
+                onClick={() => navigate("/dashboard")}
+                className="btn btn-primary"
+                aria-label="Abrir la sección principal"
+              >
+                <RiHomeLine />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="nav-wrapper">
@@ -37,9 +59,8 @@ const Nav = ({ categories, selectedCategory, setSelectedCategory, onSearch }) =>
               <ul className="category-list">
                 <li
                   key="general"
-                  className={`category-item ${
-                    selectedCategory === "" ? "active" : ""
-                  }`}
+
+                  className={`category-item ${selectedCategory === "" ? "active" : ""}`}
                   onClick={() => setSelectedCategory("")}
                 >
                   General
@@ -47,9 +68,11 @@ const Nav = ({ categories, selectedCategory, setSelectedCategory, onSearch }) =>
                 {categories.map((cat) => (
                   <li
                     key={cat.id}
+
                     className={`category-item ${
                       selectedCategory === cat.id ? "active" : ""
                     }`}
+                    className={`category-item ${selectedCategory === cat.id ? "active" : ""}`}
                     onClick={() => setSelectedCategory(cat.id)}
                   >
                     {cat.nombre}
