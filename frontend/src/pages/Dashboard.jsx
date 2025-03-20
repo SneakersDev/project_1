@@ -6,10 +6,12 @@ import "../styles/dashboard/dashboard.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from "../components/Nav";
 import { FaRegHeart } from "react-icons/fa";
+
 import Footer from "../components/Footer";
 
 const Dashboard = () => {
   const { t } = useTranslation();
+
   // Estado para almacenar los sneakers y favoritos
   const [sneakers, setSneakers] = useState([]);
   const [favorites, setFavorites] = useState([]);

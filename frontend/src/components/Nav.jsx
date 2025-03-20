@@ -9,7 +9,9 @@ import { useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import "../styles/nav/nav.css";
 
+
 const Nav = ({ categories, selectedCategory, setSelectedCategory, onSearch, showHomeOnly }) => {
+
   const navigate = useNavigate();
 
   if (showHomeOnly) {
@@ -57,6 +59,7 @@ const Nav = ({ categories, selectedCategory, setSelectedCategory, onSearch, show
               <ul className="category-list">
                 <li
                   key="general"
+
                   className={`category-item ${selectedCategory === "" ? "active" : ""}`}
                   onClick={() => setSelectedCategory("")}
                 >
@@ -65,6 +68,10 @@ const Nav = ({ categories, selectedCategory, setSelectedCategory, onSearch, show
                 {categories.map((cat) => (
                   <li
                     key={cat.id}
+
+                    className={`category-item ${
+                      selectedCategory === cat.id ? "active" : ""
+                    }`}
                     className={`category-item ${selectedCategory === cat.id ? "active" : ""}`}
                     onClick={() => setSelectedCategory(cat.id)}
                   >
