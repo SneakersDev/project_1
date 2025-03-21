@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { getSneakerByMarca, getSneakers, getSneakersByCategory, getSneakerByMarcaAndCategory } from "../Models/sneakersModel.js";
+import { getSneakerByMarca, getSneakers, getSneakersByCategory, getSneakerByMarcaAndCategory, getSneakersByName } from "../Models/sneakersModel.js";
 
 const allSneakers = async (req, res) => {
     const token = req.cookies?.sneakers;
@@ -101,4 +101,25 @@ const sneakersByCategoryAndMarca = async (req, res) => {
     }
 };
 
-export default { allSneakers, sneakersByCategory, sneakersByMarca, sneakersByCategoryAndMarca };
+const sneakersByName = async (req, res) => {
+    const token = req.cookies?.sneakers;
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    try {
+      jwt.verify(token, process.env.SECRET_KEY);
+    } catch (error) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+    
+    // Obtener el término de búsqueda
+    const name = req.query.name;
+    try {
+      const sneakers = await getSneakersByName(name);
+      return res.json({ sneakers });
+    } catch (error) {
+      return res.status(500).json({ message: "Error retrieving sneakers by name", error });
+    }
+};
+
+export default { allSneakers, sneakersByCategory, sneakersByMarca, sneakersByCategoryAndMarca, sneakersByName };

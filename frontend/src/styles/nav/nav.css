@@ -39,7 +39,7 @@
     gap: 0.5rem;
   }
   
-  .nav-wrapper .nav-top .menu .d-inline-flex button,   .nav-wrapper .nav-top .search .d-flex .d-inline-flex a, .nav-bottom .nav-bottom-left .favorites button, .user button, .nav-bottom .nav-bottom-right .home button, .maps button{
+  .nav-wrapper .nav-top .menu .d-inline-flex button, .search button, .nav-bottom .nav-bottom-left .favorites button, .user button, .nav-bottom .nav-bottom-right .home button, .maps button{
     padding: 10px 15px;
     font-size: 1.3rem;
     border-radius: 50%;
@@ -48,6 +48,10 @@
     border: #FF9E58;
   }
 
+  .nav-wrapper .nav-top .menu .d-inline-flex button:hover, .search button:hover, .nav-bottom .nav-bottom-left .favorites button:hover, .user button:hover, .nav-bottom .nav-bottom-right .home button:hover, .maps button:hover{
+    background-color: #d37c3e;
+    color: black;
+  }
 /* Contenedor del menú desplegable en la izquierda */
 .multi-collapse {
   position: fixed;
@@ -55,7 +59,7 @@
   left: 0;
   width: 250px; /* Ancho del sidebar, puedes modificarlo según convenga */
   z-index: 1000;
-  overflow-y: auto;
+  overflow-y: hidden;
   padding: 0 1rem;
   box-sizing: border-box;
 }
@@ -119,21 +123,96 @@ form.d-flex {
 }
 
 /* Reordenamos: el contenedor del input tendrá order 1 y ocupará el espacio disponible */
-.search .col.search {
-  order: 1;
-  flex: 1;
-  padding-bottom: 1rem;
-  padding-right: 1rem;
+/* Contenedor principal del search */
+.search {
+  position: relative;
+  display: flex;
+  flex-direction: row-reverse; /* El input se mostrará a la izquierda del botón */
+  align-items: center;
 }
 
-/* El contenedor del botón se coloca en order 2 */
-.search .d-inline-flex {
-  order: 2;
-}
-
-/* Opcional: ajusta el margen entre el input y el botón */
-.form-control {
-  margin-right: 0.5rem;
+/* Estilo inicial del input: oculto */
+.search-input {
+  width: 200px; /* Ancho fijo deseado */
+  opacity: 0;
+  padding: 10px 15px;
+  border: none;
   background-color: #FF9E58;
-  color: black
+  color: black;
+  transform: scaleX(0);
+  transform-origin: right; 
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+/* Cuando se activa la búsqueda, el input se expande */
+.search.active .search-input {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* Estilos del botón (ícono) en estado inactivo */
+.search-icon {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 1;
+  transform: translateY(0);
+  /* Se mantiene en su flujo normal en estado inactivo */
+}
+.search:not(.active) .search-icon {
+  transition-delay: 0.3s;
+}
+
+/* Cuando la búsqueda está activa, posicionamos el botón dentro del input */
+.search.active .search-icon {
+  position: absolute;
+  right: 0.75rem; /* Alinea con el padding derecho del input */
+  opacity: 1; /* Se mantiene visible */
+  pointer-events: auto;
+  transition: opacity 0.3s ease 0s, transform 0.3s ease 0s;
+}
+
+.search.active .buttonSearch{
+  border-radius: 0;
+  z-index: 2;
+  background-color: #FF9E58;
+  color: black;
+  padding: 0;
+}
+
+.search .buttonSearch:active, .user .btn:active, .maps .btn:active {
+  background-color: #d37c3e !important;
+  color: black;
+}
+
+.search .search-input:focus{
+  background-color: #FF9E58;
+  box-shadow: none;
+}
+
+.search .search-input{
+  font-size: .9rem;
+  font-weight: 800;
+
+}
+
+.search .search-input::placeholder{
+  color: #4b4b4b;
+  font-size: .9rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.noResults{
+  width: 100%;
+  background-color: white;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.noResults p{
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 800;
+
 }
