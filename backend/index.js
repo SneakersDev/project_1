@@ -6,6 +6,7 @@ import passport from "passport";
 
 import sneakersRouter from "./routes/sneakersRoutes.js";
 import loginRouter from "./routes/authRoutes.js";
+import chatbotRouter from "./routes/chatbotRoutes.js";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 
 app.use("/api", loginRouter);
 app.use("/api", sneakersRouter);
+app.use("/api", chatbotRouter);
 
 app.listen(port, () => {
     console.log(`Server running on route http://localhost:${port}`);

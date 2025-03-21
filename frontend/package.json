@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.8.3",
     "bootstrap": "^5.3.3",
     "firebase": "^11.3.1",
     "frontend": "file:",
@@ -17,6 +18,7 @@
     "i18next-browser-languagedetector": "^8.0.2",
     "i18next-http-backend": "^3.0.2",
     "react": "^19.0.0",
+    "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
     "react-firebase-hooks": "^5.1.1",
     "react-i18next": "^15.4.0",
