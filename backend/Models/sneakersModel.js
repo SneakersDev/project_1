@@ -1,60 +1,27 @@
 import pool from "../services/connect.js";
 
 export const getSneakers = async () => {
-    const [rows] = await pool.query(`
-        SELECT s.id, s.nombre, s.descripcion, s.modelo, s.imagen, 
-            m.nombre AS marca, c.nombre AS categoria
-        FROM sneakers s
-        JOIN marcas m ON s.marca_id = m.id
-        JOIN categorias c ON s.categoria_id = c.id
-    `);
-    return rows;
+    const [rows] = await pool.query(`CALL getSneakers()`);
+    return rows[0]; // CALL devuelve un array con los resultados en la primera posición
 };
 
+
 export const getSneakerByMarca = async (marca_id) => {
-    const [rows] = await pool.query(`
-        SELECT s.id, s.nombre, s.descripcion, s.modelo, s.imagen, 
-            m.nombre AS marca, c.nombre AS categoria
-        FROM sneakers s
-        JOIN marcas m ON s.marca_id = m.id
-        JOIN categorias c ON s.categoria_id = c.id
-        WHERE s.marca_id = ?
-    `, [marca_id]);
-    return rows;
+    const [rows] = await pool.query(`CALL getSneakerByMarca(?)`, [marca_id]);
+    return rows[0]; // Retornamos la primera parte del resultado (las filas)
 };
 
 export const getSneakersByCategory = async (category_id) => {
-    const [rows] = await pool.query(`
-        SELECT s.id, s.nombre, s.descripcion, s.modelo, s.imagen, 
-            m.nombre AS marca, c.nombre AS categoria
-        FROM sneakers s
-        JOIN marcas m ON s.marca_id = m.id
-        JOIN categorias c ON s.categoria_id = c.id
-        WHERE s.categoria_id = ?
-    `, [category_id]);
-    return rows;
+    const [rows] = await pool.query(`CALL getSneakersByCategory(?)`, [category_id]);
+    return rows[0]; // Retornamos la primera parte del resultado (las filas)
 };
 
 export const getSneakerByMarcaAndCategory = async (marca_id, category_id) => {
-    const [rows] = await pool.query(`
-        SELECT s.id, s.nombre, s.descripcion, s.modelo, s.imagen, 
-            m.nombre AS marca, c.nombre AS categoria
-        FROM sneakers s
-        JOIN marcas m ON s.marca_id = m.id
-        JOIN categorias c ON s.categoria_id = c.id
-        WHERE s.marca_id = ? AND s.categoria_id = ?
-    `, [marca_id, category_id]);
-    return rows;
+    const [rows] = await pool.query(`CALL getSneakersByMarcaAndCategory(?, ?)`, [marca_id, category_id]);
+    return rows[0]; // Retornamos la primera parte del resultado (las filas)
 };
 
 export const getSneakersByName = async (name) => {
-    const [rows] = await pool.query(`
-      SELECT s.id, s.nombre, s.descripcion, s.modelo, s.imagen, 
-             m.nombre AS marca, c.nombre AS categoria
-      FROM sneakers s
-      JOIN marcas m ON s.marca_id = m.id
-      JOIN categorias c ON s.categoria_id = c.id
-      WHERE s.nombre LIKE ?
-    `, [`%${name}%`]);
-    return rows;
-  };
+    const [rows] = await pool.query(`CALL getSneakersByName(?)`, [name]);
+    return rows[0]; // Retornamos las filas del resultado
+};
