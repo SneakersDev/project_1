@@ -211,13 +211,13 @@ const Dashboard = () => {
                                               className={`heart-icon ${favorites.includes(sneaker.nombre) ? "favorited" : ""}`}
                                               onClick={() => toggleFavorite(sneaker.nombre)}
                                           />
-                                          <Button variant="primary" onClick={() => handleChat(sneaker)}>
+                                          <Button variant="primary" onClick={() => handleChat(sneaker)} hidden>
                                               Preguntar al Chatbot
                                           </Button>
 
-                                          <Modal show={showChat} onHide={() => setShowChat(false)}>
-                                              <Modal.Header closeButton>
-                                                  <Modal.Title>Preguntar sobre {selectedProduct?.name}</Modal.Title>
+                                          <Modal show={showChat} onHide={() => setShowChat(false)} className="chatBot">
+                                              <Modal.Header>
+                                                  <Modal.Title>CHATBOT {selectedProduct?.name}</Modal.Title>
                                               </Modal.Header>
                                               <Modal.Body>
                                                   <Form.Control

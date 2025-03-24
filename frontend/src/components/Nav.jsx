@@ -8,11 +8,29 @@ import { SiGooglemaps } from "react-icons/si";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import "../styles/nav/nav.css";
+import { IoMdSettings } from "react-icons/io";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
 
-
-const Nav = ({ categories, selectedCategory, setSelectedCategory, onSearch, showHomeOnly }) => {
-
+const Nav = ({
+  categories,
+  selectedCategory,
+  setSelectedCategory,
+  onSearch,
+  showHomeOnly,
+}) => {
+  const [user] = useAuthState(auth);
   const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/");
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
+  };
 
   if (showHomeOnly) {
     return (
@@ -59,8 +77,9 @@ const Nav = ({ categories, selectedCategory, setSelectedCategory, onSearch, show
               <ul className="category-list">
                 <li
                   key="general"
-
-                  className={`category-item ${selectedCategory === "" ? "active" : ""}`}
+                  className={`category-item ${
+                    selectedCategory === "" ? "active" : ""
+                  }`}
                   onClick={() => setSelectedCategory("")}
                 >
                   General
@@ -68,11 +87,9 @@ const Nav = ({ categories, selectedCategory, setSelectedCategory, onSearch, show
                 {categories.map((cat) => (
                   <li
                     key={cat.id}
-
                     className={`category-item ${
                       selectedCategory === cat.id ? "active" : ""
                     }`}
-                    className={`category-item ${selectedCategory === cat.id ? "active" : ""}`}
                     onClick={() => setSelectedCategory(cat.id)}
                   >
                     {cat.nombre}
@@ -126,6 +143,97 @@ const Nav = ({ categories, selectedCategory, setSelectedCategory, onSearch, show
             >
               <SiGooglemaps />
             </button>
+          </div>
+        </div>
+      </div>
+      <div className="mobile-nav">
+        <button
+          className="btn btn-primary mobile-category"
+          data-bs-toggle="collapse"
+          data-bs-target="#multiCollapseExample1"
+          aria-expanded="false"
+          aria-controls="multiCollapseExample1"
+          aria-label="Categorías"
+        >
+          <TiThMenu />
+        </button>
+
+        {/* Botón para abrir el modal con búsqueda, favoritos, usuario y mapas */}
+        <button
+          className="btn btn-primary mobile-modal"
+          data-bs-toggle="modal"
+          data-bs-target="#mobileOptionsModal"
+          aria-label="Más opciones"
+        >
+          <IoMdSettings />
+        </button>
+      </div>
+      <div
+        className="modal fade"
+        id="mobileOptionsModal"
+        tabIndex="-1"
+        aria-labelledby="mobileOptionsModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="mobileOptionsModalLabel">
+                Herramientas
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Cerrar"
+              ></button>
+            </div>
+            <div className="modal-body">
+              {/* Barra de búsqueda */}
+              <div className="modal-search mb-3">
+                <SearchBar onSearch={onSearch} alwaysActive/>
+              </div>
+              <hr />
+              {/* Botones de favoritos, usuario y mapa */}
+              <div className="buttonsMobile">
+                <p className="textMobile">
+                  Navega por las secciones de la página:
+                </p>
+                <button
+                  onClick={() => navigate("/favorites")}
+                  className="btn btn-primary btnMobiles"
+                  aria-label="Favoritos"
+                >
+                  Favoritos <FaRegHeart />
+                </button>
+                <hr />
+                <button
+                  onClick={() => navigate("/Map")}
+                  className="btn btn-primary btnMobiles"
+                  aria-label="Mapa"
+                >
+                  Localización <SiGooglemaps />
+                </button>
+                <hr />
+                <button
+                  onClick={() => navigate("/user")}
+                  className="btn btn-primary btnMobiles"
+                  aria-label="Usuario"
+                >
+                  Usuario <LuUserRound />
+                </button>
+              </div>
+            </div>
+            <div className="modal-footer">
+              {user && (
+                <button
+                  onClick={handleLogout}
+                  className="logout-button mobileLogout"
+                >
+                  Cerrar sesión
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

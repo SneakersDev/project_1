@@ -1,17 +1,14 @@
-/* Contenedor general que ocupa toda la pantalla */
 .nav-wrapper {
     display: flex;
     flex-direction: column;
   }
   
-  /* Sección superior: menú a la izquierda y buscador a la derecha */
   .nav-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
   
-  /* Sección inferior fija */
   .nav-bottom {
     position: fixed;
     bottom: 1rem;
@@ -25,21 +22,19 @@
     z-index: 8;
   }
   
-  /* Columna inferior izquierda: botones en columna */
   .nav-bottom-left {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
   }
   
-  /* Columna inferior derecha: botones en fila */
   .nav-bottom-right {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
   }
   
-  .nav-wrapper .nav-top .menu .d-inline-flex button, .search button, .nav-bottom .nav-bottom-left .favorites button, .user button, .nav-bottom .nav-bottom-right .home button, .maps button{
+  .nav-wrapper .nav-top .menu .d-inline-flex button, .search button, .nav-bottom .nav-bottom-left .favorites button, .user button, .nav-bottom .nav-bottom-right .home button, .maps button, .mobile-category, .mobile-modal{
     padding: 10px 15px;
     font-size: 1.3rem;
     border-radius: 50%;
@@ -48,23 +43,22 @@
     border: #FF9E58;
   }
 
-  .nav-wrapper .nav-top .menu .d-inline-flex button:hover, .search button:hover, .nav-bottom .nav-bottom-left .favorites button:hover, .user button:hover, .nav-bottom .nav-bottom-right .home button:hover, .maps button:hover{
+  .nav-wrapper .nav-top .menu .d-inline-flex button:hover, .search button:hover, .nav-bottom .nav-bottom-left .favorites button:hover, .user button:hover, .nav-bottom .nav-bottom-right .home button:hover, .maps button:hover, .mobile-category:hover, .mobile-modal:hover{
     background-color: #d37c3e;
     color: black;
   }
-/* Contenedor del menú desplegable en la izquierda */
+
 .multi-collapse {
   position: fixed;
-  top: 3rem; /* Ajusta si tienes header o barra superior */
+  top: 3rem; 
   left: 0;
-  width: 250px; /* Ancho del sidebar, puedes modificarlo según convenga */
+  width: 250px; 
   z-index: 1000;
   overflow-y: hidden;
   padding: 0 1rem;
   box-sizing: border-box;
 }
 
-/* Título de la sección de categorías */
 .multi-collapse .titleCategory {
   padding: 0.5rem 1rem;
   border-bottom: 1px solid #ddd;
@@ -79,14 +73,12 @@
   text-align: center;
 }
 
-/* Estilos para la tarjeta que contiene la lista */
 .multi-collapse .card {
   background-color: #fff;
   padding: 0;
   height: 450px;
 }
 
-/* Estilos para la lista de categorías */
 .category-list {
   list-style: none;
   margin: 0;
@@ -109,31 +101,26 @@
   background-color: #f5f5f5;
 }
 
-/* Estilo para el elemento activo (seleccionado) */
 .category-list .category-item.active {
   background-color: #FF9E58;
   color: black;
 }
 
-/* Aseguramos que el contenedor del form sea flex y sus elementos se dispongan en fila */
 form.d-flex {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-/* Reordenamos: el contenedor del input tendrá order 1 y ocupará el espacio disponible */
-/* Contenedor principal del search */
 .search {
   position: relative;
   display: flex;
-  flex-direction: row-reverse; /* El input se mostrará a la izquierda del botón */
+  flex-direction: row-reverse; 
   align-items: center;
 }
 
-/* Estilo inicial del input: oculto */
 .search-input {
-  width: 200px; /* Ancho fijo deseado */
+  width: 200px; 
   opacity: 0;
   padding: 10px 15px;
   border: none;
@@ -144,24 +131,20 @@ form.d-flex {
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
 
-/* Cuando se activa la búsqueda, el input se expande */
 .search.active .search-input {
   opacity: 1;
   transform: scaleX(1);
 }
 
-/* Estilos del botón (ícono) en estado inactivo */
 .search-icon {
   transition: opacity 0.3s ease, transform 0.3s ease;
   opacity: 1;
   transform: translateY(0);
-  /* Se mantiene en su flujo normal en estado inactivo */
 }
 .search:not(.active) .search-icon {
   transition-delay: 0.3s;
 }
 
-/* Cuando la búsqueda está activa, posicionamos el botón dentro del input */
 .search.active .search-icon {
   position: absolute;
   right: 0.75rem; /* Alinea con el padding derecho del input */
@@ -178,9 +161,9 @@ form.d-flex {
   padding: 0;
 }
 
-.search .buttonSearch:active, .user .btn:active, .maps .btn:active {
+.search .buttonSearch:active, .user .btn:active, .maps .btn:active, .btn:active {
   background-color: #d37c3e !important;
-  color: black;
+  color: black !important;
 }
 
 .search .search-input:focus{
@@ -215,4 +198,256 @@ form.d-flex {
   text-align: center;
   font-weight: 800;
 
+}
+
+.copyright{
+  padding-top: 2rem;
+}
+
+.textCopyright{
+  font-size: 1.7rem;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+}
+
+.mobile-nav{
+  display: none;
+}
+
+@media (min-width: 430px) and (max-width: 580px){
+
+  .nav-wrapper .nav-top .menu .d-inline-flex{
+    margin-bottom: 0rem;
+  }
+  .copyright .textCopyright{
+    padding: 0px 1rem;
+    font-size: 1.2rem;
+  }
+
+  .nav-bottom{
+    padding: 0;
+  }
+
+  .nav-wrapper .nav-top .menu .d-inline-flex button, .nav-wrapper .nav-top,  .nav-bottom .nav-bottom-left .favorites button, .user button, .nav-bottom .nav-bottom-right .home button, .maps button{
+    display: none;
+  }
+
+  .mobile-nav{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .search-input{
+    width: 100%;
+  }
+
+  .btnMobiles{
+    width: 100%;
+    background-color: white;
+    color: black;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border: none;
+    text-align: start;
+  }
+
+  .btnMobiles:hover, .btnMobiles:focus-visible{
+    text-decoration: underline;
+    background-color: #d37c3e;
+    color: black;
+    box-shadow: none;
+  }
+
+  .modal-dialog{
+    padding: 0.5rem;
+  }
+
+  .modal {
+    align-content: center;
+  }
+
+  .modal-footer .mobileLogout{
+    font-size: .9rem;
+    height: 2.5rem;
+    width: 100%;
+  }
+}
+
+@media (min-width: 350px) and (max-width: 429px){
+  .nav-wrapper .nav-top .menu .d-inline-flex{
+    margin-bottom: 0rem;
+  }
+  .copyright .textCopyright{
+    padding: 0px 1rem;
+    font-size: 1.2rem;
+  }
+
+  .nav-bottom{
+    padding: 0;
+  }
+
+  .nav-wrapper .nav-top .menu .d-inline-flex button, .nav-wrapper .nav-top,  .nav-bottom .nav-bottom-left .favorites button, .user button, .nav-bottom .nav-bottom-right .home button, .maps button{
+    display: none;
+  }
+
+  .mobile-nav{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .search-input{
+    width: 100%;
+  }
+
+  .btnMobiles{
+    width: 100%;
+    background-color: white;
+    color: black;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border: none;
+    text-align: start;
+  }
+
+  .btnMobiles:hover, .btnMobiles:focus-visible{
+    text-decoration: underline;
+    background-color: #d37c3e;
+    color: black;
+    box-shadow: none;
+  }
+
+  .modal-dialog{
+    padding: 0.5rem;
+  }
+
+  .modal {
+    align-content: center;
+  }
+
+  .modal-footer .mobileLogout{
+    font-size: .9rem;
+    height: 2.5rem;
+    width: 100%;
+
+  }
+}
+
+@media (min-width: 250px) and (max-width: 349px){
+  .nav-wrapper .nav-top .menu .d-inline-flex{
+    margin-bottom: 0rem;
+  }
+  .copyright .textCopyright{
+    padding: 0px 1rem;
+    font-size: 1.2rem;
+  }
+
+  .nav-bottom{
+    padding: 0;
+  }
+
+  .nav-wrapper .nav-top .menu .d-inline-flex button, .nav-wrapper .nav-top,  .nav-bottom .nav-bottom-left .favorites button, .user button, .nav-bottom .nav-bottom-right .home button, .maps button{
+    display: none;
+  }
+
+  .mobile-nav{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .search-input{
+    width: 100%;
+  }
+
+  .btnMobiles{
+    width: 100%;
+    background-color: white;
+    color: black;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border: none;
+    text-align: start;
+  }
+
+  .btnMobiles:hover, .btnMobiles:focus-visible{
+    text-decoration: underline;
+    background-color: #d37c3e;
+    color: black;
+    box-shadow: none;
+  }
+
+  .modal-dialog{
+    padding: 0.5rem;
+  }
+
+  .modal {
+    align-content: center;
+  }
+
+  .modal-footer .mobileLogout{
+    font-size: .9rem;
+    height: 2.5rem;
+    width: 100%;
+
+  }
+}
+
+
+@media (max-width: 249px){
+  .nav-wrapper .nav-top .menu .d-inline-flex{
+    margin-bottom: 0rem;
+  }
+  .copyright .textCopyright{
+    padding: 0px 1rem;
+    font-size: 1.2rem;
+  }
+
+  .nav-bottom{
+    padding: 0;
+  }
+
+  .nav-wrapper .nav-top .menu .d-inline-flex button, .nav-wrapper .nav-top,  .nav-bottom .nav-bottom-left .favorites button, .user button, .nav-bottom .nav-bottom-right .home button, .maps button{
+    display: none;
+  }
+
+  .mobile-nav{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .search-input{
+    width: 100%;
+  }
+
+  .btnMobiles{
+    width: 100%;
+    background-color: white;
+    color: black;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border: none;
+    text-align: start;
+  }
+
+  .btnMobiles:hover, .btnMobiles:focus-visible{
+    text-decoration: underline;
+    background-color: #d37c3e;
+    color: black;
+    box-shadow: none;
+  }
+
+  .modal-dialog{
+    padding: 0.5rem;
+  }
+
+  .modal {
+    align-content: center;
+  }
+
+  .modal-footer .mobileLogout{
+    font-size: .9rem;
+    height: 2.5rem;
+    width: 100%;
+
+  }
 }

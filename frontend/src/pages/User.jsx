@@ -32,13 +32,14 @@ const User = () => {
             <AiOutlineUser className="user-icon" />
           </div>
           <div className="user-info">
-            <p className="user-text">Usuario:</p>
+            <label htmlFor="user" className="user-text">Usuario:</label>
             <input
               type="text"
               value={user ? user.displayName || user.email : "Invitado"}
               readOnly
               className="user-input"
               disabled
+              id="user"
             />
           </div>
           {user && (
