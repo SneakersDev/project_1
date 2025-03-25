@@ -70,7 +70,7 @@ body{
 }
 
 .heart-icon.favorited {
-  color: red; /* Color rojo cuando está en favoritos */
+  color: black; /* Color rojo cuando está en favoritos */
 }
 
 .chatBot{
