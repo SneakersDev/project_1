@@ -30,22 +30,22 @@ const Dashboard = () => {
   };
 
   const handleChat = (producto) => {
-      setSelectedProduct(producto);
-      setShowChat(true);
+    setSelectedProduct(producto);
+    setShowChat(true);
   };
 
-   const enviarPregunta = async () => {
-       if (!pregunta) return;
-       try {
-           const response = await axios.post(`${API_URL}/api/chatbot`, {
-               pregunta,
-               product_id: selectedProduct.id,
-           });
-           setRespuesta(response.data.respuesta || "No se obtuvo respuesta");
-       } catch (error) {
-           setRespuesta("Error al comunicarse con el chatbot");
-       }
-   };
+  const enviarPregunta = async () => {
+    if (!pregunta) return;
+    try {
+      const response = await axios.post(`${API_URL}/api/chatbot`, {
+        pregunta,
+        product_id: selectedProduct.id,
+      });
+      setRespuesta(response.data.respuesta || "No se obtuvo respuesta");
+    } catch (error) {
+      setRespuesta("Error al comunicarse con el chatbot");
+    }
+  };
 
   // Estado para almacenar los sneakers y favoritos
   const [sneakers, setSneakers] = useState([]);
@@ -174,96 +174,115 @@ const Dashboard = () => {
   };
 
   return (
-      <div className="containerDashboard">
-          <Nav
-              categories={categories}
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
-              onSearch={setSearchTerm} // Se pasa la función para actualizar searchTerm
-          />
+    <div className="containerDashboard">
+      <Nav
+        categories={categories}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        onSearch={setSearchTerm} // Se pasa la función para actualizar searchTerm
+      />
 
-          <div className="languaje" hidden>
-              <LanguageSelector />
-          </div>
-          <div className="container">
-              <div className="titleDashboard">
-                  <h1>{t("dashboard.title")}</h1>
-              </div>
-              <div className="row mt-4">
-                  {/* Se muestra la grilla de sneakers sin el menú lateral */}
-                  <div className="col-12">
-                      {/* Mostrar mensaje de "No se encontraron resultados" fuera del grid-container */}
-                      {sneakers && sneakers.length === 0 && (
-                          <div className="noResults">
-                              <p className="no-results">No se encontraron resultados.</p>
-                          </div>
-                      )}
-
-                      <div className="grid-container">
-                          {sneakers &&
-                              sneakers.length > 0 &&
-                              sneakers.map((sneaker) => (
-                                  <div key={sneaker.nombre} className="card">
-                                      <div className="image">
-                                          {sneaker.imagen && <img src={sneaker.imagen} alt={sneaker.nombre} className="card-img" />}
-                                          {/* Ícono de favoritos */}
-                                          <FaRegHeart
-                                              className={`heart-icon ${favorites.includes(sneaker.nombre) ? "favorited" : ""}`}
-                                              onClick={() => toggleFavorite(sneaker.nombre)}
-                                          />
-                                          <Button variant="primary" onClick={() => handleChat(sneaker)} hidden>
-                                              Preguntar al Chatbot
-                                          </Button>
-
-                                          <Modal show={showChat} onHide={() => setShowChat(false)} className="chatBot">
-                                              <Modal.Header>
-                                                  <Modal.Title>CHATBOT {selectedProduct?.name}</Modal.Title>
-                                              </Modal.Header>
-                                              <Modal.Body>
-                                                  <Form.Control
-                                                      type="text"
-                                                      placeholder="Ingrese su pregunta"
-                                                      value={pregunta}
-                                                      onChange={(e) => setPregunta(e.target.value)}
-                                                  />
-                                                  <Button className="mt-2" onClick={enviarPregunta}>
-                                                      Enviar
-                                                  </Button>
-                                                  {respuesta && (
-                                                      <p className="mt-3">
-                                                          <strong>Chatbot:</strong> {respuesta}
-                                                      </p>
-                                                  )}
-                                              </Modal.Body>
-                                          </Modal>
-                                      </div>
-                                      <div className="card-info">
-                                          <h5>{sneaker.nombre}</h5>
-                                          <div className="sneakerDates" hidden>
-                                              <p>{sneaker.descripcion}</p>
-                                              <p>
-                                                  <strong>Categoría:</strong> {sneaker.categoria}
-                                              </p>
-                                              <p>
-                                                  <strong>Marca:</strong> {sneaker.marca}
-                                              </p>
-                                              <p>
-                                                  <strong>Modelo:</strong> {sneaker.modelo}
-                                              </p>
-                                          </div>
-                                          {sneaker.precio && <p className="price">${sneaker.precio}</p>}
-                                      </div>
-                                  </div>
-                              ))}
-                      </div>
-                  </div>
-              </div>
-
-              <div className="copyright">
-                  <p className="textCopyright">© 2025 SNEAKERS, Inc. Todos los derechos reservados</p>
-              </div>
-          </div>
+      <div className="languaje" hidden>
+        <LanguageSelector />
       </div>
+      <div className="container">
+        <div className="titleDashboard">
+          <h1>{t("dashboard.title")}</h1>
+        </div>
+        <div className="row mt-4">
+          {/* Se muestra la grilla de sneakers sin el menú lateral */}
+          <div className="col-12">
+            {/* Mostrar mensaje de "No se encontraron resultados" fuera del grid-container */}
+            {sneakers && sneakers.length === 0 && (
+              <div className="noResults">
+                <p className="no-results">No se encontraron resultados.</p>
+              </div>
+            )}
+
+            <div className="grid-container">
+              {sneakers &&
+                sneakers.length > 0 &&
+                sneakers.map((sneaker) => (
+                  <div key={sneaker.nombre} className="card">
+                    <div className="image">
+                      {sneaker.imagen && (
+                        <img
+                          src={sneaker.imagen}
+                          alt={sneaker.nombre}
+                          className="card-img"
+                        />
+                      )}
+                      {/* Ícono de favoritos */}
+                      <FaRegHeart
+                        className={`heart-icon ${
+                          favorites.includes(sneaker.nombre) ? "favorited" : ""
+                        }`}
+                        onClick={() => toggleFavorite(sneaker.nombre)}
+                      />
+                      <Button
+                        variant="primary"
+                        onClick={() => handleChat(sneaker)}
+                        hidden
+                      >
+                        Preguntar al Chatbot
+                    
+                      </Button>
+
+                      <Modal className="chatBot" show={showChat} onHide={() => setShowChat(false)}>
+                        <Modal.Header closeButton>
+                          <Modal.Title>
+                            Preguntar sobre {selectedProduct?.name}
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <Form.Control
+                            type="text"
+                            placeholder="Ingrese su pregunta"
+                            value={pregunta}
+                            onChange={(e) => setPregunta(e.target.value)}
+                          />
+                          <Button className="mt-2" onClick={enviarPregunta}>
+                            Enviar
+                          </Button>
+                          {respuesta && (
+                            <p className="mt-3">
+                              <strong>Chatbot:</strong> {respuesta}
+                            </p>
+                          )}
+                        </Modal.Body>
+                      </Modal>
+                    </div>
+                    <div className="card-info">
+                      <h5>{sneaker.nombre}</h5>
+                      <div className="sneakerDates" hidden>
+                        <p>{sneaker.descripcion}</p>
+                        <p>
+                          <strong>Categoría:</strong> {sneaker.categoria}
+                        </p>
+                        <p>
+                          <strong>Marca:</strong> {sneaker.marca}
+                        </p>
+                        <p>
+                          <strong>Modelo:</strong> {sneaker.modelo}
+                        </p>
+                      </div>
+                      {sneaker.precio && (
+                        <p className="price">${sneaker.precio}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="copyright">
+          <p className="textCopyright">
+            © 2025 SNEAKERS, Inc. Todos los derechos reservados
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };
 

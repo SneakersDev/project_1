@@ -348,7 +348,7 @@ form.d-flex {
 
   .nav-wrapper .nav-top .menu .d-inline-flex button, .nav-wrapper .nav-top,  .nav-bottom .nav-bottom-left .favorites button, .user button, .nav-bottom .nav-bottom-right .home button, .maps button{
     display: none;
-  }
+  }     
 
   .mobile-nav{
     display: flex;
