@@ -34,7 +34,7 @@
     gap: 0.5rem;
   }
   
-  .nav-wrapper .nav-top .menu .d-inline-flex button, .search button, .nav-bottom .nav-bottom-left .favorites button, .user button, .nav-bottom .nav-bottom-right .home button, .maps button, .mobile-category, .mobile-modal{
+  .nav-wrapper .nav-top .menu .d-inline-flex button, .search button, .nav-bottom .nav-bottom-left .favorites button, .user button, .nav-bottom .nav-bottom-right .home button, .maps button, .btnModalMobile, .mobile-modal{
     padding: 10px 15px;
     font-size: 1.3rem;
     border-radius: 50%;
@@ -43,7 +43,7 @@
     border: #FF9E58;
   }
 
-  .nav-wrapper .nav-top .menu .d-inline-flex button:hover, .search button:hover, .nav-bottom .nav-bottom-left .favorites button:hover, .user button:hover, .nav-bottom .nav-bottom-right .home button:hover, .maps button:hover, .mobile-category:hover, .mobile-modal:hover{
+  .nav-wrapper .nav-top .menu .d-inline-flex button:hover, .search button:hover, .nav-bottom .nav-bottom-left .favorites button:hover, .user button:hover, .nav-bottom .nav-bottom-right .home button:hover, .maps button:hover, .mobile-category:hover, .mobile-modal:hover, .btnModalMobile:hover{
     background-color: #d37c3e;
     color: black;
   }
@@ -215,6 +215,33 @@ form.d-flex {
   display: none;
 }
 
+.modal-backdrop.show{
+  opacity: 0;
+}
+
+.nav-wrapper .nav-top .menu .d-inline-flex .btnModalMobile{
+  display: none;
+}
+
+
+@media (min-width: 579px) and (max-width: 1550px){
+
+  .multi-collapse{
+    top: 6rem;  
+    width: auto;
+  }
+
+  .category-list{
+    display: contents;
+
+  }
+
+  .multi-collapse .card{
+    border: 1px solid #ddd;
+
+  }
+}
+
 @media (min-width: 430px) and (max-width: 580px){
 
   .nav-wrapper .nav-top .menu .d-inline-flex{
@@ -231,6 +258,15 @@ form.d-flex {
 
   .nav-wrapper .nav-top .menu .d-inline-flex button, .nav-wrapper .nav-top,  .nav-bottom .nav-bottom-left .favorites button, .user button, .nav-bottom .nav-bottom-right .home button, .maps button{
     display: none;
+  }
+
+  .category-list{
+    display: contents;
+    font-size: 1.1rem;
+  }
+
+  .categoryModal{
+    padding: 5rem !important;
   }
 
   .mobile-nav{
@@ -289,6 +325,15 @@ form.d-flex {
 
   .nav-wrapper .nav-top .menu .d-inline-flex button, .nav-wrapper .nav-top,  .nav-bottom .nav-bottom-left .favorites button, .user button, .nav-bottom .nav-bottom-right .home button, .maps button{
     display: none;
+  }
+
+  .category-list{
+    display: contents;
+    font-size: 1.1rem;
+  }
+
+  .categoryModal{
+    padding: 2rem !important;
   }
 
   .mobile-nav{
@@ -350,6 +395,15 @@ form.d-flex {
     display: none;
   }     
 
+  .category-list{
+    display: contents;
+    padding: 1rem;
+  }
+
+  .categoryModal{
+    padding: .5rem !important;
+  }
+
   .mobile-nav{
     display: flex;
     justify-content: space-between;
@@ -408,6 +462,15 @@ form.d-flex {
 
   .nav-wrapper .nav-top .menu .d-inline-flex button, .nav-wrapper .nav-top,  .nav-bottom .nav-bottom-left .favorites button, .user button, .nav-bottom .nav-bottom-right .home button, .maps button{
     display: none;
+  }
+
+  .category-list{
+    display: contents;
+    padding: 1rem;
+  }
+
+  .categoryModal{
+    padding: 0;
   }
 
   .mobile-nav{

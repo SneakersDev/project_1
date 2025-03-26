@@ -146,14 +146,14 @@ const Nav = ({
           </div>
         </div>
       </div>
+      {/*Botón General para todos los botones*/}
       <div className="mobile-nav">
+        {/*Botón para abrir las cateogorías de la página */}
         <button
-          className="btn btn-primary mobile-category"
-          data-bs-toggle="collapse"
-          data-bs-target="#multiCollapseExample1"
-          aria-expanded="false"
-          aria-controls="multiCollapseExample1"
-          aria-label="Categorías"
+          className="btn btn-primary btnModalMobile"
+          data-bs-toggle="modal"
+          data-bs-target="#categoriesModal"
+          aria-label="Abrir menú"
         >
           <TiThMenu />
         </button>
@@ -191,7 +191,7 @@ const Nav = ({
             <div className="modal-body">
               {/* Barra de búsqueda */}
               <div className="modal-search mb-3">
-                <SearchBar onSearch={onSearch} alwaysActive/>
+                <SearchBar onSearch={onSearch} alwaysActive />
               </div>
               <hr />
               {/* Botones de favoritos, usuario y mapa */}
@@ -233,6 +233,56 @@ const Nav = ({
                   Cerrar sesión
                 </button>
               )}
+            </div>
+          </div>
+        </div>
+      </div>
+      {/*Sección de Categorías para los dispositivos pequeños*/}
+      <div
+        className="modal fade"
+        id="categoriesModal"
+        tabIndex="-1"
+        aria-labelledby="categoriesModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog categoryModal">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="categoriesModalLabel">
+                Categorías
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Cerrar"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <ul className="category-list">
+                <li
+                  key="general"
+                  className={`category-item ${
+                    selectedCategory === "" ? "active" : ""
+                  }`}
+                  onClick={() => setSelectedCategory("")}
+                  data-bs-dismiss="modal"
+                >
+                  General
+                </li>
+                {categories.map((cat) => (
+                  <li
+                    key={cat.id}
+                    className={`category-item ${
+                      selectedCategory === cat.id ? "active" : ""
+                    }`}
+                    onClick={() => setSelectedCategory(cat.id)}
+                    data-bs-dismiss="modal"
+                  >
+                    {cat.nombre}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
