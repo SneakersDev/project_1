@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { getSneakerByMarca, getSneakers, getSneakersByCategory, getSneakerByMarcaAndCategory, getSneakersByName } from "../Models/sneakersModel.js";
+import { getSneakerByMarca, getSneakers, getSneakersByCategory, getSneakerByMarcaAndCategory, getSneakersByName, getSneakersById } from "../Models/sneakersModel.js";
 
 const allSneakers = async (req, res) => {
     const token = req.cookies?.sneakers;
@@ -122,4 +122,23 @@ const sneakersByName = async (req, res) => {
     }
 };
 
-export default { allSneakers, sneakersByCategory, sneakersByMarca, sneakersByCategoryAndMarca, sneakersByName };
+const sneakerById = async (req, res) => {
+    const token = req.cookies?.sneakers;
+    if (!token) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+    try {
+        jwt.verify(token, process.env.SECRET_KEY);
+    } catch (error) {
+        return res.status(401).json({ message: "Invalid token" });
+    }
+    const id = req.params.id;
+    try {
+        const sneaker = await getSneakersById(id);
+        return res.json({ sneaker });
+    } catch (error) {
+        return res.status(500).json({ message: "Error retrieving sneaker by id", error });
+    }
+};
+
+export default { allSneakers, sneakersByCategory, sneakersByMarca, sneakersByCategoryAndMarca, sneakersByName, sneakerById };

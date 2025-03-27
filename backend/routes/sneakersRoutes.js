@@ -8,6 +8,7 @@ sneakersRouter.get("/sneakers/ByCategory", sneakersController.sneakersByCategory
 sneakersRouter.get("/sneakers/ByMarca", sneakersController.sneakersByMarca);
 sneakersRouter.get("/sneakers/ByCategoryAndMarca", sneakersController.sneakersByCategoryAndMarca);
 sneakersRouter.get("/sneakers/search", sneakersController.sneakersByName);
+sneakersRouter.get("/sneakers/:id", sneakersController.sneakerById);
 
 
 export default sneakersRouter;
