@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import AuthForm from "./components/AuthForm";
 import Dashboard from "./pages/Dashboard";
+import Sneaker from "./pages/Sneaker";
 import User from "./pages/User";
 import Favorites from "./pages/Favorites";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -18,7 +19,8 @@ const App = () => {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/user" element={<User />} />
                 <Route path="/favorites" element={<Favorites />} />
-                <Route path="/home" element={<Home/>} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/sneaker/:id" element={<Sneaker />} />
             </Routes>
         </Router>
     );
