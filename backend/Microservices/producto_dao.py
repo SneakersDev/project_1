@@ -24,21 +24,10 @@ class ProductoDAO:
         try:
             conexion = DatabaseConnection().get_connection()
             cursor = conexion.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM sneakers WHERE id = %s", (product_id,))
-            producto = cursor.fetchone()
+            cursor.callproc('getSneakersByID', [product_id])
+            for resultado in cursor.stored_results():
+                producto = resultado.fetchone()
             return producto
         except Exception as e:
             print(f"❌ Error al obtener producto por ID: {e}")
             return None
-
-    @staticmethod
-    def agregar_producto(nombre, precio, descripcion, imagen):
-        """Inserta un nuevo producto en la base de datos."""
-        try:
-            conexion = DatabaseConnection().get_connection()
-            cursor = conexion.cursor()
-            cursor.callproc("CreateProduct", (nombre, precio, descripcion, imagen))
-            conexion.commit()
-            print("✅ Producto agregado correctamente.")
-        except Exception as e:
-            print(f"❌ Error al agregar producto: {e}")

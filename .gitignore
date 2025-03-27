@@ -28,3 +28,4 @@ dockerfile
 # Ignorar builds
 dist/
 build/
+__pycache__/
