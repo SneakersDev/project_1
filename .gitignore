@@ -25,6 +25,10 @@ logs/
 ecosystem.config.json
 dockerfile
 
+database.cpython-313.pyc
+product_dao.cpython-313.pyc
+
 # Ignorar builds
 dist/
 build/
+__pycache__/
