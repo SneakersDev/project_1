@@ -55,6 +55,7 @@ body{
   font-weight: 600;
   font-size: 1rem;
   text-align: center;
+  text-transform: uppercase;
 }
 
 
@@ -69,5 +70,197 @@ body{
 }
 
 .heart-icon.favorited {
-  color: red; /* Color rojo cuando está en favoritos */
+  color: black; /* Color rojo cuando está en favoritos */
+}
+
+.chatBot{
+  align-content: center;
+}
+
+.chatBot .modal-header{
+  border-bottom: none;
+}
+
+.chatBot .modal-header .modal-title{
+  margin: 0 auto;
+  font-size: 2rem;
+  letter-spacing: 1px;
+  background-color: #FF9E58;
+  font-weight: 900;
+  color: black;
+  padding: .3rem 3rem;
+  border-radius: 24px;
+}
+
+.chatBot .modal-body{
+  padding: 2rem;
+}
+
+.chatBot .modal-body .form-control{
+  border-radius: 24px;
+  background-color: #9b9898;
+  margin-bottom: .5rem;
+  padding-left: 1.5rem;
+}
+
+.chatBot .modal-body .form-control:focus{
+  box-shadow: 0 0 0 .25rem #e994587c;
+  border-color: #FF9E58;
+}
+
+.chatBot .modal-body .form-control::placeholder{
+  font-size: .9rem;
+  color: black;
+  font-weight: 600;
+}
+
+.chatBot .modal-body button{
+  width: 100%;
+  border-radius: 24px;
+  background-color: #FF9E58;
+  border: none;
+  color: black;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.chatBot .modal-body button:hover, .chatBot .modal-body button:active{
+  background-color: #d37c3e;
+  color: black;
+}
+
+@media (min-width: 430px) and (max-width: 580px){
+  
+  .container{
+    padding: 0 3.5rem;
+  }
+  
+  .containerDashboard{
+    padding: 15px;
+  }
+  .container .titleDashboard h1{
+    font-size: 3rem;
+    letter-spacing: 0px;
+  }
+
+  .grid-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .grid-container .card{
+    width: 80%;
+  }
+
+  .grid-container .card .image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .grid-container .card .image .card-img{
+    width: 70%;
+  }
+}
+
+@media (min-width: 350px) and (max-width: 429px){
+  .container{
+    padding: 1rem 2.5rem;
+  }
+  
+  .containerDashboard{
+    padding: 15px;
+  }
+
+  .container .titleDashboard h1{
+    font-size: 3rem;
+    letter-spacing: 0px;
+  }
+
+  .grid-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .grid-container .card{
+    width: 80%;
+  }
+
+  .grid-container .card .image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .grid-container .card .image .card-img{
+    width: 80%;
+  }
+}
+
+@media (min-width: 250px) and (max-width: 349px){
+  .container{
+    padding: 1rem 0rem;
+  }
+  
+  .containerDashboard{
+    padding: 15px;
+  }
+
+  .container .titleDashboard h1{
+    font-size: 2.5rem;
+    letter-spacing: 0px;
+  }
+
+  .grid-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .grid-container .card{
+    width: 80%;
+  }
+
+  .grid-container .card .image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .grid-container .card .image .card-img{
+    width: 80%;
+  }
+}
+
+@media (max-width: 249px){
+  .container{
+    padding: 1rem 0rem;
+  }
+  
+  .containerDashboard{
+    padding: 0px;
+  }
+
+  .container .titleDashboard h1{
+    font-size: 2rem;
+    letter-spacing: 0px;
+  }
+
+  .grid-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .grid-container .card{
+    width: 80%;
+  }
+
+  .grid-container .card .image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .grid-container .card .image .card-img{
+    width: 80%;
+  }
 }
