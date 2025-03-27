@@ -123,7 +123,7 @@ const sneakersByName = async (req, res) => {
 };
 
 const sneakerById = async (req, res) => {
-    /* const token = req.cookies?.sneakers;
+    const token = req.cookies?.sneakers;
     if (!token) {
         return res.status(401).json({ message: "Unauthorized" });
     }
@@ -131,7 +131,7 @@ const sneakerById = async (req, res) => {
         jwt.verify(token, process.env.SECRET_KEY);
     } catch (error) {
         return res.status(401).json({ message: "Invalid token" });
-    } */
+    }
     const id = req.params.id;
     try {
         const sneaker = await getSneakersById(id);
