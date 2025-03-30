@@ -3,6 +3,9 @@ import { Container, Form, Button } from 'react-bootstrap';
 import api from '../api/api';
 import Mapa from '../components/Mapa'; // Componente reutilizable para visualizar coordenadas
 import toast from 'react-hot-toast';
+import '../styles/mapa/mapa.css'
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 
 const VerMapa = () => {
   // Lista de sneakers disponibles para seleccionar
@@ -86,36 +89,42 @@ const VerMapa = () => {
   };
 
   return (
-    <Container>
-      <h2 className="mt-4 mb-3">Ver Sneaker y tiendas en el Mapa</h2>
+    <Container className='containerMapa'>
+      <h2 className="mb-3 titleMap">Ubicaciones</h2>
+      <div className="home-button buttonMapa">
+        <Nav showHomeOnly={true}/>
+      </div>
+      <div className="mainMap">
+        {/* Formulario para seleccionar un Sneaker */}
+        <Form.Label>Selecciona la marca de tu sneaker</Form.Label>
+        <Form className="mb-4 formMap">
+          <Form.Group>
+            <Form.Select
+              value={sneakerId}
+              onChange={(e) => setSneakerId(e.target.value)}
+            >
+              <option value="">-- Selecciona --</option>
+              {sneakers.map(c => (
+                <option key={c._id} value={c._id}>
+                  {c.nombre}
+                </option>
+              ))}
+            </Form.Select>
+          </Form.Group>
+          <Button onClick={cargarSneaker}>Cargar en el Mapa</Button>
+        </Form>
 
-      {/* Formulario para seleccionar un Sneaker */}
-      <Form className="mb-3">
-        <Form.Group className="mb-2">
-          <Form.Label>Selecciona un Sneaker</Form.Label>
-          <Form.Select
-            value={sneakerId}
-            onChange={(e) => setSneakerId(e.target.value)}
-          >
-            <option value="">-- Selecciona --</option>
-            {sneakers.map(c => (
-              <option key={c._id} value={c._id}>
-                {c.nombre}
-              </option>
-            ))}
-          </Form.Select>
-        </Form.Group>
-        <Button onClick={cargarSneaker}>Cargar en el Mapa</Button>
-      </Form>
+        {/* Visualización del mapa con todas las ubicaciones */}
+        <Mapa
+          ubicaciones={ubicaciones}
+          iconos={iconos}
+          nombres={nombres}           // 🆕 Tooltips personalizados
+          viewport={viewport}
+          setViewport={setViewport}
+        />
+      </div>
+      <Footer />
 
-      {/* Visualización del mapa con todas las ubicaciones */}
-      <Mapa
-        ubicaciones={ubicaciones}
-        iconos={iconos}
-        nombres={nombres}           // 🆕 Tooltips personalizados
-        viewport={viewport}
-        setViewport={setViewport}
-      />
     </Container>
   );
 };

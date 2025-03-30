@@ -10,6 +10,8 @@ import "../styles/dashboard/dashboard.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from "../components/Nav";
 import { FaRegHeart } from "react-icons/fa";
+import Footer from "../components/Footer";
+
 const API_URL = "http://localhost:3000";
 
 const Dashboard = () => {
@@ -134,6 +136,16 @@ const Dashboard = () => {
         return () => clearTimeout(delayDebounceFn);
     }, [searchTerm]);
 
+    const toggleFavorite = (sneakerNombre) => {
+        // Verifica si el sneaker ya está en favoritos
+        if (favorites.includes(sneakerNombre)) {
+        // Remueve el sneaker de favoritos
+        setFavorites(favorites.filter((name) => name !== sneakerNombre));
+        } else {
+        // Agrega el sneaker a favoritos
+        setFavorites([...favorites, sneakerNombre]);
+        }
+    };
     return (
         <div className="containerDashboard">
             <Nav
@@ -198,10 +210,7 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-
-                <div className="copyright">
-                    <p className="textCopyright">© 2025 SNEAKERS, Inc. Todos los derechos reservados</p>
-                </div>
+                <Footer />
             </div>
         </div>
     );
