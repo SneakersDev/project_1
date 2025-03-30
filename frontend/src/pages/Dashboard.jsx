@@ -15,7 +15,7 @@ import Footer from "../components/Footer";
 const API_URL = "http://localhost:3000";
 
 const Dashboard = () => {
-    const { t } = useTranslation();
+    const { t, i18n} = useTranslation();
     const [user] = useAuthState(auth);
     const navigate = useNavigate();
 
@@ -31,14 +31,8 @@ const Dashboard = () => {
     // NUEVO: Estado para el término de búsqueda
     const [searchTerm, setSearchTerm] = useState("");
 
-    // Categorías y marcas
-    const [categories] = useState([
-        { id: 1, nombre: "Baloncesto" },
-        { id: 2, nombre: "Casuales" },
-        { id: 3, nombre: "Deportivas" },
-        { id: 4, nombre: "Atletismo" },
-        { id: 5, nombre: "Patinaje" },
-    ]);
+
+    const [categories, setCategories] = useState([]);
     const [brands] = useState([
         { id: 1, nombre: "Nike" },
         { id: 2, nombre: "Adidas" },
@@ -47,6 +41,17 @@ const Dashboard = () => {
         { id: 5, nombre: "New Balance" },
     ]);
 
+    // Actualiza las categorías cada vez que cambia el idioma
+    useEffect(() => {
+        setCategories([
+            { id: 1, nombre: t("categories.basketball") },
+            { id: 2, nombre: t("categories.casual") },
+            { id: 3, nombre: t("categories.sports") },
+            { id: 4, nombre: t("categories.athletics") },
+            { id: 5, nombre: t("categories.skating") },
+        ]);
+    }, [i18n.language, t]);
+    
     // Estados para filtros de categorías y marcas
     const [selectedCategory, setSelectedCategory] = useState("");
     const [selectedBrand, setSelectedBrand] = useState("");
@@ -154,8 +159,7 @@ const Dashboard = () => {
                 setSelectedCategory={setSelectedCategory}
                 onSearch={setSearchTerm} // Se pasa la función para actualizar searchTerm
             />
-
-            <div className="languaje" hidden>
+            <div className="languajeDashboard">
                 <LanguageSelector />
             </div>
             <div className="container">
@@ -168,7 +172,7 @@ const Dashboard = () => {
                         {/* Mostrar mensaje de "No se encontraron resultados" fuera del grid-container */}
                         {sneakers && sneakers.length === 0 && (
                             <div className="noResults">
-                                <p className="no-results">No se encontraron resultados.</p>
+                                <p className="no-results"> {t("categories.noCoincide")}</p>
                             </div>
                         )}
 
@@ -191,18 +195,6 @@ const Dashboard = () => {
                                         </div>
                                         <div className="card-info">
                                             <h5>{sneaker.nombre}</h5>
-                                            <div className="sneakerDates" hidden>
-                                                <p>{sneaker.descripcion}</p>
-                                                <p>
-                                                    <strong>Categoría:</strong> {sneaker.categoria}
-                                                </p>
-                                                <p>
-                                                    <strong>Marca:</strong> {sneaker.marca}
-                                                </p>
-                                                <p>
-                                                    <strong>Modelo:</strong> {sneaker.modelo}
-                                                </p>
-                                            </div>
                                             {sneaker.precio && <p className="price">${sneaker.precio}</p>}
                                         </div>
                                     </div>

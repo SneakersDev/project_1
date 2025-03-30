@@ -13,6 +13,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { FaTools } from "react-icons/fa";
+import { useTranslation } from "react-i18next"; // Importar el hook de traducción
+import LanguageSelector from "../components/LanguajeSelector";
 
 const Nav = ({
   categories,
@@ -20,10 +22,12 @@ const Nav = ({
   setSelectedCategory,
   onSearch,
   showHomeOnly,
-  showButtons
+  showButtons,
 }) => {
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
 
   const handleLogout = async () => {
     try {
@@ -43,7 +47,7 @@ const Nav = ({
               <button
                 onClick={() => navigate("/dashboard")}
                 className="btn btn-primary"
-                aria-label="Abrir la sección principal"
+                aria-label={t("nav.dashboard")}
               >
                 <RiHomeLine />
               </button>
@@ -54,7 +58,7 @@ const Nav = ({
     );
   }
 
-  if(showButtons){
+  if (showButtons) {
     return (
       <div className="nav-wrapper">
         <div className="nav-bottom">
@@ -63,7 +67,7 @@ const Nav = ({
               <button
                 onClick={() => navigate("/favorites")}
                 className="btn btn-primary"
-                aria-label="Abrir la sección de favoritos"
+                aria-label={t("nav.favorites")}
               >
                 <FaRegHeart />
               </button>
@@ -72,7 +76,7 @@ const Nav = ({
               <button
                 onClick={() => navigate("/user")}
                 className="btn btn-primary"
-                aria-label="Abrir la sección del usuario"
+                aria-label={t("nav.user")}
               >
                 <LuUserRound />
               </button>
@@ -83,7 +87,7 @@ const Nav = ({
               <button
                 onClick={() => navigate("/dashboard")}
                 className="btn btn-primary"
-                aria-label="Abrir la sección principal"
+                aria-label={t("nav.dashboard")}
               >
                 <RiHomeLine />
               </button>
@@ -92,7 +96,7 @@ const Nav = ({
               <button
                 onClick={() => navigate("/Map")}
                 className="btn btn-primary"
-                aria-label="Abrir el mapa"
+                aria-label={t("nav.maps")}
               >
                 <SiGooglemaps />
               </button>
@@ -115,14 +119,14 @@ const Nav = ({
               data-bs-target="#multiCollapseExample1"
               aria-expanded="false"
               aria-controls="multiCollapseExample1"
-              aria-label="Abrir menú"
+              aria-label={t("nav.openMenu")}
             >
               <TiThMenu />
             </button>
           </p>
           <div className="collapse multi-collapse" id="multiCollapseExample1">
             <div className="titleCategory">
-              <h4>Categorías</h4>
+              <h4>{t("categories.title")}</h4>
             </div>
             <div className="card card-body">
               <ul className="category-list">
@@ -133,7 +137,7 @@ const Nav = ({
                   }`}
                   onClick={() => setSelectedCategory("")}
                 >
-                  General
+                  {t("categories.general")}
                 </li>
                 {categories.map((cat) => (
                   <li
@@ -161,7 +165,7 @@ const Nav = ({
             <button
               onClick={() => navigate("/favorites")}
               className="btn btn-primary"
-              aria-label="Abrir la sección de favoritos"
+              aria-label={t("nav.favorites")}
             >
               <FaRegHeart />
             </button>
@@ -170,7 +174,7 @@ const Nav = ({
             <button
               onClick={() => navigate("/user")}
               className="btn btn-primary"
-              aria-label="Abrir la sección del usuario"
+              aria-label={t("nav.user")}
             >
               <LuUserRound />
             </button>
@@ -181,16 +185,16 @@ const Nav = ({
             <button
               onClick={() => navigate("/settings")}
               className="btn btn-primary"
-              aria-label="Abrir la sección de ajustes"
+              aria-label={t("nav.settings")}
             >
-              <FaTools />   
+              <FaTools />
             </button>
           </div>
           <div className="home">
             <button
               onClick={() => navigate("/dashboard")}
               className="btn btn-primary"
-              aria-label="Abrir la sección principal"
+              aria-label={t("nav.dashboard")}
             >
               <RiHomeLine />
             </button>
@@ -199,7 +203,7 @@ const Nav = ({
             <button
               onClick={() => navigate("/Map")}
               className="btn btn-primary"
-              aria-label="Abrir el mapa"
+              aria-label={t("nav.maps")}
             >
               <SiGooglemaps />
             </button>
@@ -213,7 +217,7 @@ const Nav = ({
           className="btn btn-primary btnModalMobile"
           data-bs-toggle="modal"
           data-bs-target="#categoriesModal"
-          aria-label="Abrir menú"
+          aria-label={t("nav.openMenu")}
         >
           <TiThMenu />
         </button>
@@ -223,7 +227,7 @@ const Nav = ({
           className="btn btn-primary mobile-modal"
           data-bs-toggle="modal"
           data-bs-target="#mobileOptionsModal"
-          aria-label="Más opciones"
+          aria-label={t("nav.moreOptions")}
         >
           <IoMdSettings />
         </button>
@@ -239,13 +243,13 @@ const Nav = ({
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="mobileOptionsModalLabel">
-                Herramientas
+                {t("nav.tools")}
               </h5>
               <button
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
-                aria-label="Cerrar"
+                aria-label={t("nav.close")}
               ></button>
             </div>
             <div className="modal-body">
@@ -257,31 +261,36 @@ const Nav = ({
               {/* Botones de favoritos, usuario y mapa */}
               <div className="buttonsMobile">
                 <p className="textMobile">
-                  Navega por las secciones de la página:
+                  {t("nav.navigateSections")}
                 </p>
                 <button
-                  onClick={() => navigate("/favorites")}
+                  onClick={() => window.location.assign("/favorites")}
                   className="btn btn-primary btnMobiles"
-                  aria-label="Favoritos"
+                  aria-label={t("nav.favorites")}
                 >
-                  Favoritos <FaRegHeart />
+                  {t("nav.favorites")} <FaRegHeart />
                 </button>
                 <hr />
                 <button
-                  onClick={() => navigate("/Map")}
+                  onClick={() => window.location.assign("/Map")}
                   className="btn btn-primary btnMobiles"
-                  aria-label="Mapa"
+                  aria-label={t("nav.maps")}
                 >
-                  Localización <SiGooglemaps />
+                  {t("nav.maps")} <SiGooglemaps />
                 </button>
                 <hr />
                 <button
-                  onClick={() => navigate("/user")}
+                  onClick={() => window.location.assign("/user")}
                   className="btn btn-primary btnMobiles"
-                  aria-label="Usuario"
+                  aria-label={t("nav.user")}
                 >
-                  Usuario <LuUserRound />
+                  {t("nav.user")} <LuUserRound />
                 </button>
+              </div>
+              <hr/>
+              <div className="languajeMobile">
+                <p className="Idiom"> {t("nav.idiom")} </p>
+                <LanguageSelector />
               </div>
             </div>
             <div className="modal-footer">
@@ -290,7 +299,7 @@ const Nav = ({
                   onClick={handleLogout}
                   className="logout-button mobileLogout"
                 >
-                  Cerrar sesión
+                  {t("nav.logout")}
                 </button>
               )}
             </div>
@@ -309,13 +318,13 @@ const Nav = ({
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="categoriesModalLabel">
-                Categorías
+                {t("categories.title")}
               </h5>
               <button
                 type="button"
                 className="btn-close"
                 data-bs-dismiss="modal"
-                aria-label="Cerrar"
+                aria-label={t("nav.close")}
               ></button>
             </div>
             <div className="modal-body">
@@ -328,7 +337,7 @@ const Nav = ({
                   onClick={() => setSelectedCategory("")}
                   data-bs-dismiss="modal"
                 >
-                  General
+                  {t("categories.general")}
                 </li>
                 {categories.map((cat) => (
                   <li

@@ -22,13 +22,90 @@ const fr = {
 
   dashboard: {
     title: "Sneakers",
-    welcome: "Bienvenue sur le Sneakers",
-    logout: "Deconnexion",
+  },
+
+  categories: {
+    title: "Catégories",
+    general: "Général",
+    basketball: "Basket-ball",
+    casual: "Décontractées",
+    sports: "Sportives",
+    athletics: "Athlétisme",
+    skating: "Patinage",
+    noCoincide: "Aucun résultat trouvé.",
+  },
+
+  nav: {
+    openMenu: "Ouvrir le menu",
+    moreOptions: "Plus d'options",
+    dashboard: "Accueil",
+    favorites: "Favoris",
     user: "Utilisateur",
-    email: "Courriel",
-    displayName: "Nom d'utilisateur",
-    photoURL: "URL de la photo",
-    updateProfile: "Mettre à jour le profil",
+    maps: "Cartes",
+    settings: "Paramètres",
+    tools: "Outils",
+    close: "Fermer",
+    navigateSections: "Naviguez dans les sections :",
+    logout: "Se déconnecter",
+    idiom: "Français",
+  },
+
+  footer: {
+    text: "© 2025 SNEAKERS, Inc. Tous droits réservés."
+  },
+
+  home: {
+    title: "🏠 Page d'accueil",
+    welcome: "Bienvenue, {{name}}",
+    loading: "Chargement..."
+  },
+
+  search: {
+    open: "Ouvrir la recherche",
+    placeholder: "Rechercher...",
+    input: "Champ de recherche",
+  },
+
+  sneaker: {
+    loading: "Chargement...",
+    noSneaker: "Aucune sneaker trouvée.",
+    chatbot: "Chatbot",
+    chatbotTitle: "CHATBOT {{name}}",
+    chatbotSubtitle: "QUESTIONS SUR LES SNEAKERS",
+    chatbotPlaceholder: "Entrez votre question",
+    send: "Envoyer",
+    chatbotLabel: "Chatbot",
+    moreOptions: "Plus d'options",
+    tools: "Outils",
+    close: "Fermer",
+    navigateSections: "Naviguez dans les sections :",
+    home: "Accueil",
+    favorites: "Favoris",
+    location: "Localisation"
+  },
+
+  user: {
+    userLabel: "Utilisateur:",
+    guest: "Invité",
+    logout: "Se déconnecter",
+    logoutError: "Erreur lors de la déconnexion:",
+    moreOptions: "Plus d'options",
+    tools: "Outils",
+    close: "Fermer",
+    navigateSections: "Naviguez dans les sections :",
+    home: "Accueil",
+    favorites: "Favoris",
+    location: "Localisation"
+  },
+
+  verMapa: {
+    locationsTitle: "Emplacements",
+    errorLoadingClients: "Erreur lors du chargement des sneakers",
+    selectSneaker: "Sélectionnez une sneaker",
+    errorLoadingSneaker: "Erreur lors du chargement de la sneaker",
+    selectBrand: "Sélectionnez la marque de votre sneaker",
+    selectOption: "-- Sélectionnez --",
+    loadOnMap: "Charger sur la carte"
   }
 };
 

@@ -51,7 +51,7 @@
 
 .multi-collapse {
   position: fixed;
-  top: 3rem; 
+  top: 5rem; 
   left: 0;
   width: 250px; 
   z-index: 1000;
@@ -226,7 +226,7 @@ form.d-flex {
 }
 
 
-@media (min-width: 579px) and (max-width: 1550px){
+@media (min-width: 581px) and (max-width: 1550px){
 
   .multi-collapse{
     top: 6rem;  
