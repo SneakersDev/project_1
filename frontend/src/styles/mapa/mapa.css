@@ -1,0 +1,146 @@
+.titleMap{
+    font-size: 4rem;
+    text-transform: uppercase;
+    color: white;
+    font-weight: 900;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-top: 2rem;
+}
+
+.mainMap{
+    padding-top: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.mapboxgl-map, .mapboxgl-canvas{
+    height: 32rem !important;
+}
+
+.formMap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.mainMap .form-label{
+    color: white;
+    font-size: 1.2rem;
+}
+
+.mainMap .formMap .form-select:focus{
+    box-shadow: 0 0 0 .25rem rgba(207, 110, 54, 0.25);
+    border-color: #FF9E58;
+}
+
+.mainMap .formMap button{
+    background-color: #FF9E58;
+    color: black;
+    font-weight: 900;
+    text-transform: uppercase;
+    border-color: #FF9E58;
+}
+
+.mainMap .formMap button:hover{
+    background-color: #d37c3e;
+    color: black;
+}
+
+@media (min-width: 580px) and (max-width: 767px){
+
+    .containerMapa{
+        padding: 0;
+    }
+
+    .titleMap{
+        font-size: 3.2rem;
+        margin-top: 2.8rem;
+    }
+
+    .buttonMapa button{
+        left: 1.5rem;
+        top: 1.5rem;
+    }
+}
+
+@media (min-width: 360px) and (max-width: 579px){
+
+    .containerMapa{
+        padding: 0;
+    }
+
+    .titleMap{
+        font-size: 2.5rem;
+        margin-top: 4rem;
+    }
+
+    .buttonMapa button{
+        left: .5rem;
+        top: .5rem;
+    }
+
+    .buttonMapa button{
+        display: block !important;
+    }
+
+    .mapboxgl-map{
+        width: 90% !important;
+        margin: 1rem;
+    }
+
+    .formMap{
+        padding: 0 1rem;
+    }
+
+    .mainMap .formMap button{
+        text-transform: none;
+    }
+}
+
+@media (max-width: 359px){
+
+    .containerMapa{
+        padding: 0;
+    }
+
+    .titleMap{
+        font-size: 2.5rem;
+        margin-top: 4.5rem;
+    }
+
+    .buttonMapa button{
+        left: .5rem;
+        top: .5rem;
+    }
+
+    .buttonMapa button{
+        display: block !important;
+    }
+
+    .mapboxgl-map{
+        width: 90% !important;
+        margin: 1rem;
+    }
+
+    .formMap{
+        padding: 0 1rem;
+        flex-direction: column;
+    }
+
+    .mainMap{
+        padding-top: 0;
+    }
+
+    .mainMap .form-label{
+        font-size: 1rem;
+    }
+
+    .mainMap .formMap button{
+        text-transform: none;
+    }
+}

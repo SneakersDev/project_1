@@ -16,6 +16,7 @@
     right: 1rem;
     display: flex;
     justify-content: space-between;
+    align-items: end;
     max-width: 1200px;
     margin: 0 auto;
     padding: 40px;
@@ -34,7 +35,7 @@
     gap: 0.5rem;
   }
   
-  .nav-wrapper .nav-top .menu .d-inline-flex button, .search button, .nav-bottom .nav-bottom-left .favorites button, .user button, .nav-bottom .nav-bottom-right .home button, .maps button, .btnModalMobile, .mobile-modal{
+  .nav-wrapper .nav-top .menu .d-inline-flex button, .search button, .nav-bottom .nav-bottom-left .favorites button, .user button, .nav-bottom .nav-bottom-right .home button, .maps button, .btnModalMobile, .mobile-modal, .nav-bottom .nav-bottom-right .settings button{
     padding: 10px 15px;
     font-size: 1.3rem;
     border-radius: 50%;
@@ -43,7 +44,7 @@
     border: #FF9E58;
   }
 
-  .nav-wrapper .nav-top .menu .d-inline-flex button:hover, .search button:hover, .nav-bottom .nav-bottom-left .favorites button:hover, .user button:hover, .nav-bottom .nav-bottom-right .home button:hover, .maps button:hover, .mobile-category:hover, .mobile-modal:hover, .btnModalMobile:hover{
+  .nav-wrapper .nav-top .menu .d-inline-flex button:hover, .search button:hover, .nav-bottom .nav-bottom-left .favorites button:hover, .user button:hover, .nav-bottom .nav-bottom-right .home button:hover, .maps button:hover, .mobile-category:hover, .mobile-modal:hover, .btnModalMobile:hover, .nav-bottom .nav-bottom-right .settings button:hover{
     background-color: #d37c3e;
     color: black;
   }
@@ -134,6 +135,7 @@ form.d-flex {
 .search.active .search-input {
   opacity: 1;
   transform: scaleX(1);
+  border-radius: 24px;
 }
 
 .search-icon {
