@@ -30,4 +30,3 @@ export const getSneakersById = async (id) => {
     return rows[0]; // Retornamos la primera parte del resultado (las filas)
 
 };
-};
