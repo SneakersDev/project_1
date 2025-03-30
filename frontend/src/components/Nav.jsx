@@ -12,6 +12,7 @@ import { IoMdSettings } from "react-icons/io";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
+import { FaTools } from "react-icons/fa";
 
 const Nav = ({
   categories,
@@ -176,6 +177,15 @@ const Nav = ({
           </div>
         </div>
         <div className="nav-bottom-right">
+          <div className="settings">
+            <button
+              onClick={() => navigate("/settings")}
+              className="btn btn-primary"
+              aria-label="Abrir la sección de ajustes"
+            >
+              <FaTools />   
+            </button>
+          </div>
           <div className="home">
             <button
               onClick={() => navigate("/dashboard")}

@@ -7,7 +7,7 @@ import Sneaker from "./pages/Sneaker";
 import User from "./pages/User";
 import Favorites from "./pages/Favorites";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Home from "./pages/Home";
+import Settings from "./pages/Settings";
 import VerMapa from "./pages/VerMapa";
 
 const App = () => {
@@ -20,7 +20,7 @@ const App = () => {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/user" element={<User />} />
                 <Route path="/favorites" element={<Favorites />} />
-                <Route path="/home" element={<Home />} />
+                <Route path="/settings" element={<Settings />} />
                 <Route path="/sneaker/:id" element={<Sneaker />} />
                 <Route path="/map" element={<VerMapa />} />
             </Routes>

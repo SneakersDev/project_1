@@ -3,7 +3,7 @@ body{
 }
 
 .containerDashboard {
-    padding: 40px;
+    padding: 35px;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -73,6 +73,9 @@ body{
   color: black; /* Color rojo cuando está en favoritos */
 }
 
+.d-inline-flex {
+   margin-bottom: 0;
+}
 @media (min-width: 430px) and (max-width: 580px){
   
   .container{
