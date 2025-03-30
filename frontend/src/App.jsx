@@ -8,6 +8,7 @@ import User from "./pages/User";
 import Favorites from "./pages/Favorites";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./pages/Home";
+import VerMapa from "./pages/VerMapa";
 
 const App = () => {
     return (
@@ -21,6 +22,7 @@ const App = () => {
                 <Route path="/favorites" element={<Favorites />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/sneaker/:id" element={<Sneaker />} />
+                <Route path="/map" element={<VerMapa />} />
             </Routes>
         </Router>
     );
