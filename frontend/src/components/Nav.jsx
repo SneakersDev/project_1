@@ -19,6 +19,7 @@ const Nav = ({
   setSelectedCategory,
   onSearch,
   showHomeOnly,
+  showButtons
 }) => {
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
@@ -44,6 +45,55 @@ const Nav = ({
                 aria-label="Abrir la sección principal"
               >
                 <RiHomeLine />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if(showButtons){
+    return (
+      <div className="nav-wrapper">
+        <div className="nav-bottom">
+          <div className="nav-bottom-left sneakers">
+            <div className="favorites">
+              <button
+                onClick={() => navigate("/favorites")}
+                className="btn btn-primary"
+                aria-label="Abrir la sección de favoritos"
+              >
+                <FaRegHeart />
+              </button>
+            </div>
+            <div className="user">
+              <button
+                onClick={() => navigate("/user")}
+                className="btn btn-primary"
+                aria-label="Abrir la sección del usuario"
+              >
+                <LuUserRound />
+              </button>
+            </div>
+          </div>
+          <div className="nav-bottom-right">
+            <div className="home">
+              <button
+                onClick={() => navigate("/dashboard")}
+                className="btn btn-primary"
+                aria-label="Abrir la sección principal"
+              >
+                <RiHomeLine />
+              </button>
+            </div>
+            <div className="maps">
+              <button
+                onClick={() => navigate("/Map")}
+                className="btn btn-primary"
+                aria-label="Abrir el mapa"
+              >
+                <SiGooglemaps />
               </button>
             </div>
           </div>
