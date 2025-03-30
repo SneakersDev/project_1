@@ -28,5 +28,6 @@ export const getSneakersByName = async (name) => {
 export const getSneakersById = async (id) => {
     const [rows] = await pool.query(`CALL getSneakersByID(?)`, [id]);
     return rows[0]; // Retornamos la primera parte del resultado (las filas)
+
 };
-=======
+};
