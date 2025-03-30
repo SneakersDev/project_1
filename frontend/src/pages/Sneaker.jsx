@@ -2,8 +2,14 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import axios from "axios";
-
+import Nav from "../components/Nav";
 import "../styles/sneaker/sneaker.css";
+import Footer from "../components/Footer";
+import { IoMdSettings } from "react-icons/io";
+import { RiHomeLine } from "react-icons/ri";
+import { FaRegHeart } from "react-icons/fa";
+import { SiGooglemaps } from "react-icons/si";
+import { useNavigate } from "react-router-dom";
 
 const API_URL = "http://localhost:3000";
 
@@ -20,6 +26,8 @@ function Sneaker() {
     const [respuesta, setRespuesta] = useState("");
 
 
+    const navigate = useNavigate();
+    
     const handleChat = (producto) => {
             setSelectedProduct(producto);
             setShowChat(true);
@@ -75,36 +83,124 @@ function Sneaker() {
     if (!sneaker) return <p className="text-center">No se encontró la zapatilla.</p>;
 
     return (
-        <div className="detail-container p-4">
-            <h1 className="text-2xl font-bold">{sneaker.nombre}</h1>
-            <img src={sneaker.imagen} alt={sneaker.nombre} className="rounded-xl shadow-lg w-60" />
-            <p className="mt-2 text-gray-600">Descripción: {sneaker.descripcion}</p>
-            <p className="mt-2 font-bold text-lg text-green-500">Precio: ${sneaker.precio}</p>
-            <Button variant="primary" onClick={() => handleChat(sneaker)}>
-                Preguntar al Chatbot
-            </Button>
-            <Modal className="chatBot" show={showChat} onHide={() => setShowChat(false)}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Preguntar sobre {selectedProduct?.name}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form.Control
-                        type="text"
-                        placeholder="Ingrese su pregunta"
-                        value={pregunta}
-                        onChange={(e) => setPregunta(e.target.value)}
-                    />
-                    <Button className="mt-2" onClick={enviarPregunta}>
-                        Enviar
-                    </Button>
-                    {respuesta && (
-                        <p className="mt-3">
-                            <strong>Chatbot:</strong> {respuesta}
-                        </p>
-                    )}
-                </Modal.Body>
-            </Modal>
+        <div className="containerDetails p-4 mt-2">
+            <div className="home-buttons">
+                <Nav showButtons={true}/>
+            </div>
+            <div className="container">
+                <div className="title">
+                    <h1>SNEAKERS</h1>
+                </div>
+                <div className="containerInfo">
+                    <div className="infoImage">
+                        <img src={sneaker.imagen} alt={sneaker.nombre} />
+                    </div>
+                    <div className="infoDates">
+                        <h2 className="text-2xl font-bold mb-4">{sneaker.nombre}</h2>
+                        <p className="mt-2 text-gray-600">{sneaker.descripcion}</p>
+                        <div className="infoButton">
+                            <p className="mt-2 font-bold text-lg text-green-500">Precio: ${sneaker.precio}</p>
+                            <Button variant="primary" onClick={() => handleChat(sneaker)}>
+                            Chatbot
+                            </Button>
+                        </div>
+                    </div>
+
+                    <Modal className="chatBot" show={showChat} onHide={() => setShowChat(false)}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>CHATBOT {selectedProduct?.name}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <div className="box">
+                            <h5 className="mb-3">PREGUNTAS SOBRE SNEAKERS</h5>
+                            <Form.Control
+                                type="text"
+                                placeholder="Ingrese su pregunta"
+                                value={pregunta}
+                                onChange={(e) => setPregunta(e.target.value)}
+                            />
+                            <Button className="mt-2" onClick={enviarPregunta}>
+                                Enviar
+                            </Button>
+                            {respuesta && (
+                                <p className="mt-3">
+                                    <strong>Chatbot:</strong> {respuesta}
+                                </p>
+                            )}
+                            </div>
+                        </Modal.Body>
+                    </Modal>
+                </div>
+                <Footer />
+            </div>
+            {/* Mobile Nav (Visible solo en ciertas resoluciones) */}
+            <div className="mobile-nav userMobile sneakerMobile">
+            <button
+                className="btn btn-primary mobile-modal"
+                data-bs-toggle="modal"
+                data-bs-target="#mobileOptionsModal"
+                aria-label="Más opciones"
+            >
+                <IoMdSettings />
+            </button>
+            </div>
+    
+            {/* Modal con herramientas adicionales */}
+            <div
+            className="modal fade"
+            id="mobileOptionsModal"
+            tabIndex="-1"
+            aria-labelledby="mobileOptionsModalLabel"
+            aria-hidden="true"
+            >
+            <div className="modal-dialog">
+                <div className="modal-content">
+                <div className="modal-header">
+                    <h5 className="modal-title" id="mobileOptionsModalLabel">
+                    Herramientas
+                    </h5>
+                    <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Cerrar"
+                    ></button>
+                </div>
+                <div className="modal-body">
+                    <div className="buttonsMobile">
+                    <p className="textMobile">
+                        Navega por las secciones de la página:
+                    </p>
+                    <button
+                        onClick={() => navigate("/dashboard")}
+                        className="btn btn-primary btnMobiles"
+                        aria-label="Mapa"
+                    >
+                        Home <RiHomeLine />
+                    </button>
+                    <hr/>
+                    <button
+                        onClick={() => navigate("/favorites")}
+                        className="btn btn-primary btnMobiles"
+                        aria-label="Favoritos"
+                    >
+                        Favoritos <FaRegHeart />
+                    </button>
+                    <hr />
+                    <button
+                        onClick={() => navigate("/Map")}
+                        className="btn btn-primary btnMobiles"
+                        aria-label="Mapa"
+                    >
+                        Localización <SiGooglemaps />
+                    </button>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
         </div>
+        
     );
 }
 
