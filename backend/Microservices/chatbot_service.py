@@ -35,10 +35,31 @@ def chat():
     
     if "precio" in pregunta:
         return jsonify({"respuesta": f"{producto.get('precio', 'Precio no disponible')} USD"})
+    
+    if "descripcion" in pregunta:
+        return jsonify({"respuesta": producto.get("descripcion", "Descripción no disponible")})
+    
+    if "marca" in pregunta:
+        return jsonify({"respuesta": producto.get("marca", "Marca no disponible")})
+    
+    if "talla" in pregunta:
+        return jsonify({"respuesta": producto.get("talla", "Talla no disponible")})
+    
+    if "color" in pregunta:
+        return jsonify({"respuesta": producto.get("color", "Color no disponible")})
+    
+    if "modelo" in pregunta:
+        return jsonify({"respuesta": producto.get("modelo", "Modelo no disponible")})
+    # Usar el modelo de QA para preguntas de productos
 
     # Construir el contexto con nombre, descripción y precio
     contexto = f"Nombre: {producto.get('nombre', 'No disponible')}. " \
-               f"Descripción: {producto.get('descripcion', 'No disponible')}. "
+               f"Descripción: {producto.get('descripcion', 'No disponible')}. "\
+               f"Precio: {producto.get('precio', 'No disponible')} USD"\
+               f"Marca: {producto.get('marca', 'No disponible')}"\
+               f"Talla: {producto.get('talla', 'No disponible')}. "\
+               f"Color: {producto.get('color', 'No disponible')}"\
+               f"Modelo: {producto.get('modelo', 'No disponible')}"
 
     print(f"🔍 Contexto utilizado: {contexto}")
 
