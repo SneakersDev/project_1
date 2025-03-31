@@ -10,11 +10,17 @@ import { RiHomeLine } from "react-icons/ri";
 import { FaRegHeart } from "react-icons/fa";
 import { SiGooglemaps } from "react-icons/si";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import LanguageSelector from "../components/LanguajeSelector";
+
 
 const API_URL = "http://localhost:3000";
 
 
 function Sneaker() {
+
+    const { t } = useTranslation();
+
     const { id } = useParams();
     const [sneaker, setSneaker] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -78,14 +84,17 @@ function Sneaker() {
         fetchSneaker();
     }, [id]);
 
-    if (loading) return <p className="text-center">Cargando...</p>;
+    if (loading) return <p className="text-center">{t("sneaker.loading")}</p>;
     if (error) return <p className="text-red-500 text-center">{error}</p>;
-    if (!sneaker) return <p className="text-center">No se encontró la zapatilla.</p>;
+    if (!sneaker) return <p className="text-center">{t("sneaker.noSneaker")}</p>;
 
     return (
         <div className="containerDetails p-4 mt-2">
             <div className="home-buttons">
                 <Nav showButtons={true}/>
+            </div>
+            <div className="languajeSneaker">
+                <LanguageSelector />
             </div>
             <div className="container">
                 <div className="title">
@@ -101,30 +110,30 @@ function Sneaker() {
                         <div className="infoButton">
                             <p className="mt-2 font-bold text-lg text-green-500">Precio: ${sneaker.precio}</p>
                             <Button variant="primary" onClick={() => handleChat(sneaker)}>
-                            Chatbot
+                                {t("sneaker.chatbot")}
                             </Button>
                         </div>
                     </div>
 
                     <Modal className="chatBot" show={showChat} onHide={() => setShowChat(false)}>
                         <Modal.Header closeButton>
-                            <Modal.Title>CHATBOT {selectedProduct?.name}</Modal.Title>
+                            <Modal.Title>{t("sneaker.chatbotTitle", { name: selectedProduct?.name })}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <div className="box">
-                            <h5 className="mb-3">PREGUNTAS SOBRE SNEAKERS</h5>
+                            <h5 className="mb-3">{t("sneaker.chatbotSubtitle")}</h5>
                             <Form.Control
                                 type="text"
-                                placeholder="Ingrese su pregunta"
+                                placeholder={t("sneaker.chatbotPlaceholder")}
                                 value={pregunta}
                                 onChange={(e) => setPregunta(e.target.value)}
                             />
                             <Button className="mt-2" onClick={enviarPregunta}>
-                                Enviar
+                                {t("sneaker.send")}
                             </Button>
                             {respuesta && (
                                 <p className="mt-3">
-                                    <strong>Chatbot:</strong> {respuesta}
+                                    <strong>{t("sneaker.chatbotLabel")}:</strong> {respuesta}
                                 </p>
                             )}
                             </div>
@@ -139,7 +148,7 @@ function Sneaker() {
                 className="btn btn-primary mobile-modal"
                 data-bs-toggle="modal"
                 data-bs-target="#mobileOptionsModal"
-                aria-label="Más opciones"
+                aria-label={t("sneaker.moreOptions")}
             >
                 <IoMdSettings />
             </button>
@@ -157,43 +166,48 @@ function Sneaker() {
                 <div className="modal-content">
                 <div className="modal-header">
                     <h5 className="modal-title" id="mobileOptionsModalLabel">
-                    Herramientas
+                    {t("sneaker.tools")}
                     </h5>
                     <button
                     type="button"
                     className="btn-close"
                     data-bs-dismiss="modal"
-                    aria-label="Cerrar"
+                    aria-label={t("sneaker.close")}
                     ></button>
                 </div>
                 <div className="modal-body">
                     <div className="buttonsMobile">
                     <p className="textMobile">
-                        Navega por las secciones de la página:
+                        {t("sneaker.navigateSections")}
                     </p>
                     <button
-                        onClick={() => navigate("/dashboard")}
+                        onClick={() => window.location.assign("/dashboard")}
                         className="btn btn-primary btnMobiles"
-                        aria-label="Mapa"
+                        aria-label={t("sneaker.home")}
                     >
-                        Home <RiHomeLine />
+                        {t("sneaker.home")} <RiHomeLine />
                     </button>
                     <hr/>
                     <button
-                        onClick={() => navigate("/favorites")}
+                        onClick={() => window.location.assign("/favorites")}
                         className="btn btn-primary btnMobiles"
-                        aria-label="Favoritos"
+                        aria-label={t("sneaker.favorites")}
                     >
-                        Favoritos <FaRegHeart />
+                        {t("sneaker.favorites")} <FaRegHeart />
                     </button>
                     <hr />
                     <button
-                        onClick={() => navigate("/Map")}
+                        onClick={() => window.location.assign("/Map")}
                         className="btn btn-primary btnMobiles"
-                        aria-label="Mapa"
+                        aria-label={t("sneaker.location")}
                     >
-                        Localización <SiGooglemaps />
+                        {t("sneaker.location")} <SiGooglemaps />
                     </button>
+                    </div>
+                    <hr/>
+                    <div className="languajeMobile">
+                        <p className="Idiom">{t("nav.idiom")}</p>
+                        <LanguageSelector />
                     </div>
                 </div>
                 </div>

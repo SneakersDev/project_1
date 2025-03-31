@@ -6,8 +6,12 @@ import toast from 'react-hot-toast';
 import '../styles/mapa/mapa.css'
 import Nav from "../components/Nav";
 import Footer from "../components/Footer";
+import { useTranslation } from "react-i18next";
+import LanguageSelector from "../components/LanguajeSelector";
 
 const VerMapa = () => {
+  const { t } = useTranslation();
+
   // Lista de sneakers disponibles para seleccionar
   const [sneakers, setSneakers] = useState([]);
 
@@ -90,20 +94,23 @@ const VerMapa = () => {
 
   return (
     <Container className='containerMapa'>
-      <h2 className="mb-3 titleMap">Ubicaciones</h2>
+      <h2 className="mb-3 titleMap">{t("verMapa.locationsTitle")}</h2>
       <div className="home-button buttonMapa">
         <Nav showHomeOnly={true}/>
       </div>
+      <div className="languajeMap">
+        <LanguageSelector />
+      </div>
       <div className="mainMap">
         {/* Formulario para seleccionar un Sneaker */}
-        <Form.Label>Selecciona la marca de tu sneaker</Form.Label>
+        <Form.Label>{t("verMapa.selectBrand")}</Form.Label>
         <Form className="mb-4 formMap">
           <Form.Group>
             <Form.Select
               value={sneakerId}
               onChange={(e) => setSneakerId(e.target.value)}
             >
-              <option value="">-- Selecciona --</option>
+              <option value="">{t("verMapa.selectOption")}</option>
               {sneakers.map(c => (
                 <option key={c._id} value={c._id}>
                   {c.nombre}
@@ -111,7 +118,7 @@ const VerMapa = () => {
               ))}
             </Form.Select>
           </Form.Group>
-          <Button onClick={cargarSneaker}>Cargar en el Mapa</Button>
+          <Button onClick={cargarSneaker}>{t("verMapa.loadOnMap")}</Button>
         </Form>
 
         {/* Visualización del mapa con todas las ubicaciones */}
