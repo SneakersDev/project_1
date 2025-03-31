@@ -32,37 +32,15 @@ const LanguageSelector = () => {
     };
 
     return (
-        <div className="languajeSelector" style={{ position: "fixed", left: "4rem", top: "2rem" }}>
+        <div className="languajeSelector" style={{ position: "fixed", left: "2rem", top: "1rem" }}>
             <button
                 onClick={toggleDropdown}
-                style={{
-                    padding: "8px 12px",
-                    cursor: "pointer",
-                    background: "#636363",
-                    color: "black",
-                    fontWeight: "900",
-                    borderRadius: "4px",
-                    border: "none",
-                    fontSize: "1.5rem"
-                }}
+                className="buttonSelect"
             >
                  {getLabel(i18n.language)}<MdArrowDropDown />
             </button>
             {isOpen && (
-                <ul
-                    style={{
-                        position: "absolute",
-                        top: "100%",
-                        left: 0,
-                        margin: 0,
-                        padding: 0,
-                        listStyle: "none",
-                        background: "#fff",
-                        borderRadius: "4px",
-                        width: "100%",
-                        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
-                        zIndex: 1000,
-                    }}
+                <ul className="listLang"
                 >
                     {["en", "es", "fr", "de"].map((lang) => (
                         <li key={lang}>

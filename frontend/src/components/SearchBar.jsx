@@ -1,8 +1,10 @@
 // components/SearchBar.jsx
 import React, { useRef, useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
+import { useTranslation } from "react-i18next";
 
 const SearchBar = ({ onSearch, alwaysActive = false }) => {
+  const { t } = useTranslation();
   const searchRef = useRef(null);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -55,7 +57,7 @@ const SearchBar = ({ onSearch, alwaysActive = false }) => {
           type="button"
           className="buttonSearch btn btn-primary search-icon"
           onClick={toggleSearch}
-          aria-label="Abrir búsqueda"
+          aria-label={t("search.open")}
         >
           <IoSearch />
         </button>
@@ -63,8 +65,8 @@ const SearchBar = ({ onSearch, alwaysActive = false }) => {
       <input
         type="search"
         className="form-control search-input"
-        placeholder="Buscar..."
-        aria-label="Search"
+        placeholder={t("search.placeholder")}
+        aria-label={t("search.input")}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />

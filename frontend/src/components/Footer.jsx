@@ -1,9 +1,13 @@
+import { useTranslation } from "react-i18next";
+
 const Footer = () =>{
+    
+    const { t } = useTranslation();
     
     return(
     <div className="copyright">
         <p className="textCopyright">
-        © 2025 SNEAKERS, Inc. Todos los derechos reservados
+        {t("footer.text")}
         </p>
     </div>
     )
