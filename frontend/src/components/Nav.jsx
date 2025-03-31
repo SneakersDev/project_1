@@ -1,5 +1,5 @@
 // components/Nav.jsx
-import React from "react";
+import { useEffect, useState } from "react";
 import { TiThMenu } from "react-icons/ti";
 import { LuUserRound } from "react-icons/lu";
 import { FaRegHeart } from "react-icons/fa";
@@ -24,19 +24,46 @@ const Nav = ({
   showHomeOnly,
   showButtons,
 }) => {
+
   const [user] = useAuthState(auth);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [role, setRole] = useState(null); // Estado para almacenar el rol del usuario
 
-
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigate("/");
-    } catch (error) {
-      console.error("Error al cerrar sesión:", error);
-    }
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            navigate("/");
+        } catch (error) {
+            console.error("Error al cerrar sesión:", error);
+        }
   };
+  
+  useEffect(() => {
+      const fetchRole = async () => {
+          if (user && user.uid) {
+              // Verifica si el usuario está autenticado y tiene un UID
+              try {
+                  // Realizar la solicitud a la API con el UID del usuario
+                  const response = await fetch(`http://localhost:3000/api/get-rol/${user.uid}`, {
+                      method: "POST",
+                  });
+                  // Verificar si la respuesta es exitosa (status 200)
+                  if (!response.ok) {
+                      throw new Error(`Error en la solicitud: ${response.statusText}`);
+                  }
+                  const data = await response.json();
+                  // Verificar si la respuesta contiene el rol
+                  if (data.rol !== undefined) {
+                      setRole(data.rol); // Establecer el rol en el estado
+                  }
+              } catch (error) {
+                  console.error("Error al obtener el rol:", error);
+              }
+          } else {
+              // El usuario no esta autenticado o no tiene un UID
+          }
+      };
 
   if (showHomeOnly) {
     return (
@@ -100,12 +127,8 @@ const Nav = ({
               >
                 <SiGooglemaps />
               </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+      fetchRole(); // Llamar la función para obtener el rol al montar el componente
+  }, [user]);
 
   return (
     <div className="nav-wrapper">
@@ -152,12 +175,11 @@ const Nav = ({
                 ))}
               </ul>
             </div>
-          </div>
         </div>
-        {/* Aquí se integra el SearchBar */}
-        <SearchBar onSearch={onSearch} />
-      </div>
-
+    </div>
+    {/* Aquí se integra el SearchBar */}
+    <SearchBar onSearch={onSearch} />
+  </div>
       {/* Sección inferior (fija) */}
       <div className="nav-bottom">
         <div className="nav-bottom-left">
@@ -187,7 +209,7 @@ const Nav = ({
               className="btn btn-primary"
               aria-label={t("nav.settings")}
             >
-              <FaTools />
+              <FaTools />   
             </button>
           </div>
           <div className="home">
@@ -221,7 +243,7 @@ const Nav = ({
         >
           <TiThMenu />
         </button>
-
+        
         {/* Botón para abrir el modal con búsqueda, favoritos, usuario y mapas */}
         <button
           className="btn btn-primary mobile-modal"
@@ -301,7 +323,6 @@ const Nav = ({
                 >
                   {t("nav.logout")}
                 </button>
-              )}
             </div>
           </div>
         </div>
@@ -352,11 +373,11 @@ const Nav = ({
                   </li>
                 ))}
               </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
   );
 };
 

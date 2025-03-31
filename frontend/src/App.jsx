@@ -9,6 +9,8 @@ import Favorites from "./pages/Favorites";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Settings from "./pages/Settings";
 import VerMapa from "./pages/VerMapa";
+import AgregarSede from "./pages/AgregarSede";
+import CrearSneaker from "./pages/CrearSneaker";
 
 const App = () => {
     return (
@@ -23,6 +25,8 @@ const App = () => {
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/sneaker/:id" element={<Sneaker />} />
                 <Route path="/map" element={<VerMapa />} />
+                <Route path="/agregar-sede" element={<AgregarSede />} />
+                <Route path="/crear-sneaker" element={<CrearSneaker />} />
             </Routes>
         </Router>
     );
