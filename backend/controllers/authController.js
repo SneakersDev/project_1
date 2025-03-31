@@ -1,5 +1,6 @@
-import { createUser, findUserByUid, findUserByEmail } from "../Models/userModel.js";
+import { createUser, findUserByUid, findUserByEmail, getRol } from "../Models/userModel.js";
 import { generateToken } from "../services/token.js";
+import pool from "../services/connect.js"; // Asegúrate de que pool esté correctamente importado
 import bcrypt from "bcryptjs";
 import crypto from "crypto"; // Asegúrate de tener esto para generar UID
 
@@ -125,4 +126,35 @@ const register = async (req, res) => {
     }
 };
 
-export default { login, loginWithEmail, register };
+const getRole = async (req, res) => {
+  try {
+    const { id } = req.params;  // Aquí obtenemos el id de los parámetros de la URL
+
+    // Verificar que el id no sea nulo o vacío
+    if (!id) {
+      return res.status(400).json({ message: "El ID es requerido" });
+    }
+
+    // Llamar al modelo para obtener el rol
+    const result = await getRol(id);
+
+    if (result.error) {
+      return res.status(404).json({ message: result.error });
+    }
+
+    if (result.rol === null) {
+      return res.status(404).json({ message: 'Rol no encontrado', rol: null });
+    }
+
+    // Si todo va bien, devuelve el rol
+    return res.status(200).json({ message: 'Rol obtenido exitosamente', rol: result.rol });
+    
+  } catch (error) {
+    console.error('❌ Error en getRole:', error);
+    return res.status(500).json({ message: 'Error en el servidor' });
+  }
+};
+
+
+
+export default { login, loginWithEmail, register, getRole };

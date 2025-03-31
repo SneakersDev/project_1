@@ -32,3 +32,26 @@ export const createUser = async ({ uid, email, username, provider, displayName, 
   return rows[0];
 };
 
+export const getRol = async (id) => {
+  // Verificar si id es válido
+  if (!id) {
+    throw new Error('ID es requerido');
+  }
+
+  try {
+    const [rows] = await pool.query("SELECT rol FROM users WHERE uid = ?", [id]);
+
+    // Si no se encuentra el rol, devolver null
+    if (rows.length === 0) {
+      return { rol: null };
+    }
+
+    return { rol: rows[0].rol };
+
+  } catch (error) {
+    console.error('Error en getRol:', error);
+    throw new Error('Error al recuperar el rol');
+  }
+};
+
+
