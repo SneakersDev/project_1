@@ -113,7 +113,6 @@ const Nav = ({
             </div>
         );
     }
-
     return (
         <div className="nav-wrapper">
             {/* Sección superior: menú y buscador */}
@@ -156,7 +155,70 @@ const Nav = ({
                 {/* Aquí se integra el SearchBar */}
                 <SearchBar onSearch={onSearch} />
             </div>
-
+=======
+      {/* Sección inferior (fija) */}
+      <div className="nav-bottom">
+        <div className="nav-bottom-left">
+          <div className="favorites">
+            <button
+              onClick={() => navigate("/favorites")}
+              className="btn btn-primary"
+              aria-label="Abrir la sección de favoritos"
+            >
+              <FaRegHeart />
+            </button>
+          </div>
+          <div className="user">
+            <button
+              onClick={() => navigate("/user")}
+              className="btn btn-primary"
+              aria-label="Abrir la sección del usuario"
+            >
+              <LuUserRound />
+            </button>
+          </div>
+        </div>
+        <div className="nav-bottom-right">
+          <div className="settings">
+            <button
+              onClick={() => navigate("/settings")}
+              className="btn btn-primary"
+              aria-label="Abrir la sección de ajustes"
+            >
+              <FaTools />   
+            </button>
+          </div>
+          <div className="home">
+            <button
+              onClick={() => navigate("/dashboard")}
+              className="btn btn-primary"
+              aria-label="Abrir la sección principal"
+            >
+              <RiHomeLine />
+            </button>
+          </div>
+          <div className="maps">
+            <button
+              onClick={() => navigate("/Map")}
+              className="btn btn-primary"
+              aria-label="Abrir el mapa"
+            >
+              <SiGooglemaps />
+            </button>
+          </div>
+        </div>
+      </div>
+      {/*Botón General para todos los botones*/}
+      <div className="mobile-nav">
+        {/*Botón para abrir las cateogorías de la página */}
+        <button
+          className="btn btn-primary btnModalMobile"
+          data-bs-toggle="modal"
+          data-bs-target="#categoriesModal"
+          aria-label="Abrir menú"
+        >
+          <TiThMenu />
+        </button>
             {/* Sección inferior (fija) */}
             <div className="nav-bottom">
                 <div className="nav-bottom-left">
