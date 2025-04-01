@@ -8,6 +8,7 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "../components/LanguajeSelector";
+import AccessibilityButtons from "../components/Accesibility";
 
 const VerMapa = () => {
   const { t } = useTranslation();
@@ -100,6 +101,9 @@ const VerMapa = () => {
       </div>
       <div className="languajeMap">
         <LanguageSelector />
+      </div>
+      <div className="accesibilityMap">
+        <AccessibilityButtons />
       </div>
       <div className="mainMap">
         {/* Formulario para seleccionar un Sneaker */}

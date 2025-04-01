@@ -161,7 +161,7 @@ const Login = () => {
                             <span> {t("singInAccount")} </span>
                             <div className="loginDates">
                                 <div>
-                                    <label htmlFor="email">{t("user")}</label>
+                                    <label htmlFor="email">{t("userLabel")}</label>
                                     <input id="email" name="email" type="email" placeholder={t("email")} onChange={(e) => setEmail(e.target.value)} required />
                                 </div>
                                 <div>
@@ -206,7 +206,7 @@ const Login = () => {
                             <span> {t("loginAccountEmail")} </span>
                             <div className="loginDates">
                                 <div>
-                                    <label htmlFor="emailLogin">{t("user")}</label>
+                                    <label htmlFor="emailLogin">{t("userLabel")}</label>
                                     <input id="emailLogin" name="email" type="email" placeholder={t("email")} onChange={(e) => setEmail(e.target.value)} required />
                                 </div>
                                 <div>
