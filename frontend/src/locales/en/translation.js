@@ -1,7 +1,7 @@
 const en = {
   loginAccount: "Login",
   loginAccountEmail: "Or, log in with your credentials",
-  user: "Email:",
+  userLabel: "Email:",
   password: "Password:",
   confirmPasswordtext: "Confirm Password:",
   register: "Sign Up",
@@ -106,6 +106,11 @@ const en = {
     selectBrand: "Select your sneaker brand",
     selectOption: "-- Select --",
     loadOnMap: "Load on Map"
+  },
+
+  favorites: {
+    title: "Favorites",
+    noFavorites: "You don't have any favorite sneakers."
   }
 
 };

@@ -1,7 +1,7 @@
 const de = {
   loginAccount: "Anmelden",
   loginAccountEmail: "Oder mit Ihren Anmeldeinformationen einloggen",
-  user: "E-Mail:",
+  userLabel: "E-Mail:",
   password: "Passwort:",
   confirmPasswordtext: "Passwort bestätigen:",
   register: "Registrieren",
@@ -106,6 +106,11 @@ const de = {
     selectBrand: "Wähle die Marke deines Sneakers",
     selectOption: "-- Auswählen --",
     loadOnMap: "Auf Karte laden"
+  },
+
+  favorites: {
+    title: "Favoriten",
+    noFavorites: "Sie haben keine Lieblingssneaker."
   }
 };
 
