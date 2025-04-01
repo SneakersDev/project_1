@@ -63,7 +63,10 @@ const Nav = ({
           } else {
               // El usuario no esta autenticado o no tiene un UID
           }
-      };
+    };
+
+    fetchRole();
+  }, [user]);
 
   if (showHomeOnly) {
     return (
@@ -127,9 +130,12 @@ const Nav = ({
               >
                 <SiGooglemaps />
               </button>
-      fetchRole(); // Llamar la función para obtener el rol al montar el componente
-  }, [user]);
-
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="nav-wrapper">
       {/* Sección superior: menú y buscador */}
@@ -323,6 +329,7 @@ const Nav = ({
                 >
                   {t("nav.logout")}
                 </button>
+              )}
             </div>
           </div>
         </div>
