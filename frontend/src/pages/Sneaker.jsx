@@ -12,6 +12,7 @@ import { SiGooglemaps } from "react-icons/si";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "../components/LanguajeSelector";
+import AccessibilityButtons from "../components/Accesibility";
 
 
 const API_URL = "http://localhost:3000";
@@ -96,6 +97,9 @@ function Sneaker() {
             <div className="languajeSneaker">
                 <LanguageSelector />
             </div>
+            <div className="accesibilitySneaker">
+                <AccessibilityButtons />
+            </div>
             <div className="container">
                 <div className="title">
                     <h1>SNEAKERS</h1>
@@ -108,7 +112,7 @@ function Sneaker() {
                         <h2 className="text-2xl font-bold mb-4">{sneaker.nombre}</h2>
                         <p className="mt-2 text-gray-600">{sneaker.descripcion}</p>
                         <div className="infoButton">
-                            <p className="mt-2 font-bold text-lg text-green-500">Precio: ${sneaker.precio}</p>
+                            <p className="mt-2 font-bold text-lg text-green-500">${sneaker.precio}</p>
                             <Button variant="primary" onClick={() => handleChat(sneaker)}>
                                 {t("sneaker.chatbot")}
                             </Button>

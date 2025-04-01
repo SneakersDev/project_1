@@ -11,6 +11,7 @@ import Footer from "../components/Footer";
 import Nav from "../components/Nav";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "../components/LanguajeSelector";
+import AccessibilityButtons from "../components/Accesibility";
 
 const User = () => {
   const { t } = useTranslation();
@@ -32,6 +33,9 @@ const User = () => {
       </div>
       <div className="languajeUser">
         <LanguageSelector />
+      </div>
+      <div className="accesibilityUser">
+          <AccessibilityButtons />
       </div>
       <div className="container">
         <div className="user-container">

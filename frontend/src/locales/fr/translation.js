@@ -1,7 +1,7 @@
 const fr = {
   loginAccount: "Connexion",
   loginAccountEmail: "Ou connectez-vous avec vos identifiants",
-  user: "E-mail :",
+  userLabel: "E-mail :",
   password: "Mot de passe :",
   confirmPasswordtext: "Confirmez le mot de passe:",
   register: "S'inscrire",
@@ -106,6 +106,11 @@ const fr = {
     selectBrand: "Sélectionnez la marque de votre sneaker",
     selectOption: "-- Sélectionnez --",
     loadOnMap: "Charger sur la carte"
+  },
+  
+  favorites: {
+    title: "Favoris",
+    noFavorites: "Vous n'avez aucun sneaker favori."
   }
 };
 
