@@ -69,5 +69,5 @@ def chat():
     return jsonify({"respuesta": respuesta["answer"]})
 
 if __name__ == "__main__":
-    print("🚀 Chatbot Service iniciado en http://localhost:5001")
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    port = int(os.environ.get("PORT", 10000))  # Render asigna el puerto
+    app.run(host="0.0.0.0", port=port)
