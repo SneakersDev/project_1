@@ -33,3 +33,4 @@ dist/
 build/
 __pycache__/
 sql/
+firebase-key.json
