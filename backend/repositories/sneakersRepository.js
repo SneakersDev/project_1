@@ -2,8 +2,7 @@ import fs from "fs";
 import path from "path";
 
 function loadQuery(name) {
-    // Carga los SQL desde LA RAIZ del proyecto
-    return fs.readFileSync(path.join("sql", name), "utf8");
+    return fs.readFileSync(path.join(__dirname, "..", "sql", name), "utf8");
 }
 
 export class SneakersRepository {
