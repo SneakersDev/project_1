@@ -1,6 +1,9 @@
 import fs from "fs";
 import path from "path";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 function loadQuery(name) {
     return fs.readFileSync(path.join(__dirname, "..", "sql", name), "utf8");
 }
