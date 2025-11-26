@@ -12,7 +12,7 @@ import mongoose from 'mongoose';
 // ====================================
 // Crear una nueva sede para un sneaker
 // ====================================
-export const crearSede = async (req, res) => {
+export const crearSede = async (req, res, next) => {
   try {
     // Extraemos campos del cuerpo
     const { sneakerId, nombre, direccion, ubicacion } = req.body;
@@ -50,14 +50,15 @@ export const crearSede = async (req, res) => {
 
     res.status(201).json(sedeGuardada);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al crear la sede', error });
+    error.message = "Error al crear la sede";
+    return next(error);
   }
 };
 
 // =======================
 // Obtener sede por su ID
 // =======================
-export const obtenerSedePorId = async (req, res) => {
+export const obtenerSedePorId = async (req, res, next) => {
   try {
     const { id } = req.params;
     const sede = await Sede.findById(id).populate('sneaker').exec();
@@ -68,14 +69,15 @@ export const obtenerSedePorId = async (req, res) => {
 
     res.status(200).json(sede);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al obtener la sede', error });
+    error.message = "Error al obtener la sede";
+    return next(error);
   }
 };
 
 // ===========================
 // Actualizar sede por su ID
 // ===========================
-export const actualizarSede = async (req, res) => {
+export const actualizarSede = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { nombre, direccion, ubicacion } = req.body;
@@ -105,14 +107,15 @@ export const actualizarSede = async (req, res) => {
 
     res.status(200).json(sedeActualizada);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al actualizar la sede', error });
+    error.message = "Error al actualizar la sede";
+    return next(error);
   }
 };
 
 // ==========================
 // Eliminar sede por su ID
 // ==========================
-export const eliminarSede = async (req, res) => {
+export const eliminarSede = async (req, res, next) => {
   try {
     const { id } = req.params;
     const sede = await Sede.findByIdAndDelete(id);
@@ -133,14 +136,15 @@ export const eliminarSede = async (req, res) => {
 
     res.status(200).json({ mensaje: 'Sede eliminada correctamente' });
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al eliminar la sede', error });
+    error.message = "Error al eliminar la sede";
+    return next(error);
   }
 };
 
 // ==================================
 // Obtener imagen asociada a la sede
 // ==================================
-export const obtenerImagenSede = async (req, res) => {
+export const obtenerImagenSede = async (req, res, next) => {
   try {
     const { id } = req.params;
     const objectId = new mongoose.Types.ObjectId(id);
@@ -153,6 +157,7 @@ export const obtenerImagenSede = async (req, res) => {
     const readStream = gfs.createReadStream(file.filename);
     readStream.pipe(res);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al obtener la imagen de la sede', error });
+    error.message = "Error al obtener la imagen de la sede";
+    return next(error);
   }
 };

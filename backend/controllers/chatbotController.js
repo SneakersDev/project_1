@@ -3,7 +3,7 @@ import axios from "axios";
 
 const CHATBOT_SERVICE_URL = process.env.CHATBOT_SERVICE_URL;
 
-export const chatbotHandler = async (req, res) => {
+export const chatbotHandler = async (req, res, next) => {
     const { pregunta, product_id } = req.body;
 
     if (!pregunta || !product_id) {
@@ -19,7 +19,7 @@ export const chatbotHandler = async (req, res) => {
 
         res.status(response.status).json(response.data);
     } catch (error) {
-        console.error("❌ Error al comunicarse con el chatbot:", error.message);
-        res.status(500).json({ error: "No se pudo conectar con el chatbot." });
+        error.message = error.message || "No se pudo conectar con el chatbot.";
+        return next(error);
     }
 };

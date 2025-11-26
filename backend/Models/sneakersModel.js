@@ -1,32 +1,34 @@
 import pool from "../services/connect.js";
+import { SneakersRepository } from "../repositories/sneakersRepository.js";
+
+// Instancia del repositorio usando la conexión MySQL (pool con promesas)
+const sneakersRepository = new SneakersRepository(pool);
 
 export const getSneakers = async () => {
-    const [rows] = await pool.query(`CALL getSneakers()`);
-    return rows[0]; // CALL devuelve un array con los resultados en la primera posición
+  return await sneakersRepository.getSneakers();
 };
 
-
 export const getSneakerByMarca = async (marca_id) => {
-    const [rows] = await pool.query(`CALL getSneakerByMarca(?)`, [marca_id]);
-    return rows[0]; // Retornamos la primera parte del resultado (las filas)
+  return await sneakersRepository.getSneakerByMarca(marca_id);
 };
 
 export const getSneakersByCategory = async (category_id) => {
-    const [rows] = await pool.query(`CALL getSneakersByCategory(?)`, [category_id]);
-    return rows[0]; // Retornamos la primera parte del resultado (las filas)
+  return await sneakersRepository.getSneakersByCategory(category_id);
 };
 
 export const getSneakerByMarcaAndCategory = async (marca_id, category_id) => {
-    const [rows] = await pool.query(`CALL getSneakersByMarcaAndCategory(?, ?)`, [marca_id, category_id]);
-    return rows[0]; // Retornamos la primera parte del resultado (las filas)
+  return await sneakersRepository.getSneakersByMarcaAndCategory(
+    marca_id,
+    category_id
+  );
 };
 
 export const getSneakersByName = async (name) => {
-    const [rows] = await pool.query(`CALL getSneakersByName(?)`, [name]);
-    return rows[0]; // Retornamos las filas del resultado
+  return await sneakersRepository.getSneakersByName(name);
 };
-export const getSneakersById = async (id) => {
-    const [rows] = await pool.query(`CALL getSneakersByID(?)`, [id]);
-    return rows[0]; // Retornamos la primera parte del resultado (las filas)
 
+export const getSneakersById = async (id) => {
+  return await sneakersRepository.getSneakersByID(id);
 };
+
+

@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import passport from "passport";
 import mongoose from 'mongoose';
+import { requestLogger, errorLogger } from "./middleware/logger.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 import sneakersRouter from "./routes/sneakersRoutes.js";
 import loginRouter from "./routes/authRoutes.js";
@@ -21,6 +23,7 @@ app.use(cors({
   origin: process.env.FRONTEND_URL,
   credentials: true,
 }));
+app.use(requestLogger);
 app.use(cookieParser());
 app.use(express.json());
 app.use(passport.initialize());
@@ -43,6 +46,11 @@ app.use("/api", sneakersRouter);
 app.use("/api", chatbotRouter);
 app.use('/api', sneakerRoutes);
 app.use('/api', sedeRoutes);
+
+// Middleware de logging de errores (debe ir después de las rutas)
+app.use(errorLogger);
+// Middleware global de manejo de errores (respuesta uniforme)
+app.use(errorHandler);
 
 app.listen(port, () => {
     console.log(`Server running on route http://localhost:${port}`);

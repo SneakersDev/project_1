@@ -15,6 +15,7 @@ import { signOut } from "firebase/auth";
 import { FaTools } from "react-icons/fa";
 import { useTranslation } from "react-i18next"; // Importar el hook de traducción
 import LanguageSelector from "../components/LanguajeSelector";
+import { getApiUrl } from "../assets/getapi";
 
 const Nav = ({
   categories,
@@ -45,9 +46,12 @@ const Nav = ({
               // Verifica si el usuario está autenticado y tiene un UID
               try {
                   // Realizar la solicitud a la API con el UID del usuario
-                  const response = await fetch(`http://localhost:3000/api/get-rol/${user.uid}`, {
-                      method: "POST",
-                  });
+                  const response = await fetch(
+                    getApiUrl(`/get-rol/${user.uid}`),
+                    {
+                        method: "POST",
+                    }
+                  );
                   // Verificar si la respuesta es exitosa (status 200)
                   if (!response.ok) {
                       throw new Error(`Error en la solicitud: ${response.statusText}`);

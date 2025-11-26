@@ -32,3 +32,4 @@ product_dao.cpython-313.pyc
 dist/
 build/
 __pycache__/
+sql/

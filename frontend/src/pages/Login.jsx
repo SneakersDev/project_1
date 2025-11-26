@@ -9,6 +9,7 @@ import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import "../styles/login/login.css";
 import Swal from "sweetalert2";
+import { getApiUrl } from "../assets/getapi";
 
 const Login = () => {
     const { t } = useTranslation();
@@ -29,19 +30,22 @@ const Login = () => {
             try {
                 const providerId = user.providerData[0]?.providerId || "unknown";
 
-                const response = await fetch("http://localhost:3000/api/login", {
-                    method: "POST",
-                    credentials: "include",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        email: user.email,
-                        uid: user.uid,
-                        displayName: user.displayName,
-                        providerId: providerId,
-                    }),
-                });
+                const response = await fetch(
+                    getApiUrl("/login"),
+                    {
+                        method: "POST",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            email: user.email,
+                            uid: user.uid,
+                            displayName: user.displayName,
+                            providerId: providerId,
+                        }),
+                    }
+                );
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
@@ -79,12 +83,15 @@ const Login = () => {
         try {
             if (isRegistering) {
                 console.log("Enviando solicitud de registro...");
-                const response = await fetch("http://localhost:3000/api/register", {
-                    method: "POST",
-                    credentials: "include",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email, password }),
-                });
+                const response = await fetch(
+                    getApiUrl("/register"),
+                    {
+                        method: "POST",
+                        credentials: "include",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email, password }),
+                    }
+                );
     
                 if (!response.ok) {
                     throw new Error("Error en el registro. El correo ingresado no es válido o ya está registrado en el sistema.");
@@ -106,12 +113,15 @@ const Login = () => {
     
             } else {
                 console.log("Enviando solicitud de inicio de sesión...");
-                const response = await fetch("http://localhost:3000/api/loginWithEmail", {
-                    method: "POST",
-                    credentials: "include",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ email, password }),
-                });
+                const response = await fetch(
+                    getApiUrl("/loginWithEmail"),
+                    {
+                        method: "POST",
+                        credentials: "include",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email, password }),
+                    }
+                );
     
                 if (!response.ok) {
                     throw new Error("Error al iniciar sesión. Por favor, revisa la información ingresada.");

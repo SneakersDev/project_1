@@ -13,9 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "../components/LanguajeSelector";
 import AccessibilityButtons from "../components/Accesibility";
-
-
-const API_URL = "http://localhost:3000";
+import { getApiUrl } from "../assets/getapi";
 
 
 function Sneaker() {
@@ -43,10 +41,13 @@ function Sneaker() {
     const enviarPregunta = async () => {
         if (!pregunta) return;
         try {
-            const response = await axios.post(`${API_URL}/api/chatbot`, {
-                pregunta,
-                product_id: selectedProduct.id,
-            });
+            const response = await axios.post(
+              getApiUrl("/chatbot"),
+              {
+                  pregunta,
+                  product_id: selectedProduct.id,
+              }
+            );
             setRespuesta(response.data.respuesta || "No se obtuvo respuesta");
         } catch (error) {
             setRespuesta("Error al comunicarse con el chatbot");
@@ -55,13 +56,16 @@ function Sneaker() {
     useEffect(() => {
         const fetchSneaker = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/api/sneakers/${id}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    credentials: "include",
-                });
+                const response = await fetch(
+                  getApiUrl(`/sneakers/${id}`),
+                  {
+                      method: "GET",
+                      headers: {
+                          "Content-Type": "application/json",
+                      },
+                      credentials: "include",
+                  }
+                );
 
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status} ${response.statusText}`);

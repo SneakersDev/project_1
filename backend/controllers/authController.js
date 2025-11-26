@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import crypto from "crypto"; // Asegúrate de tener esto para generar UID
 
 // Login para proveedores externos (o flujo híbrido)
-const login = async (req, res) => {
+const login = async (req, res, next) => {
     const { username, password, email, uid, providerId, displayName } = req.body;
 
     try {
@@ -61,13 +61,13 @@ const login = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("❌ Error en login:", error);
-        res.status(500).json({ message: "Internal server error" });
+        error.message = error.message || "Error en login";
+        return next(error);
     }
 };
 
 // Login exclusivo para email y contraseña (no crea el usuario si no existe)
-const loginWithEmail = async (req, res) => {
+const loginWithEmail = async (req, res, next) => {
     const { email, password } = req.body;
 
     try {
@@ -97,13 +97,13 @@ const loginWithEmail = async (req, res) => {
         });
 
     } catch (error) {
-        console.error("❌ Error en loginWithEmail:", error);
-        res.status(500).json({ message: "Internal server error" });
+        error.message = error.message || "Error en loginWithEmail";
+        return next(error);
     }
 };
 
 // Registro de usuario con email y contraseña
-const register = async (req, res) => {
+const register = async (req, res, next) => {
     const { email, password } = req.body;
 
     try {
@@ -121,12 +121,12 @@ const register = async (req, res) => {
 
         res.status(201).json({ message: "Usuario registrado exitosamente" });
     } catch (error) {
-        console.error("❌ Error en registro:", error);
-        res.status(500).json({ message: "Error en el servidor" });
+        error.message = error.message || "Error en registro";
+        return next(error);
     }
 };
 
-const getRole = async (req, res) => {
+const getRole = async (req, res, next) => {
   try {
     const { id } = req.params;  // Aquí obtenemos el id de los parámetros de la URL
 
@@ -150,8 +150,8 @@ const getRole = async (req, res) => {
     return res.status(200).json({ message: 'Rol obtenido exitosamente', rol: result.rol });
     
   } catch (error) {
-    console.error('❌ Error en getRole:', error);
-    return res.status(500).json({ message: 'Error en el servidor' });
+    error.message = error.message || "Error en getRole";
+    return next(error);
   }
 };
 

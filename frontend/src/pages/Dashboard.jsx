@@ -12,8 +12,7 @@ import Nav from "../components/Nav";
 import { FaRegHeart } from "react-icons/fa";
 import Footer from "../components/Footer";
 import AccessibilityButtons from "../components/Accesibility";
-
-const API_URL = "http://localhost:3000";
+import { getApiUrl } from "../assets/getapi";
 
 const Dashboard = () => {
   const { t, i18n } = useTranslation();
@@ -62,14 +61,16 @@ const Dashboard = () => {
 
   // Función para obtener sneakers según filtros de categoría/marca
   const fetchSneakers = async () => {
-    let endpoint = "http://localhost:3000/api/sneakers";
+    let endpoint = getApiUrl("/sneakers");
 
     if (selectedCategory && selectedBrand) {
-      endpoint = `http://localhost:3000/api/sneakers/ByCategoryAndMarca?category=${selectedCategory}&marca=${selectedBrand}`;
+      endpoint = getApiUrl(
+        `/sneakers/ByCategoryAndMarca?category=${selectedCategory}&marca=${selectedBrand}`
+      );
     } else if (selectedCategory) {
-      endpoint = `http://localhost:3000/api/sneakers/ByCategory?category=${selectedCategory}`;
+      endpoint = getApiUrl(`/sneakers/ByCategory?category=${selectedCategory}`);
     } else if (selectedBrand) {
-      endpoint = `http://localhost:3000/api/sneakers/ByMarca?marca=${selectedBrand}`;
+      endpoint = getApiUrl(`/sneakers/ByMarca?marca=${selectedBrand}`);
     }
 
     try {
@@ -89,7 +90,7 @@ const Dashboard = () => {
   // Función para obtener todos los sneakers
   const fetchAllSneakers = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/sneakers", {
+      const response = await fetch(getApiUrl("/sneakers"), {
         method: "GET",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -106,9 +107,9 @@ const Dashboard = () => {
   const fetchSneakersByName = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/sneakers/search?name=${encodeURIComponent(
-          searchTerm
-        )}`,
+        getApiUrl(
+          `/sneakers/search?name=${encodeURIComponent(searchTerm)}`
+        ),
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

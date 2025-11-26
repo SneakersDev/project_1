@@ -5,7 +5,7 @@ import { gfs } from '../../services/db.js';
 // ===========================
 // Crear un nuevo sneaker
 // ===========================
-export const crearSneaker = async (req, res) => {
+export const crearSneaker = async (req, res, next) => {
   try {
     const { nombre, descripcion, modelo, talla, color, precio, ubicacion } = req.body;
 
@@ -26,27 +26,28 @@ export const crearSneaker = async (req, res) => {
     const sneakerCreado = await Sneaker.create(nuevoSneaker);
     res.status(201).json(sneakerCreado);
   } catch (error) {
-    console.error('Error al crear el sneaker:', error);
-    res.status(500).json({ mensaje: 'Error al crear sneaker', error });
+    error.message = "Error al crear sneaker";
+    return next(error);
   }
 };
 
 // ===========================
 // Obtener todos los sneakers
 // ===========================
-export const obtenerSneakers = async (req, res) => {
+export const obtenerSneakers = async (req, res, next) => {
   try {
     const sneakers = await Sneaker.find().populate('sedes').exec();
     res.status(200).json(sneakers);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al obtener los sneakers', error });
+    error.message = "Error al obtener los sneakers";
+    return next(error);
   }
 };
 
 // ===========================
 // Obtener sneaker por ID
 // ===========================
-export const obtenerSneakerPorId = async (req, res) => {
+export const obtenerSneakerPorId = async (req, res, next) => {
   try {
     const { id } = req.params;
     const sneaker = await Sneaker.findById(id).populate('sedes').exec();
@@ -57,14 +58,15 @@ export const obtenerSneakerPorId = async (req, res) => {
 
     res.status(200).json(sneaker);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al obtener el sneaker', error });
+    error.message = "Error al obtener el sneaker";
+    return next(error);
   }
 };
 
 // ===========================
 // Actualizar sneaker por ID
 // ===========================
-export const actualizarSneaker = async (req, res) => {
+export const actualizarSneaker = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { nombre, descripcion, modelo, talla, color, precio, ubicacion } = req.body;
@@ -95,14 +97,15 @@ export const actualizarSneaker = async (req, res) => {
 
     res.status(200).json(sneakerActualizado);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al actualizar el sneaker', error });
+    error.message = "Error al actualizar el sneaker";
+    return next(error);
   }
 };
 
 // ===========================
 // Eliminar sneaker por ID
 // ===========================
-export const eliminarSneaker = async (req, res) => {
+export const eliminarSneaker = async (req, res, next) => {
   try {
     const { id } = req.params;
     const sneakerEliminado = await Sneaker.findByIdAndDelete(id);
@@ -113,14 +116,15 @@ export const eliminarSneaker = async (req, res) => {
 
     res.status(200).json({ mensaje: 'Sneaker eliminado correctamente' });
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al eliminar el sneaker', error });
+    error.message = "Error al eliminar el sneaker";
+    return next(error);
   }
 };
 
 // ===========================
 // Obtener imagen desde GridFS
 // ===========================
-export const obtenerImagenSneaker = async (req, res) => {
+export const obtenerImagenSneaker = async (req, res, next) => {
   try {
     const { id } = req.params;
     const objectId = new mongoose.Types.ObjectId(id);
@@ -133,6 +137,7 @@ export const obtenerImagenSneaker = async (req, res) => {
     const readStream = gfs.createReadStream(file.filename);
     readStream.pipe(res);
   } catch (error) {
-    res.status(500).json({ mensaje: 'Error al obtener la imagen', error });
+    error.message = "Error al obtener la imagen";
+    return next(error);
   }
 };
